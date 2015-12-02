@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "player.h"
 
 
 
@@ -10,7 +10,7 @@ Player::~Player()
 {
 }
 
-Player::PlayerCollidWithBlock(BasicEntity* objBlock, int blockHalfSize, int playerRadius)
+void Player::PlayerCollidWithBlock(BasicEntity* objBlock, int blockHalfSize, int playerRadius)
 { 
 	// ###############################################################
 	// Player checks collision with block

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Entity.h"
-#include <demo/basicentity.h>
+#include "basicentity.h"
 
 class Player
 {
