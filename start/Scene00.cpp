@@ -17,6 +17,9 @@ Scene00::Scene00() : SuperScene()
 	delay = 10;
 	counter = 0;
 
+	clicked = false;
+	bulletCounter = -1;
+
 	text[0]->message("Scene00: shoot the enemies before they shoot you!");
 
 	Sprite* background_spr = new Sprite();
@@ -185,30 +188,50 @@ void Scene00::update(float deltaTime)
 		counter += 1 * deltaTime;
 	}
 
-	if (input()->getKey(GLFW_KEY_SPACE)){ //&& counter >= delay) {
-			BasicEntity* bullet_player_entity = new BasicEntity();
-			bullet_player_entity->addSprite("assets/bullet.tga");
-			bullet_player_entity->sprite()->color = ORANGE;
-			bullet_player_entity->position = Point2(player_entity->position.x, player_entity->position.y);
+	if (input()->getMouseDown(GLFW_MOUSE_BUTTON_1)){ //&& counter >= delay) {
+		BasicEntity* bullet_player_entity = new BasicEntity();
+		bullet_player_entity->addSprite("assets/bullet.tga");
+		bullet_player_entity->sprite()->color = ORANGE;
+		bullet_player_entity->position = Point2(player_entity->position.x, player_entity->position.y);
 
-			player_bullets.push_back(bullet_player_entity);
+		layers[1]->addChild(bullet_player_entity);
 
-			layers[1]->addChild(bullet_player_entity);
+		player_bullets.push_back(bullet_player_entity);
 
-			Point2 mouseposbull = Point2(input()->getMouseX(), input()->getMouseY());
-			Vector2 deltabull = Vector2(bullet_player_entity->position, mouseposbull);
-			float anglebull = deltabull.getAngle();
-			bullet_player_entity->rotation = anglebull;
+		Point2 mouseposbull = Point2(input()->getMouseX(), input()->getMouseY());
+		Vector2 deltabull = Vector2(bullet_player_entity->position, mouseposbull);
+		float anglebull = deltabull.getAngle();
+		bullet_player_entity->rotation = anglebull;
 
-			counter = 0;
+		counter = 0;
+		clicked = true;
+		bulletCounter++;
 	}
+	if (clicked) {
+		for (int k = bulletCounter; k <= bulletCounter; k++) {
+			MouseX = input()->getMouseX();
+			MouseY = input()->getMouseY();
 
-	for (int k = 0; k > player_bullets.size(); k++) {
-		Point2 mouseposbull1 = Point2(input()->getMouseX(), input()->getMouseY());
-		Vector2 deltabull1 = Vector2(player_bullets[k]->position, mouseposbull1);
-		float anglebull1 = deltabull1.getAngle();
+			BulletX = player_bullets[bulletCounter]->position.x;
+			BulletY = player_bullets[bulletCounter]->position.y;
 
-		player_bullets[k]->position += deltabull1 * 1 * deltaTime;
+			AngleX = MouseX - BulletX;
+			AngleY = MouseY - BulletY;
+
+			vectorLength = sqrt(AngleX*AngleX + AngleY*AngleY);
+
+			DirectionX = AngleX / vectorLength;
+			DirectionY = AngleY / vectorLength;
+
+			VelocityX = DirectionX * 400 * deltaTime;
+			VelocityY = DirectionY * 400 * deltaTime;
+		}
+		clicked = false;
+	}
+	if (bulletCounter >= 0) {
+		for (int bb = 0; bb < bulletCounter; bb++) {
+			player_bullets[bb]->position += Point2(VelocityX, VelocityY);
+		}
 	}
 }
 

@@ -15,6 +15,7 @@
 #include "player.h"
 #include "superscene.h"
 #include "basicentity.h"
+#include "bullet.h"
 
 class Scene00: public SuperScene
 {
@@ -32,12 +33,16 @@ class Scene00: public SuperScene
 
 		Timer t;
 		int delay;
-		int counter;
+		float counter;
+		bool clicked;
 
 		std::vector<BasicEntity*> enemies;
 		std::vector<BasicEntity*> guns_enemies;
 		std::vector<BasicEntity*> blocks;
 		std::vector<BasicEntity*> player_bullets;
+
+		double MouseX, MouseY, BulletY, BulletX, AngleX, AngleY, vectorLength, DirectionX, DirectionY, VelocityX, VelocityY;
+		int bulletCounter;
 
 		void PlayerStayInScreen();
 };
