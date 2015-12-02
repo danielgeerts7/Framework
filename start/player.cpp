@@ -15,6 +15,7 @@ void Player::update(float deltaTime)
 
 void Player::playerCollidWithBlock(BasicEntity* objPlayer, BasicEntity* objBlock, int blockHalfSize, int playerRadius)
 {
+	/*
 	// ###############################################################
 	// Player checks collision with block
 	// ###############################################################
@@ -33,20 +34,23 @@ void Player::playerCollidWithBlock(BasicEntity* objPlayer, BasicEntity* objBlock
 
 	if (playerRightRadius > blockLeft && playerLeftRadius < blockRight && playerBottomRadius > blockTop && playerTopRadius < blockBottom) {
 		//Checking player top, and block bottom
-		if (objPlayer->position.y < objBlock->position.y - blockHalfSize) {
+		if (objPlayer->position.y + playerRadius -1 <= objBlock->position.y - blockHalfSize) {
 			objPlayer->position.y = objBlock->position.y - (blockHalfSize + playerRadius);
 		}
 		//Checking player bottom, and block top
-		if (objPlayer->position.y > objBlock->position.y + blockHalfSize) {
+		if (objPlayer->position.y - playerRadius +1 >= objBlock->position.y + blockHalfSize) {
 			objPlayer->position.y = objBlock->position.y + (blockHalfSize + playerRadius);
 		}
 		//Checking player right, and block left
-		if (objPlayer->position.x < objBlock->position.x - blockHalfSize) {
+		if (objPlayer->position.x + playerRadius -1 <= objBlock->position.x - blockHalfSize) {
 			objPlayer->position.x = objBlock->position.x - (blockHalfSize + playerRadius);
 		}
 		//Checking player left, and block right
-		if  (objPlayer->position.x > objBlock->position.x + blockHalfSize) {
+		if  (objPlayer->position.x - playerRadius +1 >= objBlock->position.x + blockHalfSize) {
 			objPlayer->position.x = objBlock->position.x + (blockHalfSize + playerRadius);
 		}
+
+		objBlock->sprite()->color = GREEN;
 	}
+	*/
 }

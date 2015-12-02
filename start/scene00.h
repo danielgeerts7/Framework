@@ -12,9 +12,9 @@
 
 #include <vector>
 #include <rt2d/timer.h>
-#include <heat/player.h>
+#include "player.h"
 #include "superscene.h"
-#include <heat\basicentity.h>
+#include "basicentity.h"
 
 class Scene00: public SuperScene
 {

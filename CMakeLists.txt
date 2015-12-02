@@ -48,7 +48,6 @@ include_directories(
 	${CMAKE_SOURCE_DIR}/external/glew-1.9.0/include/
 	${CMAKE_SOURCE_DIR}/external/rs232/
 	${CMAKE_SOURCE_DIR}/rt2d/
-	${CMAKE_SOURCE_DIR}/heat/
 	${CMAKE_SOURCE_DIR}/.
 )
 
@@ -58,14 +57,12 @@ link_directories(
 	${CMAKE_SOURCE_DIR}/external/rs232
 	${CMAKE_SOURCE_DIR}/external/
 	${CMAKE_SOURCE_DIR}/rt2d
-	${CMAKE_SOURCE_DIR}/heat
 )
 
 set(ALL_LIBS
 	${OPENGL_LIBRARY}
 	rs232
 	rt2d
-	heat
 	GLFW_303
 	GLEW_190
 )
@@ -129,28 +126,6 @@ file(
 )
 
 ####################################################################
-# librt2d.a                                                        #
-####################################################################
-add_library(heat
-	heat/basicentity.cpp
-	heat/basicentity.h
-	heat/collision.cpp
-	heat/collision.h
-	heat/loadtiles.cpp
-	heat/loadtiles.h
-	heat/player.cpp
-	heat/player.h
-)
-#file(
-	#COPY ${CMAKE_SOURCE_DIR}/heat/shaders
-	#DESTINATION ${CMAKE_BINARY_DIR}
-#)
-#file(
-	#COPY ${CMAKE_SOURCE_DIR}/heat/fonts
-	#DESTINATION ${CMAKE_BINARY_DIR}
-#)
-
-####################################################################
 # demo                                                             #
 ####################################################################
 add_executable(demo
@@ -201,11 +176,17 @@ file(
 # start                                                            #
 ####################################################################
 add_executable(start
+	start/basicentity.cpp
+	start/basicentity.h
+	start/loadtiles.cpp
+	start/loadtiles.h
 	start/main.cpp
 	start/myentity.cpp
 	start/myentity.h
 	start/myscene.cpp
 	start/myscene.h
+	start/player.cpp
+	start/player.h
 	start/scene00.cpp
 	start/scene00.h
 	start/superscene.cpp
@@ -232,7 +213,6 @@ if(WIN32)
 
 	# create file tabs in visual studio
 	#SOURCE_GROUP(rt2d REGULAR_EXPRESSION ".*/rt2d/.*" )
-	#SOURCE_GROUP(rt2d REGULAR_EXPRESSION ".*/heat/.*" )
 	#SOURCE_GROUP(demo REGULAR_EXPRESSION ".*/demo/.*" )
 	#SOURCE_GROUP(start REGULAR_EXPRESSION ".*/start/.*" )
 	#SOURCE_GROUP(shaders REGULAR_EXPRESSION ".*/.*shaders$" )
