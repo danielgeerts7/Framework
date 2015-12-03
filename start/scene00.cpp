@@ -20,6 +20,12 @@ Scene00::Scene00() : SuperScene()
 	clicked = false;
 	bulletCounter = 0;
 
+	MaxAmmo = 25;
+	MaxMags = 6;
+
+	CurrentAmmo = MaxAmmo;
+	CurrentMags = MaxMags;
+
 	text[0]->message("Scene00: shoot the enemies before they shoot you!");
 
 	Sprite* background_spr = new Sprite();
@@ -204,6 +210,7 @@ void Scene00::update(float deltaTime)
 		counter = 0;
 		clicked = true;
 		bulletCounter++;
+		CurrentAmmo--;
 	}
 
 	if (clicked) {
@@ -211,8 +218,8 @@ void Scene00::update(float deltaTime)
 			MouseX = input()->getMouseX();
 			MouseY = input()->getMouseY();
 
-			BulletX = player_bullets[bulletCounter-1]->position.x;
-			BulletY = player_bullets[bulletCounter-1]->position.y;
+			BulletX = player_bullets[bulletCounter - 1]->position.x;
+			BulletY = player_bullets[bulletCounter - 1]->position.y;
 
 			AngleX = MouseX - BulletX;
 			AngleY = MouseY - BulletY;
@@ -237,6 +244,21 @@ void Scene00::update(float deltaTime)
 			player_bullets[bb]->position += bulletDirectionCounter[bb];
 		}
 	}
+	if (input()->getKeyDown(GLFW_KEY_R)) {
+		if (CurrentAmmo == 0 && CurrentMags > 0) {
+			CurrentAmmo = MaxAmmo;
+			CurrentMags--;
+		}
+		else if (CurrentAmmo == 0 && CurrentMags == 0) {
+
+		}
+	}
+
+	std::string AmmoLeftToUseText = "Ammo: ";
+	AmmoLeftToUseText.append(std::to_string(CurrentAmmo));
+	AmmoLeftToUseText.append("/");
+	AmmoLeftToUseText.append(std::to_string(CurrentMags));
+	text[1]->message(AmmoLeftToUseText);
 
 	int playerRaduis = 24;
 

@@ -44,6 +44,13 @@ class Scene00: public SuperScene
 
 		double MouseX, MouseY, BulletY, BulletX, AngleX, AngleY, vectorLength, DirectionX, DirectionY, VelocityX, VelocityY;
 		int bulletCounter;
+
+		int MaxAmmo;
+		int MaxMags;
+
+		int CurrentAmmo;
+		int CurrentMags;
+
 		std::vector<Point2> bulletDirectionCounter;
 };
 
