@@ -134,32 +134,10 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	SuperScene::update(deltaTime);
 
-	PlayerStayInScreen();
-
 	Vector2 playerRight = Vector2(1, 0);
 	Vector2 playerLeft = Vector2(1, 0);
 	Vector2 playerUp = Vector2(0, 1);
 	Vector2 playerDown = Vector2(0, 1);
-
-	// ###############################################################
-	// Rotate player_entity to the position of the mouse
-	// ###############################################################
-	Point2 mousepos = Point2(input()->getMouseX(), input()->getMouseY());
-	Vector2 delta = Vector2(player_entity->position, mousepos);
-	float angle = delta.getAngle();
-	player_entity->rotation = angle;
-
-	for (int a = 0; a < enemies.size(); a++) {
-		Point2 mousepos1 = Point2(player_entity->position.x, player_entity->position.y);
-		Vector2 delta1 = Vector2(enemies[a]->position, mousepos1);
-		float angle1 = delta1.getAngle();
-		enemies[a]->rotation = angle1;
-	}
-
-	Player* player_p = new Player();
-	for (int i = 0; i < blocks.size(); i++) {
-		player_p->playerCollidWithBlock(player_entity, blocks[i], 32, 27);
-	}
 
 	// ###############################################################
 	// Move player_entity to and from the mouse
@@ -183,12 +161,32 @@ void Scene00::update(float deltaTime)
 		player_entity->position += playerRight * deltaTime * speed;
 	}
 
-	
+	// ###############################################################
+	// Rotate player_entity to the position of the mouse
+	// ###############################################################
+	Point2 mousepos = Point2(input()->getMouseX(), input()->getMouseY());
+	Vector2 delta = Vector2(player_entity->position, mousepos);
+	float angle = delta.getAngle();
+	player_entity->rotation = angle;
+
+
+	for (int a = 0; a < enemies.size(); a++) {
+		Point2 mousepos1 = Point2(player_entity->position.x, player_entity->position.y);
+		Vector2 delta1 = Vector2(enemies[a]->position, mousepos1);
+		float angle1 = delta1.getAngle();
+		enemies[a]->rotation = angle1;
+	}
+
+	Player* player_p = new Player();
+	for (int i = 0; i < blocks.size(); i++) {
+		player_p->playerCollidWithBlock(player_entity, blocks[i], 32, 27);
+	}
+
 	if (counter < delay) {
 		counter += 1 * deltaTime;
 	}
 
-	if (input()->getMouseDown(GLFW_MOUSE_BUTTON_1)){ //&& counter >= delay) {
+	if (input()->getMouseDown(GLFW_MOUSE_BUTTON_1)) { //&& counter >= delay) {
 		BasicEntity* bullet_player_entity = new BasicEntity();
 		bullet_player_entity->addSprite("assets/bullet.tga");
 		bullet_player_entity->sprite()->color = ORANGE;
@@ -207,6 +205,7 @@ void Scene00::update(float deltaTime)
 		clicked = true;
 		bulletCounter++;
 	}
+
 	if (clicked) {
 		for (int k = bulletCounter; k <= bulletCounter; k++) {
 			MouseX = input()->getMouseX();
@@ -225,17 +224,20 @@ void Scene00::update(float deltaTime)
 
 			VelocityX = DirectionX * 400 * deltaTime;
 			VelocityY = DirectionY * 400 * deltaTime;
+
+			Point2 bullDir = Point2(VelocityX, VelocityY);
+
+			bulletDirectionCounter.push_back(bullDir);
 		}
 		clicked = false;
 	}
+
 	if (bulletCounter >= 0) {
 		for (int bb = 0; bb < bulletCounter; bb++) {
-			player_bullets[bb]->position += Point2(VelocityX, VelocityY);
+			player_bullets[bb]->position += bulletDirectionCounter[bb];
 		}
 	}
-}
 
-void Scene00::PlayerStayInScreen() {
 	int playerRaduis = 24;
 
 	if (player_entity->position.x < 0 + playerRaduis) {

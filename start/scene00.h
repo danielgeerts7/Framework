@@ -26,6 +26,7 @@ class Scene00: public SuperScene
 		virtual void update(float deltaTime);
 	
 	private:
+
 		BasicEntity* background_entity;
 		BasicEntity* player_entity;
 		//BasicEntity* gun_enemie_entity;
@@ -43,8 +44,7 @@ class Scene00: public SuperScene
 
 		double MouseX, MouseY, BulletY, BulletX, AngleX, AngleY, vectorLength, DirectionX, DirectionY, VelocityX, VelocityY;
 		int bulletCounter;
-
-		void PlayerStayInScreen();
+		std::vector<Point2> bulletDirectionCounter;
 };
 
 #endif /* SCENE00_H */ 
