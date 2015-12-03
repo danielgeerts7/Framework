@@ -18,7 +18,7 @@ Scene00::Scene00() : SuperScene()
 	counter = 0;
 
 	clicked = false;
-	bulletCounter = -1;
+	bulletCounter = 0;
 
 	text[0]->message("Scene00: shoot the enemies before they shoot you!");
 
@@ -211,8 +211,8 @@ void Scene00::update(float deltaTime)
 			MouseX = input()->getMouseX();
 			MouseY = input()->getMouseY();
 
-			BulletX = player_bullets[bulletCounter]->position.x;
-			BulletY = player_bullets[bulletCounter]->position.y;
+			BulletX = player_bullets[bulletCounter-1]->position.x;
+			BulletY = player_bullets[bulletCounter-1]->position.y;
 
 			AngleX = MouseX - BulletX;
 			AngleY = MouseY - BulletY;
