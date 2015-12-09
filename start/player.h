@@ -3,7 +3,7 @@
 #include "Entity.h"
 #include "basicentity.h"
 
-class Player
+class Player : public BasicEntity
 {
 public:
 	Player();
