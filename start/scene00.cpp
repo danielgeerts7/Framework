@@ -183,9 +183,14 @@ void Scene00::update(float deltaTime)
 	for (int i = 0; i < blocks.size(); i++) {
 		player_entity->playerCollidWithBlock(player_entity, blocks[i], 32, 27);
 	}
+	
+	counter += 0.5;
 
+	if (counter >= delay) {
+		counter = delay;
+	}
 
-	if (input()->getMouseDown(GLFW_MOUSE_BUTTON_1)) {// && counter >= delay) {
+	if (input()->getMouse(GLFW_MOUSE_BUTTON_1) && counter >= delay) {
 		Bullet* b = new Bullet();
 		b->setPositionAndRotation(player_entity);
 		layers[1]->addChild(b);
@@ -199,7 +204,7 @@ void Scene00::update(float deltaTime)
 	AmmoLeftToUseText.append(std::to_string(CurrentAmmo));
 	AmmoLeftToUseText.append("/");
 	AmmoLeftToUseText.append(std::to_string(CurrentMags));
-	text[1]->message(AmmoLeftToUseText);
+	text[4]->message(AmmoLeftToUseText);
 
 	int playerRaduis = 24;
 
