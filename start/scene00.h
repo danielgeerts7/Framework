@@ -28,30 +28,22 @@ class Scene00: public SuperScene
 	private:
 
 		BasicEntity* background_entity;
-		BasicEntity* player_entity;
-		//BasicEntity* gun_enemie_entity;
+		Player* player_entity;
 		BasicEntity* gun_player_entity;
 
 		Timer t;
 		int delay;
 		float counter;
-		bool clicked;
 
 		std::vector<BasicEntity*> enemies;
 		std::vector<BasicEntity*> guns_enemies;
 		std::vector<BasicEntity*> blocks;
 		std::vector<BasicEntity*> player_bullets;
 
-		double MouseX, MouseY, BulletY, BulletX, AngleX, AngleY, vectorLength, DirectionX, DirectionY, VelocityX, VelocityY;
-		int bulletCounter;
-
 		int MaxAmmo;
 		int MaxMags;
-
 		int CurrentAmmo;
 		int CurrentMags;
-
-		std::vector<Point2> bulletDirectionCounter;
 };
 
 #endif /* SCENE00_H */ 

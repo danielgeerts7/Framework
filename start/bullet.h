@@ -3,11 +3,20 @@
 #include "basicentity.h"
 #include <rt2d/scene.h>
 #include <vector>
+#include <rt2d/input.h>
+#include <rt2d/scene.h>
 
-class Bullet : public BasicEntity
+static class Bullet : public BasicEntity
 {
 public:
-	Bullet(BasicEntity* user, std::vector<BasicEntity*> bullets);
+	Bullet();
 	~Bullet();
+	void setPositionAndRotation(BasicEntity* parent);
+
+	float velocity_x;
+	float velocity_y;
+	Vector2 velocity;
+
+	virtual void update(float deltaTime);
 };
 

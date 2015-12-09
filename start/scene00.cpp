@@ -17,9 +17,6 @@ Scene00::Scene00() : SuperScene()
 	delay = 10;
 	counter = 0;
 
-	clicked = false;
-	bulletCounter = 0;
-
 	MaxAmmo = 25;
 	MaxMags = 6;
 
@@ -38,7 +35,7 @@ Scene00::Scene00() : SuperScene()
 	Sprite* player_spr = new Sprite();
 	player_spr->setupSprite("assets/player.tga", 0.5f, 0.5f, 1.0f, 1.0f, 1, 2);
 	player_spr->color = GREEN;
-	player_entity = new BasicEntity();
+	player_entity = new Player();
 	player_entity->position = Point2(SWIDTH / 2, SHEIGHT / 2);
 	player_entity->addSprite(player_spr);
 	player_entity->scale = Point2(2,2);
@@ -174,7 +171,7 @@ void Scene00::update(float deltaTime)
 	Vector2 delta = Vector2(player_entity->position, mousepos);
 	float angle = delta.getAngle();
 	player_entity->rotation = angle;
-
+	
 
 	for (int a = 0; a < enemies.size(); a++) {
 		Point2 mousepos1 = Point2(player_entity->position.x, player_entity->position.y);
@@ -183,75 +180,19 @@ void Scene00::update(float deltaTime)
 		enemies[a]->rotation = angle1;
 	}
 
-	Player* player_p = new Player();
 	for (int i = 0; i < blocks.size(); i++) {
-		player_p->playerCollidWithBlock(player_entity, blocks[i], 32, 27);
+		player_entity->playerCollidWithBlock(player_entity, blocks[i], 32, 27);
 	}
 
-	if (counter < delay) {
-		counter += 1 * deltaTime;
-	}
 
-	if (input()->getMouseDown(GLFW_MOUSE_BUTTON_1)) { //&& counter >= delay) {
-		BasicEntity* bullet_player_entity = new BasicEntity();
-		bullet_player_entity->addSprite("assets/bullet.tga");
-		bullet_player_entity->sprite()->color = ORANGE;
-		bullet_player_entity->position = Point2(player_entity->position.x, player_entity->position.y);
-
-		layers[1]->addChild(bullet_player_entity);
-
-		player_bullets.push_back(bullet_player_entity);
-
-		Point2 mouseposbull = Point2(input()->getMouseX(), input()->getMouseY());
-		Vector2 deltabull = Vector2(bullet_player_entity->position, mouseposbull);
-		float anglebull = deltabull.getAngle();
-		bullet_player_entity->rotation = anglebull;
+	if (input()->getMouseDown(GLFW_MOUSE_BUTTON_1)) {// && counter >= delay) {
+		Bullet* b = new Bullet();
+		b->setPositionAndRotation(player_entity);
+		layers[1]->addChild(b);
+		player_bullets.push_back(b);
 
 		counter = 0;
-		clicked = true;
-		bulletCounter++;
 		CurrentAmmo--;
-	}
-
-	if (clicked) {
-		for (int k = bulletCounter; k <= bulletCounter; k++) {
-			MouseX = input()->getMouseX();
-			MouseY = input()->getMouseY();
-
-			BulletX = player_bullets[bulletCounter - 1]->position.x;
-			BulletY = player_bullets[bulletCounter - 1]->position.y;
-
-			AngleX = MouseX - BulletX;
-			AngleY = MouseY - BulletY;
-
-			vectorLength = sqrt(AngleX*AngleX + AngleY*AngleY);
-
-			DirectionX = AngleX / vectorLength;
-			DirectionY = AngleY / vectorLength;
-
-			VelocityX = DirectionX * 400 * deltaTime;
-			VelocityY = DirectionY * 400 * deltaTime;
-
-			Point2 bullDir = Point2(VelocityX, VelocityY);
-
-			bulletDirectionCounter.push_back(bullDir);
-		}
-		clicked = false;
-	}
-
-	if (bulletCounter >= 0) {
-		for (int bb = 0; bb < bulletCounter; bb++) {
-			player_bullets[bb]->position += bulletDirectionCounter[bb];
-		}
-	}
-	if (input()->getKeyDown(GLFW_KEY_R)) {
-		if (CurrentAmmo == 0 && CurrentMags > 0) {
-			CurrentAmmo = MaxAmmo;
-			CurrentMags--;
-		}
-		else if (CurrentAmmo == 0 && CurrentMags == 0) {
-
-		}
 	}
 
 	std::string AmmoLeftToUseText = "Ammo: ";
