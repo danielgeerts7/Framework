@@ -138,9 +138,7 @@ void Scene00::update(float deltaTime)
 	SuperScene::update(deltaTime);
 
 	Vector2 playerRight = Vector2(1, 0);
-	Vector2 playerLeft = Vector2(1, 0);
 	Vector2 playerUp = Vector2(0, 1);
-	Vector2 playerDown = Vector2(0, 1);
 
 	// ###############################################################
 	// Move player_entity to and from the mouse
@@ -153,11 +151,11 @@ void Scene00::update(float deltaTime)
 	}
 	// Move down
 	if (input()->getKey(GLFW_KEY_S)) {
-		player_entity->position += playerDown * deltaTime * speed;
+		player_entity->position += playerUp * deltaTime * speed;
 	}
 	// move left
 	if (input()->getKey(GLFW_KEY_A)) {
-		player_entity->position -= playerLeft * deltaTime * speed;
+		player_entity->position -= playerRight * deltaTime * speed;
 	}
 	// move right
 	if (input()->getKey(GLFW_KEY_D)) {
