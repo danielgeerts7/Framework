@@ -9,13 +9,16 @@
 #define LOADTILES_H
 
 #include <fstream>
+#include "basicentity.h"
 
 
-class LoadTiles
+class LoadTiles : public BasicEntity
 {
 public:
 	LoadTiles();
 	virtual ~LoadTiles();
+
+	void LoadAndConvertTile();
 };
 
 #endif /* LOADTILES_H */ 

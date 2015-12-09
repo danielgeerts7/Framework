@@ -25,21 +25,16 @@ Scene00::Scene00() : SuperScene()
 
 	text[0]->message("Scene00: shoot the enemies before they shoot you!");
 
-	Sprite* background_spr = new Sprite();
-	background_spr->setupSprite("assets/tiles_1.tga", 0.5f, 0.5f, 1.0f, 1.0f, 1, 2);
-	background_entity = new BasicEntity();
+	background_entity = new LoadTiles();
 	background_entity->position = Point2(400, 400);
-	background_entity->addSprite(background_spr);
-	delete background_spr;
+	background_entity->addSprite("assets/tiles_1.tga");
+	background_entity->LoadAndConvertTile;
 
-	Sprite* player_spr = new Sprite();
-	player_spr->setupSprite("assets/player.tga", 0.5f, 0.5f, 1.0f, 1.0f, 1, 2);
-	player_spr->color = GREEN;
 	player_entity = new Player();
 	player_entity->position = Point2(SWIDTH / 2, SHEIGHT / 2);
-	player_entity->addSprite(player_spr);
+	player_entity->addSprite("assets/player.tga");
+	player_entity->sprite()->color = GREEN;
 	player_entity->scale = Point2(2,2);
-	delete player_spr;
 
 	for (int e = 0; e < 5; e++) {
 		BasicEntity* enemie = new BasicEntity();

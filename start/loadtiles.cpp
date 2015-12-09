@@ -8,11 +8,15 @@
 
 #include "loadtiles.h"
 
-LoadTiles::LoadTiles()
+LoadTiles::LoadTiles() : BasicEntity()
 {
 }
 
 
 LoadTiles::~LoadTiles()
+{
+}
+
+void LoadTiles::LoadAndConvertTile()
 {
 }

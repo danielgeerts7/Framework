@@ -16,6 +16,7 @@
 #include "superscene.h"
 #include "basicentity.h"
 #include "bullet.h"
+#include "loadtiles.h"
 
 class Scene00: public SuperScene
 {
@@ -27,7 +28,7 @@ class Scene00: public SuperScene
 	
 	private:
 
-		BasicEntity* background_entity;
+		LoadTiles* background_entity;
 		Player* player_entity;
 		BasicEntity* gun_player_entity;
 
