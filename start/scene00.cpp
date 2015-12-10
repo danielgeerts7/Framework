@@ -48,7 +48,7 @@ Scene00::Scene00() : SuperScene()
 		BasicEntity* gun_enemie = new BasicEntity();
 		gun_enemie->addSprite("assets/gun.tga");
 		gun_enemie->sprite()->color = YELLOW;
-		gun_enemie->position = Point2(15, 12);
+		gun_enemie->position = Point2(30, 25);
 
 		guns_enemies.push_back(gun_enemie);
 
@@ -64,7 +64,7 @@ Scene00::Scene00() : SuperScene()
 	gun_player_entity = new BasicEntity();
 	gun_player_entity->addSprite("assets/gun.tga");
 	gun_player_entity->sprite()->color = YELLOW;
-	gun_player_entity->position = Point2(15, 12);
+	gun_player_entity->position = Point2(30, 25);
 	
 	int amount = 10;
 
