@@ -19,6 +19,12 @@ public:
 	virtual ~LoadTiles();
 
 	void LoadAndConvertTile();
+
+private:
+	int gridwidth;
+	int gridheight;
+	int cellwidth;
+	int cellheight;
 };
 
 #endif /* LOADTILES_H */ 

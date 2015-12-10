@@ -13,6 +13,7 @@ public:
 	~Bullet();
 	void setPositionAndRotation(BasicEntity* parent);
 
+private:
 	float velocity_x;
 	float velocity_y;
 	Vector2 velocity;

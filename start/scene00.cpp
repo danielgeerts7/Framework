@@ -26,22 +26,19 @@ Scene00::Scene00() : SuperScene()
 	text[0]->message("Scene00: shoot the enemies before they shoot you!");
 
 	background_entity = new LoadTiles();
-	background_entity->position = Point2(400, 400);
-	background_entity->addSprite("assets/tiles_1.tga");
-	background_entity->LoadAndConvertTile;
+	layers[0]->addChild(background_entity);
+	//background_entity->LoadAndConvertTile;
 
 	player_entity = new Player();
 	player_entity->position = Point2(SWIDTH / 2, SHEIGHT / 2);
 	player_entity->addSprite("assets/player.tga");
 	player_entity->sprite()->color = GREEN;
-	player_entity->scale = Point2(2,2);
 
 	for (int e = 0; e < 5; e++) {
 		BasicEntity* enemie = new BasicEntity();
 		enemie->addSprite("assets/player.tga");
 
 		enemie->sprite()->color = MAGENTA;
-		enemie->scale = Point2(2, 2);
 
 		enemies.push_back(enemie);
 
@@ -83,7 +80,6 @@ Scene00::Scene00() : SuperScene()
 		layers[2]->addChild(blocks[i]);
 	}
 
-	layers[1]->addChild(background_entity);
 	layers[2]->addChild(player_entity);
 	player_entity->addChild(gun_player_entity);
 }
@@ -115,11 +111,11 @@ Scene00::~Scene00()
 	}
 	enemies.clear();
 
-	layers[1]->removeChild(background_entity);
 	layers[2]->removeChild(player_entity);
 	player_entity->removeChild(gun_player_entity);
 	
 
+	layers[0]->removeChild(background_entity);
 	delete background_entity;
 	delete player_entity;
 	delete gun_player_entity;
@@ -182,7 +178,7 @@ void Scene00::update(float deltaTime)
 	if (counter >= delay) {
 		counter = delay;
 	}
-
+	
 	if (input()->getMouse(GLFW_MOUSE_BUTTON_1) && counter >= delay) {
 		Bullet* b = new Bullet();
 		b->setPositionAndRotation(player_entity);
