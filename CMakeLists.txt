@@ -20,7 +20,7 @@ if(UNIX)
 
 	set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
 
-	# valgrind --leak-check=yes ./demo
+	# valgrind --leak-check=full ./demo
 	# ./demo # creates cmon.out
 	# gprof demo gmon.out > analysis.txt
 	#set(CMAKE_CXX_FLAGS "-Wall -pg -std=c++11")
@@ -146,6 +146,8 @@ add_executable(demo
 	demo/scene03.h
 	demo/scene03a.cpp
 	demo/scene03a.h
+	demo/scene03b.cpp
+	demo/scene03b.h
 	demo/scene04.cpp
 	demo/scene04.h
 	demo/scene05.cpp
