@@ -19,6 +19,13 @@ public:
 	virtual void update(float deltaTime);
 
 	void playerCollidWithBlock(BasicEntity* objplayer, BasicEntity* objBlock, int blockHalfSize, int playerRadius);
+	
+	int getCurrentHealth();
+	int getMaxHealth();
+
+private:
+	int maxhealth;
+	int currenthealth;
 };
 
 #endif /* PLAYER_H */

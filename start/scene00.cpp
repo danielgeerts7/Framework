@@ -153,6 +153,9 @@ void Scene00::update(float deltaTime)
 		player_entity->position += playerRight * deltaTime * speed;
 	}
 
+	//camera()->position.x = player_entity->position.x;
+	//camera()->position.y = player_entity->position.y;
+
 	// ###############################################################
 	// Rotate player_entity to the position of the mouse
 	// ###############################################################
@@ -194,6 +197,12 @@ void Scene00::update(float deltaTime)
 	AmmoLeftToUseText.append("/");
 	AmmoLeftToUseText.append(std::to_string(CurrentMags));
 	text[4]->message(AmmoLeftToUseText);
+
+	std::string playerHealthToText = "Health: ";
+	playerHealthToText.append(std::to_string(player_entity->getCurrentHealth()));
+	playerHealthToText.append("/");
+	playerHealthToText.append(std::to_string(player_entity->getMaxHealth()));
+	text[5]->message(playerHealthToText);
 
 	int playerRaduis = 24;
 

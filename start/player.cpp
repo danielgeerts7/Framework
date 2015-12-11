@@ -3,6 +3,8 @@
 
 Player::Player() : BasicEntity()
 {
+	maxhealth = 100;
+	currenthealth = maxhealth;
 }
 
 Player::~Player()
@@ -53,4 +55,14 @@ void Player::playerCollidWithBlock(BasicEntity* objplayer, BasicEntity* objBlock
 		objBlock->sprite()->color = GREEN;
 	}
 	*/
+}
+
+int Player::getCurrentHealth()
+{
+	return currenthealth;
+}
+
+int Player::getMaxHealth()
+{
+	return maxhealth;
 }
