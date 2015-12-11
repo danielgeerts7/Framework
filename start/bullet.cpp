@@ -1,5 +1,9 @@
-#include "bullet.h"
+/**
+* - Copyright 2015 Daniel Geerts <daniel.geerts@live.nl>
+*     - Initial commit
+*/
 
+#include "bullet.h"
 
 
 Bullet::Bullet() : BasicEntity()

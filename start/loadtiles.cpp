@@ -1,6 +1,4 @@
 /**
-* This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
-*
 * - Copyright 2015 Daniel Geerts <daniel.geerts@live.nl>
 *     - Initial commit
 */
@@ -32,8 +30,8 @@ LoadTiles::LoadTiles() : BasicEntity()
 	OR THERE IS SOMETHING WRONG WITH THE 'ADDGRID' OR ELSE WITH THE IFSTREAM FILE CHECKER
 	*/
 	
-	gridwidth = 6;
-	gridheight = 6;
+	gridwidth = 25;
+	gridheight = 25;
 	cellwidth = 64;
 	cellheight = 64;
 	tileCounter = 0;
@@ -41,7 +39,7 @@ LoadTiles::LoadTiles() : BasicEntity()
 	this->addGrid("assets/tiles_1.tga", 6, 6, gridwidth, gridheight, cellwidth, cellheight);
 	
 	string line, cell;
-	ifstream myfile("assets/tiles_2.csv");
+	ifstream myfile("assets/tiles_1.csv");
 	// try to open the file, else if you cannot throw exception
 	try
 	{

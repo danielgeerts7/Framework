@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "player.h"
 
 
 Player::Player() : BasicEntity()
@@ -13,16 +13,16 @@ void Player::update(float deltaTime)
 {
 }
 
-void Player::playerCollidWithBlock(BasicEntity* objPlayer, BasicEntity* objBlock, int blockHalfSize, int playerRadius)
+void Player::playerCollidWithBlock(BasicEntity* objplayer, BasicEntity* objBlock, int blockHalfSize, int playerRadius)
 {
 	/*
 	// ###############################################################
-	// Player checks collision with block
+	// player checks collision with block
 	// ###############################################################
-	int playerLeftRadius = objPlayer->position.x - playerRadius;
-	int playerRightRadius = objPlayer->position.x + playerRadius;
-	int playerTopRadius = objPlayer->position.y - playerRadius;
-	int playerBottomRadius = objPlayer->position.y + playerRadius;
+	int playerLeftRadius = objplayer->position.x - playerRadius;
+	int playerRightRadius = objplayer->position.x + playerRadius;
+	int playerTopRadius = objplayer->position.y - playerRadius;
+	int playerBottomRadius = objplayer->position.y + playerRadius;
 
 
 	int blockLeft = objBlock->position.x - blockHalfSize;
@@ -34,20 +34,20 @@ void Player::playerCollidWithBlock(BasicEntity* objPlayer, BasicEntity* objBlock
 
 	if (playerRightRadius > blockLeft && playerLeftRadius < blockRight && playerBottomRadius > blockTop && playerTopRadius < blockBottom) {
 		//Checking player top, and block bottom
-		if (objPlayer->position.y + playerRadius -1 <= objBlock->position.y - blockHalfSize) {
-			objPlayer->position.y = objBlock->position.y - (blockHalfSize + playerRadius);
+		if (objplayer->position.y + playerRadius -1 <= objBlock->position.y - blockHalfSize) {
+			objplayer->position.y = objBlock->position.y - (blockHalfSize + playerRadius);
 		}
 		//Checking player bottom, and block top
-		if (objPlayer->position.y - playerRadius +1 >= objBlock->position.y + blockHalfSize) {
-			objPlayer->position.y = objBlock->position.y + (blockHalfSize + playerRadius);
+		if (objplayer->position.y - playerRadius +1 >= objBlock->position.y + blockHalfSize) {
+			objplayer->position.y = objBlock->position.y + (blockHalfSize + playerRadius);
 		}
 		//Checking player right, and block left
-		if (objPlayer->position.x + playerRadius -1 <= objBlock->position.x - blockHalfSize) {
-			objPlayer->position.x = objBlock->position.x - (blockHalfSize + playerRadius);
+		if (objplayer->position.x + playerRadius -1 <= objBlock->position.x - blockHalfSize) {
+			objplayer->position.x = objBlock->position.x - (blockHalfSize + playerRadius);
 		}
 		//Checking player left, and block right
-		if  (objPlayer->position.x - playerRadius +1 >= objBlock->position.x + blockHalfSize) {
-			objPlayer->position.x = objBlock->position.x + (blockHalfSize + playerRadius);
+		if  (objplayer->position.x - playerRadius +1 >= objBlock->position.x + blockHalfSize) {
+			objplayer->position.x = objBlock->position.x + (blockHalfSize + playerRadius);
 		}
 
 		objBlock->sprite()->color = GREEN;

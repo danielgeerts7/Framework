@@ -1,11 +1,9 @@
 /**
- * This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
- * 
- * - Copyright 2015 Rik Teerling <rik@onandoffables.com>
- *     - Initial commit
- * - Copyright 2015 Your Name <you@yourhost.com>
- *     - What you did
- */
+* This file is part of a demo that shows how to use RT2D, a 2D OpenGL framework.
+*
+* - Copyright 2015 Daniel Geerts <daniel.geerts@live.nl>
+*     - Initial commit
+*/
 
 #ifndef SCENE00_H
 #define SCENE00_H
