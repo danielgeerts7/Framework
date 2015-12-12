@@ -9,14 +9,24 @@ using namespace std;
 
 LoadTiles::LoadTiles() : BasicEntity()
 {
+	// ###############################################################
+	// Setting variables
+	// ###############################################################
 	gridwidth = 3;
 	gridheight = 3;
 	cellwidth = 64;
 	cellheight = 64;
 	tileCounter = 0;
-	this->position = Point2(0, 0);
+	this->position = Point2(50, 150);
 	this->addGrid("assets/tiles_numbers.tga", 3, 3, gridwidth, gridheight, cellwidth, cellheight);
 
+	// ###############################################################
+	// Open the file 'assets/tiles_numbers.csv'
+	// First, read the whole file with the .is_open() function
+	// Second, read every line singly
+	// Third, take every cell single
+	// Fourth, with the function spritebatch() every tile set to the current cell 
+	// ###############################################################
 	string line, cell;
 	ifstream myfile("assets/tiles_numbers.csv");
 	// try to open the file, else if you cannot throw exception

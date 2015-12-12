@@ -11,6 +11,10 @@
 
 Scene00::Scene00() : SuperScene()
 {
+	// ###############################################################
+	// Setting the variables
+	// ###############################################################
+
 	// Start Timer t
 	t.start();
 
@@ -128,13 +132,13 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	SuperScene::update(deltaTime);
 
-	Vector2 playerRight = Vector2(1, 0);
-	Vector2 playerUp = Vector2(0, 1);
-
 	// ###############################################################
-	// Move player_entity to and from the mouse
+	// Moving the player_entity
 	// ###############################################################
 	float speed = 150.0f; // 150 units / second
+
+	Vector2 playerRight = Vector2(1, 0);
+	Vector2 playerUp = Vector2(0, 1);
 
 	// Move up
 	if (input()->getKey(GLFW_KEY_W)) {
@@ -153,6 +157,9 @@ void Scene00::update(float deltaTime)
 		player_entity->position += playerRight * deltaTime * speed;
 	}
 
+	// ###############################################################
+	// Camera follow the player_entity
+	// ###############################################################
 	//camera()->position.x = player_entity->position.x;
 	//camera()->position.y = player_entity->position.y;
 
@@ -164,7 +171,9 @@ void Scene00::update(float deltaTime)
 	float angle = delta.getAngle();
 	player_entity->rotation = angle;
 	
-
+	// ###############################################################
+	// All enemies rotation to the player_entity
+	// ###############################################################
 	for (int a = 0; a < enemies.size(); a++) {
 		Point2 mousepos1 = Point2(player_entity->position.x, player_entity->position.y);
 		Vector2 delta1 = Vector2(enemies[a]->position, mousepos1);
@@ -176,12 +185,17 @@ void Scene00::update(float deltaTime)
 		player_entity->playerCollidWithBlock(player_entity, blocks[i], 32, 27);
 	}
 	
+	// ###############################################################
+	// Updating counter and checking with delay of the bullets 'rate of fire'
+	// ###############################################################
 	counter += 0.5;
-
 	if (counter >= delay) {
 		counter = delay;
 	}
 	
+	// ###############################################################
+	// Creating Bullet* on the position of the player_entity when left mouse button is clicked
+	// ###############################################################
 	if (input()->getMouse(GLFW_MOUSE_BUTTON_1) && counter >= delay) {
 		Bullet* b = new Bullet();
 		b->setPositionAndRotation(player_entity);
@@ -192,18 +206,27 @@ void Scene00::update(float deltaTime)
 		CurrentAmmo--;
 	}
 
+	// ###############################################################
+	// Logging current ammo and current mags
+	// ###############################################################
 	std::string AmmoLeftToUseText = "Ammo: ";
 	AmmoLeftToUseText.append(std::to_string(CurrentAmmo));
 	AmmoLeftToUseText.append("/");
 	AmmoLeftToUseText.append(std::to_string(CurrentMags));
 	text[4]->message(AmmoLeftToUseText);
 
+	// ###############################################################
+	// Logging current health and max health
+	// ###############################################################
 	std::string playerHealthToText = "Health: ";
 	playerHealthToText.append(std::to_string(player_entity->getCurrentHealth()));
 	playerHealthToText.append("/");
 	playerHealthToText.append(std::to_string(player_entity->getMaxHealth()));
 	text[5]->message(playerHealthToText);
 
+	// ###############################################################
+	// Setting the borders for the player_entity
+	// ###############################################################
 	int playerRaduis = 24;
 
 	if (player_entity->position.x < 0 + playerRaduis) {

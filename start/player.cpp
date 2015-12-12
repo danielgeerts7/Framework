@@ -3,6 +3,9 @@
 
 Player::Player() : BasicEntity()
 {
+	// ###############################################################
+	// Setting the variables
+	// ###############################################################
 	maxhealth = 100;
 	currenthealth = maxhealth;
 }
@@ -57,11 +60,17 @@ void Player::playerCollidWithBlock(BasicEntity* objplayer, BasicEntity* objBlock
 	*/
 }
 
+// ###############################################################
+// Get 'this' current health
+// ###############################################################
 int Player::getCurrentHealth()
 {
 	return currenthealth;
 }
 
+// ###############################################################
+// Get 'this' maximal health
+// ###############################################################
 int Player::getMaxHealth()
 {
 	return maxhealth;
