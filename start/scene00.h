@@ -38,6 +38,7 @@ class Scene00: public SuperScene
 		std::vector<BasicEntity*> guns_enemies;
 		std::vector<BasicEntity*> blocks;
 		std::vector<BasicEntity*> player_bullets;
+		std::vector<BasicEntity*>::iterator iterator_player_bullets;
 
 		int maxAmmoInMagazine;
 		int currentAmmoInMagazine;

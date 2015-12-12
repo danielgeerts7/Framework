@@ -211,21 +211,15 @@ void Scene00::update(float deltaTime)
 	if (player_bullets.size() > 0) {
 		for (int b = 0; b < player_bullets.size(); b++) {
 			int i = player_bullets[b]->position.x;
-			if (player_bullets[b]->position.x < SWIDTH - SWIDTH) {
+			if (player_bullets[b]->position.x < SWIDTH - SWIDTH ||
+				player_bullets[b]->position.x > SWIDTH ||
+				player_bullets[b]->position.y < SHEIGHT - SHEIGHT ||
+				player_bullets[b]->position.y > SHEIGHT ) {
+
 				layers[1]->removeChild(player_bullets[b]);
-				//player_bullets.erase(player_bullets.begin() + b - 1);
-			}
-			if (player_bullets[b]->position.x > SWIDTH) {
-				layers[1]->removeChild(player_bullets[b]);
-				//player_bullets.erase(player_bullets.begin() + b - 1);
-			}
-			if (player_bullets[b]->position.y < SHEIGHT - SHEIGHT) {
-				layers[1]->removeChild(player_bullets[b]);
-				//player_bullets.erase(player_bullets.begin() + b - 1);
-			}
-			if (player_bullets[b]->position.y > SHEIGHT) {
-				layers[1]->removeChild(player_bullets[b]);
-				//player_bullets.erase(player_bullets.begin() + b - 1);
+				iterator_player_bullets = player_bullets.begin();
+				advance(iterator_player_bullets, b);
+				iterator_player_bullets = player_bullets.erase(iterator_player_bullets);
 			}
 		}
 	}
@@ -255,7 +249,7 @@ void Scene00::update(float deltaTime)
 	}
 
 	if (currentAmmoInMagazine == 0 && currentAmmoInBag == 0) {
-		text[5]->message("You're out of ammo, find a ammunition box to continuing shooting");
+		text[6]->message("You're out of ammo, find a ammunition box to continuing shooting");
 	}
 
 
