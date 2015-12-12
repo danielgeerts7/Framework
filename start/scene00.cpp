@@ -159,8 +159,8 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Camera follow the player_entity
 	// ###############################################################
-	//camera()->position.x = player_entity->position.x;
-	//camera()->position.y = player_entity->position.y;
+	camera()->position.x = player_entity->position.x;
+	camera()->position.y = player_entity->position.y;
 
 	// ###############################################################
 	// Rotate player_entity to the position of the mouse
@@ -203,6 +203,31 @@ void Scene00::update(float deltaTime)
 
 		counter = 0;
 		currentAmmoInMagazine--;
+	}
+
+	// ###############################################################
+	// Checking if the player_bullets go out of the stage, then remove them
+	// ###############################################################
+	if (player_bullets.size() > 0) {
+		for (int b = 0; b < player_bullets.size(); b++) {
+			int i = player_bullets[b]->position.x;
+			if (player_bullets[b]->position.x < SWIDTH - SWIDTH) {
+				layers[1]->removeChild(player_bullets[b]);
+				//player_bullets.erase(player_bullets.begin() + b - 1);
+			}
+			if (player_bullets[b]->position.x > SWIDTH) {
+				layers[1]->removeChild(player_bullets[b]);
+				//player_bullets.erase(player_bullets.begin() + b - 1);
+			}
+			if (player_bullets[b]->position.y < SHEIGHT - SHEIGHT) {
+				layers[1]->removeChild(player_bullets[b]);
+				//player_bullets.erase(player_bullets.begin() + b - 1);
+			}
+			if (player_bullets[b]->position.y > SHEIGHT) {
+				layers[1]->removeChild(player_bullets[b]);
+				//player_bullets.erase(player_bullets.begin() + b - 1);
+			}
+		}
 	}
 
 	// ###############################################################
@@ -260,13 +285,13 @@ void Scene00::update(float deltaTime)
 	if (player_entity->position.x < 0 + playerRaduis) {
 		player_entity->position.x = 0 + playerRaduis;
 	}
-	if (player_entity->position.x > 800 - playerRaduis) {
-		player_entity->position.x = 800 - playerRaduis;
+	if (player_entity->position.x > SWIDTH - playerRaduis) {
+		player_entity->position.x = SWIDTH - playerRaduis;
 	}
 	if (player_entity->position.y < 0 + playerRaduis) {
 		player_entity->position.y = 0 + playerRaduis;
 	}
-	if (player_entity->position.y > 720 - playerRaduis) {
-		player_entity->position.y = 720 - playerRaduis;
+	if (player_entity->position.y > SHEIGHT - playerRaduis) {
+		player_entity->position.y = SHEIGHT - playerRaduis;
 	}
 }
