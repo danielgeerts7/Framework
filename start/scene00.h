@@ -39,10 +39,9 @@ class Scene00: public SuperScene
 		std::vector<BasicEntity*> blocks;
 		std::vector<BasicEntity*> player_bullets;
 
-		int MaxAmmo;
-		int MaxMags;
-		int CurrentAmmo;
-		int CurrentMags;
+		int maxAmmoInMagazine;
+		int currentAmmoInMagazine;
+		int currentAmmoInBag;
 };
 
 #endif /* SCENE00_H */ 

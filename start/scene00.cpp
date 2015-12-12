@@ -21,11 +21,10 @@ Scene00::Scene00() : SuperScene()
 	delay = 10;
 	counter = 0;
 
-	MaxAmmo = 25;
-	MaxMags = 6;
+	maxAmmoInMagazine = 32;
+	currentAmmoInMagazine = maxAmmoInMagazine;
 
-	CurrentAmmo = MaxAmmo;
-	CurrentMags = MaxMags;
+	currentAmmoInBag = maxAmmoInMagazine * 2;
 
 	text[0]->message("Scene00: shoot the enemies before they shoot you!");
 
@@ -196,23 +195,52 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Creating Bullet* on the position of the player_entity when left mouse button is clicked
 	// ###############################################################
-	if (input()->getMouse(GLFW_MOUSE_BUTTON_1) && counter >= delay) {
+	if (input()->getMouse(GLFW_MOUSE_BUTTON_1) && counter >= delay && currentAmmoInMagazine > 0) {
 		Bullet* b = new Bullet();
 		b->setPositionAndRotation(player_entity);
 		layers[1]->addChild(b);
 		player_bullets.push_back(b);
 
 		counter = 0;
-		CurrentAmmo--;
+		currentAmmoInMagazine--;
 	}
+
+	// ###############################################################
+	// Reloading the weapon player_entity is holding
+	// ###############################################################
+	if (input()->getKeyDown(GLFW_KEY_R) && currentAmmoInBag > 0) {
+		int checkIfCanCarry = currentAmmoInMagazine + currentAmmoInBag;
+
+		if (checkIfCanCarry > 32) {
+			currentAmmoInBag -= maxAmmoInMagazine - currentAmmoInMagazine;
+			currentAmmoInMagazine = maxAmmoInMagazine;
+		}
+		else if (checkIfCanCarry > 0) {
+			currentAmmoInMagazine += currentAmmoInBag;
+			currentAmmoInBag -= currentAmmoInBag;
+		}
+	}
+
+	if (currentAmmoInMagazine <= 0) {
+		currentAmmoInMagazine == 0;
+	}
+
+	if (currentAmmoInBag <= 0) {
+		currentAmmoInBag == 0;
+	}
+
+	if (currentAmmoInMagazine == 0 && currentAmmoInBag == 0) {
+		text[5]->message("You're out of ammo, find a ammunition box to continuing shooting");
+	}
+
 
 	// ###############################################################
 	// Logging current ammo and current mags
 	// ###############################################################
 	std::string AmmoLeftToUseText = "Ammo: ";
-	AmmoLeftToUseText.append(std::to_string(CurrentAmmo));
+	AmmoLeftToUseText.append(std::to_string(currentAmmoInMagazine));
 	AmmoLeftToUseText.append("/");
-	AmmoLeftToUseText.append(std::to_string(CurrentMags));
+	AmmoLeftToUseText.append(std::to_string(currentAmmoInBag));
 	text[4]->message(AmmoLeftToUseText);
 
 	// ###############################################################
