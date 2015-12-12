@@ -185,10 +185,6 @@ add_executable(start
 	start/loadtiles.cpp
 	start/loadtiles.h
 	start/main.cpp
-	start/myentity.cpp
-	start/myentity.h
-	start/myscene.cpp
-	start/myscene.h
 	start/player.cpp
 	start/player.h
 	start/scene00.cpp
