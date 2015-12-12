@@ -15,7 +15,6 @@
  */
 #include <rt2d/core.h>
 
-#include "myscene.h"
 #include "scene00.h"
 
 /// @brief main entry point
