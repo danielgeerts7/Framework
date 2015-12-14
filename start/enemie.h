@@ -19,10 +19,13 @@ public:
 
 	void checkForPlayerIfWalkingInFieldOfView(Player* p);
 
+	int getEnemieHealth();
+	void setEnemieHealth(int h);
+
 private:
 	int fieldOfView;
-
 	int radius;
+	int health;
 };
 
 #endif /* ENEMIE_H */

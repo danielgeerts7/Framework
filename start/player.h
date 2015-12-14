@@ -20,12 +20,11 @@ public:
 
 	void playerCollidWithBlock(BasicEntity* objplayer, BasicEntity* objBlock, int blockHalfSize, int playerRadius);
 	
-	int getCurrentHealth();
-	int getMaxHealth();
+	int getPlayerHealth();
+	void setPlayerHealth(int h);
 
 private:
-	int maxhealth;
-	int currenthealth;
+	int health;
 };
 
 #endif /* PLAYER_H */
