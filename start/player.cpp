@@ -60,7 +60,7 @@ void Player::playerCollidWithBlock(BasicEntity* objplayer, BasicEntity* objBlock
 }
 
 // ###############################################################
-// Get 'this' current health
+// Get player health
 // ###############################################################
 int Player::getPlayerHealth()
 {
@@ -68,7 +68,7 @@ int Player::getPlayerHealth()
 }
 
 // ###############################################################
-// Get 'this' maximal health
+// Set player health
 // ###############################################################
 void Player::setPlayerHealth(int h)
 {

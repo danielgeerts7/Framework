@@ -8,8 +8,8 @@ Enemie::Enemie() : BasicEntity ()
 	this->sprite()->color = MAGENTA;
 
 	fieldOfView = 192;
-
 	health = 100;
+	checkIfPlayerIsInFieldOfView = false;
 }
 
 
@@ -29,16 +29,25 @@ void Enemie::checkForPlayerIfWalkingInFieldOfView(Player* p)
 		Vector2 delta1 = Vector2(this->position, mousepos1);
 		float angle1 = delta1.getAngle();
 		this->rotation = angle1;
+
+		checkIfPlayerIsInFieldOfView = true;
 	} else {
 		this->rotation = 0;
+		checkIfPlayerIsInFieldOfView = false;
 	}
 }
 
+// ###############################################################
+// Get enemie health
+// ###############################################################
 int Enemie::getEnemieHealth()
 {
 	return health;
 }
 
+// ###############################################################
+// Set enemie health
+// ###############################################################
 void Enemie::setEnemieHealth(int h)
 {
 	health = h;

@@ -21,6 +21,9 @@ Scene00::Scene00() : SuperScene()
 	delay = 10;
 	counter = 0;
 
+	enemieDelay = 10;
+	enemieCounter = 0;
+
 	maxAmmoInMagazine = 32;
 	currentAmmoInMagazine = maxAmmoInMagazine;
 
@@ -100,6 +103,13 @@ Scene00::~Scene00()
 	}
 	player_bullets.clear();
 
+	int e_b = enemies_bullets.size();
+	for (int l = 0; l<e_b; l++) {
+		layers[1]->removeChild(enemies_bullets[l]);
+		delete enemies_bullets[l];
+	}
+	enemies_bullets.clear();
+
 	int es = enemies.size();
 	for (int k = 0; k < es; k++) {
 		enemies[k]->removeChild(guns_enemies[k]);
@@ -168,8 +178,39 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// All enemies rotation to the player_entity
 	// ###############################################################
+	enemieCounter += 0.5;
+	if (enemieCounter >= enemieDelay) {
+		enemieCounter = enemieDelay;
+	}
 	for (int a = 0; a < enemies.size(); a++) {
 		enemies[a]->checkForPlayerIfWalkingInFieldOfView(player_entity);
+		if (enemies[a]->checkIfPlayerIsInFieldOfView && enemieCounter >= enemieDelay) {
+			Bullet* b = new Bullet();
+			b->setPositionAndRotation(enemies[a]);
+			layers[1]->addChild(b);
+			enemies_bullets.push_back(b);
+
+			enemieCounter = 0;
+		}
+	}
+
+	// ###############################################################
+	// Checking if the enemie_bullets go out of the stage, then remove them
+	// ###############################################################
+	if (enemies_bullets.size() > 0) {
+		for (int b = 0; b < enemies_bullets.size(); b++) {
+			int i = enemies_bullets[b]->position.x;
+			if (enemies_bullets[b]->position.x < SWIDTH - SWIDTH ||
+				enemies_bullets[b]->position.x > SWIDTH ||
+				enemies_bullets[b]->position.y < SHEIGHT - SHEIGHT ||
+				enemies_bullets[b]->position.y > SHEIGHT) {
+
+				layers[1]->removeChild(enemies_bullets[b]);
+				iterator_enemies_bullets = enemies_bullets.begin();
+				advance(iterator_enemies_bullets, b);
+				iterator_enemies_bullets = enemies_bullets.erase(iterator_enemies_bullets);
+			}
+		}
 	}
 
 	for (int i = 0; i < blocks.size(); i++) {

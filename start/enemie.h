@@ -18,6 +18,7 @@ public:
 	~Enemie();
 
 	void checkForPlayerIfWalkingInFieldOfView(Player* p);
+	bool checkIfPlayerIsInFieldOfView;
 
 	int getEnemieHealth();
 	void setEnemieHealth(int h);
