@@ -74,3 +74,18 @@ void Player::setPlayerHealth(int h)
 {
 	h = health;
 }
+
+int Player::gettingHitByEnemieBullets(BasicEntity* b)
+{
+	int radius = 24;
+	if (b->position.x > this->position.x - radius &&
+		b->position.x < this->position.x + radius &&
+		b->position.y > this->position.y - radius &&
+		b->position.y < this->position.y + radius) {
+		health--;
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}

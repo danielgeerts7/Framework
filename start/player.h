@@ -23,6 +23,8 @@ public:
 	int getPlayerHealth();
 	void setPlayerHealth(int h);
 
+	int gettingHitByEnemieBullets(BasicEntity* b);
+
 private:
 	int health;
 };

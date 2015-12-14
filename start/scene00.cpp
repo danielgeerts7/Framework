@@ -194,6 +194,15 @@ void Scene00::update(float deltaTime)
 		}
 	}
 
+	for (int eb = 0; eb < enemies_bullets.size(); eb++) {
+		if (player_entity->gettingHitByEnemieBullets(enemies_bullets[eb]) == 1) {
+			layers[1]->removeChild(enemies_bullets[eb]);
+			iterator_enemies_bullets = enemies_bullets.begin();
+			advance(iterator_enemies_bullets, eb);
+			iterator_enemies_bullets = enemies_bullets.erase(iterator_enemies_bullets);
+		}
+	}
+
 	// ###############################################################
 	// Checking if the enemie_bullets go out of the stage, then remove them
 	// ###############################################################
