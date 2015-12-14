@@ -258,9 +258,9 @@ void Scene00::update(float deltaTime)
 	// Logging current health and max health
 	// ###############################################################
 	std::string playerHealthToText = "Health: ";
-	playerHealthToText.append(std::to_string(player_entity->getCurrentHealth()));
+	playerHealthToText.append(std::to_string(player_entity->getPlayerHealth()));
 	playerHealthToText.append("/");
-	playerHealthToText.append(std::to_string(player_entity->getMaxHealth()));
+	playerHealthToText.append("100");
 	text[5]->message(playerHealthToText);
 
 	// ###############################################################

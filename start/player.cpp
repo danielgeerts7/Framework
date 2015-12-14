@@ -70,7 +70,7 @@ int Player::getPlayerHealth()
 // ###############################################################
 // Get 'this' maximal health
 // ###############################################################
-int Player::setPlayerHealth(int h)
+void Player::setPlayerHealth(int h)
 {
 	h = health;
 }
