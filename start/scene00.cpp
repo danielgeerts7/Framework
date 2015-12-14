@@ -169,10 +169,7 @@ void Scene00::update(float deltaTime)
 	// All enemies rotation to the player_entity
 	// ###############################################################
 	for (int a = 0; a < enemies.size(); a++) {
-		Point2 mousepos1 = Point2(player_entity->position.x, player_entity->position.y);
-		Vector2 delta1 = Vector2(enemies[a]->position, mousepos1);
-		float angle1 = delta1.getAngle();
-		enemies[a]->rotation = angle1;
+		enemies[a]->checkForPlayerIfWalkingInFieldOfView(player_entity);
 	}
 
 	for (int i = 0; i < blocks.size(); i++) {

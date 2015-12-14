@@ -9,12 +9,20 @@
 #define ENEMIE_H
 
 #include "basicentity.h"
+#include "player.h"
 
 class Enemie : public BasicEntity
 {
 public:
 	Enemie();
 	~Enemie();
+
+	void checkForPlayerIfWalkingInFieldOfView(Player* p);
+
+private:
+	int fieldOfView;
+
+	int radius;
 };
 
 #endif /* ENEMIE_H */
