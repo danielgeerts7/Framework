@@ -15,6 +15,7 @@
 #include "basicentity.h"
 #include "bullet.h"
 #include "loadtiles.h"
+#include "enemie.h"
 
 class Scene00: public SuperScene
 {
@@ -34,7 +35,7 @@ class Scene00: public SuperScene
 		int delay;
 		float counter;
 
-		std::vector<BasicEntity*> enemies;
+		std::vector<Enemie*> enemies;
 		std::vector<BasicEntity*> guns_enemies;
 		std::vector<BasicEntity*> blocks;
 		std::vector<BasicEntity*> player_bullets;

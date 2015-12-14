@@ -38,16 +38,11 @@ Scene00::Scene00() : SuperScene()
 	player_entity->sprite()->color = GREEN;
 
 	for (int e = 0; e < 5; e++) {
-		BasicEntity* enemie = new BasicEntity();
-		enemie->addSprite("assets/player.tga");
-
-		enemie->sprite()->color = MAGENTA;
-
+		Enemie* enemie = new Enemie();
 		enemies.push_back(enemie);
 
 		layers[2]->addChild(enemies[e]);
 
-		
 		BasicEntity* gun_enemie = new BasicEntity();
 		gun_enemie->addSprite("assets/gun.tga");
 		gun_enemie->sprite()->color = YELLOW;

@@ -182,6 +182,8 @@ add_executable(start
 	start/basicentity.h
 	start/bullet.cpp
 	start/bullet.h
+	start/enemie.cpp
+	start/enemie.h
 	start/loadtiles.cpp
 	start/loadtiles.h
 	start/main.cpp
