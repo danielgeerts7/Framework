@@ -32,11 +32,19 @@ class Scene00: public SuperScene
 		BasicEntity* gun_player_entity;
 
 		Timer t;
-		int delay;
-		float counter;
+		int mouseClickBulletDelay;
+		float mouseClickBulletCounter;
+
+		int playerReloadDelay;
+		float playerReloadCounter;
 
 		int enemieDelay;
 		float enemieCounter;
+
+		bool pressedReloadingForThePlayer;
+		bool playerCanShoot;
+
+		int playerRaduis;
 
 		std::vector<Enemie*> enemies;
 		std::vector<BasicEntity*> guns_enemies;

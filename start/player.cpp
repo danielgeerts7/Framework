@@ -6,7 +6,7 @@ Player::Player() : BasicEntity()
 	// ###############################################################
 	// Setting the variables
 	// ###############################################################
-	health = 100;
+	this->health = 100;
 }
 
 Player::~Player()
@@ -15,6 +15,10 @@ Player::~Player()
 
 void Player::update(float deltaTime)
 {
+	if (this->health <= 0) {
+		this->health = 0;
+		this->sprite()->color = RED;
+	}
 }
 
 void Player::playerCollidWithBlock(BasicEntity* objplayer, BasicEntity* objBlock, int blockHalfSize, int playerRadius)
@@ -64,7 +68,7 @@ void Player::playerCollidWithBlock(BasicEntity* objplayer, BasicEntity* objBlock
 // ###############################################################
 int Player::getPlayerHealth()
 {
-	return health;
+	return this->health;
 }
 
 // ###############################################################
@@ -72,7 +76,7 @@ int Player::getPlayerHealth()
 // ###############################################################
 void Player::setPlayerHealth(int h)
 {
-	h = health;
+	this->health = h;
 }
 
 int Player::gettingHitByEnemieBullets(BasicEntity* b)
@@ -82,7 +86,7 @@ int Player::gettingHitByEnemieBullets(BasicEntity* b)
 		b->position.x < this->position.x + radius &&
 		b->position.y > this->position.y - radius &&
 		b->position.y < this->position.y + radius) {
-		health--;
+		this->health--;
 		return 1;
 	}
 	else {

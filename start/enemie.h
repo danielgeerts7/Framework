@@ -17,11 +17,15 @@ public:
 	Enemie();
 	~Enemie();
 
+	virtual void update(float deltaTime);
+
 	void checkForPlayerIfWalkingInFieldOfView(Player* p);
 	bool checkIfPlayerIsInFieldOfView;
 
 	int getEnemieHealth();
 	void setEnemieHealth(int h);
+
+	int gettingHitByPlayerBullets(BasicEntity* b);
 
 private:
 	int fieldOfView;

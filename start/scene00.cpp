@@ -18,11 +18,19 @@ Scene00::Scene00() : SuperScene()
 	// Start Timer t
 	t.start();
 
-	delay = 10;
-	counter = 0;
+	mouseClickBulletDelay = 10;
+	mouseClickBulletCounter = 0;
+
+	playerReloadDelay = 100;
+	playerReloadCounter = 0;
 
 	enemieDelay = 10;
 	enemieCounter = 0;
+
+	pressedReloadingForThePlayer = false;
+	playerCanShoot = false;
+
+	playerRaduis = 24;
 
 	maxAmmoInMagazine = 32;
 	currentAmmoInMagazine = maxAmmoInMagazine;
@@ -176,12 +184,16 @@ void Scene00::update(float deltaTime)
 	player_entity->rotation = angle;
 	
 	// ###############################################################
-	// All enemies rotation to the player_entity
+	// Updating the enemieCounter and checking if the enemieCounter is greater then the enemieDelay
 	// ###############################################################
 	enemieCounter += 0.5;
 	if (enemieCounter >= enemieDelay) {
 		enemieCounter = enemieDelay;
 	}
+
+	// ###############################################################
+	// Giving the new Bullet(s)* b the rotation of the enemies[a]
+	// ###############################################################
 	for (int a = 0; a < enemies.size(); a++) {
 		enemies[a]->checkForPlayerIfWalkingInFieldOfView(player_entity);
 		if (enemies[a]->checkIfPlayerIsInFieldOfView && enemieCounter >= enemieDelay) {
@@ -194,8 +206,11 @@ void Scene00::update(float deltaTime)
 		}
 	}
 
+	// ###############################################################
+	// Player gets hit by the enemies bullets
+	// ###############################################################
 	for (int eb = 0; eb < enemies_bullets.size(); eb++) {
-		if (player_entity->gettingHitByEnemieBullets(enemies_bullets[eb]) == 1) {
+		if (player_entity->gettingHitByEnemieBullets(enemies_bullets[eb]) == 1 && player_entity->getPlayerHealth() > 0 && enemies_bullets.size() > 0) {
 			layers[1]->removeChild(enemies_bullets[eb]);
 			iterator_enemies_bullets = enemies_bullets.begin();
 			advance(iterator_enemies_bullets, eb);
@@ -204,47 +219,65 @@ void Scene00::update(float deltaTime)
 	}
 
 	// ###############################################################
-	// Checking if the enemie_bullets go out of the stage, then remove them
+	// Enemies gets hit by the player bullets
 	// ###############################################################
-	if (enemies_bullets.size() > 0) {
-		for (int b = 0; b < enemies_bullets.size(); b++) {
-			int i = enemies_bullets[b]->position.x;
-			if (enemies_bullets[b]->position.x < SWIDTH - SWIDTH ||
-				enemies_bullets[b]->position.x > SWIDTH ||
-				enemies_bullets[b]->position.y < SHEIGHT - SHEIGHT ||
-				enemies_bullets[b]->position.y > SHEIGHT) {
-
-				layers[1]->removeChild(enemies_bullets[b]);
-				iterator_enemies_bullets = enemies_bullets.begin();
-				advance(iterator_enemies_bullets, b);
-				iterator_enemies_bullets = enemies_bullets.erase(iterator_enemies_bullets);
+	for (int pb = 0; pb < player_bullets.size(); pb++) {
+		for (int ee = 0; ee < enemies.size(); ee++) {
+			if (enemies[ee]->gettingHitByPlayerBullets(player_bullets[pb]) == 1 && enemies[ee]->getEnemieHealth() > 0 && player_bullets.size() > 0) {
+				layers[1]->removeChild(player_bullets[pb]);
+				iterator_player_bullets = player_bullets.begin();
+				advance(iterator_player_bullets, pb);
+				iterator_player_bullets = player_bullets.erase(iterator_player_bullets);
 			}
 		}
 	}
 
+	// ###############################################################
+	// Checking if the enemie_bullets go out of the stage, then remove them
+	// ###############################################################
+	for (int b = 0; b < enemies_bullets.size(); b++) {
+		int i = enemies_bullets[b]->position.x;
+		if (((enemies_bullets[b]->position.x < SWIDTH - SWIDTH) ||
+			(enemies_bullets[b]->position.x > SWIDTH) ||
+			(enemies_bullets[b]->position.y < SHEIGHT - SHEIGHT) ||
+			(enemies_bullets[b]->position.y > SHEIGHT)) &&
+			enemies_bullets.size() > 0) {
+
+			layers[1]->removeChild(enemies_bullets[b]);
+			iterator_enemies_bullets = enemies_bullets.begin();
+			advance(iterator_enemies_bullets, b);
+			iterator_enemies_bullets = enemies_bullets.erase(iterator_enemies_bullets);
+		}
+	}
+
+	// ###############################################################
+	// Calling the playerCollidWithBlock function to every block that is on stage
+	// But that function doens't do anything yet
+	// ###############################################################
 	for (int i = 0; i < blocks.size(); i++) {
 		player_entity->playerCollidWithBlock(player_entity, blocks[i], 32, 27);
 	}
 	
 	// ###############################################################
-	// Updating counter and checking with delay of the bullets 'rate of fire'
+	// Updating mouseClickBulletCounter and checking if the mouseClickBulletCounter is greater then the mouseClickBulletDelay
 	// ###############################################################
-	counter += 0.5;
-	if (counter >= delay) {
-		counter = delay;
+	mouseClickBulletCounter += 0.5;
+	if (mouseClickBulletCounter >= mouseClickBulletDelay) {
+		mouseClickBulletCounter = mouseClickBulletDelay;
 	}
 	
 	// ###############################################################
 	// Creating Bullet* on the position of the player_entity when left mouse button is clicked
 	// ###############################################################
-	if (input()->getMouse(GLFW_MOUSE_BUTTON_1) && counter >= delay && currentAmmoInMagazine > 0) {
+	if (input()->getMouse(GLFW_MOUSE_BUTTON_1) && mouseClickBulletCounter >= mouseClickBulletDelay && currentAmmoInMagazine > 0 && playerCanShoot) {
 		Bullet* b = new Bullet();
 		b->setPositionAndRotation(player_entity);
 		layers[1]->addChild(b);
 		player_bullets.push_back(b);
 
-		counter = 0;
+		mouseClickBulletCounter = 0;
 		currentAmmoInMagazine--;
+		playerCanShoot = false;
 	}
 
 	// ###############################################################
@@ -267,33 +300,61 @@ void Scene00::update(float deltaTime)
 	}
 
 	// ###############################################################
-	// Reloading the weapon player_entity is holding
+	// When R pressed and currentAmmoInBag is greater then 0
+	// Then, pressedReloadingForThePlayer is true
 	// ###############################################################
 	if (input()->getKeyDown(GLFW_KEY_R) && currentAmmoInBag > 0) {
-		int checkIfCanCarry = currentAmmoInMagazine + currentAmmoInBag;
+		pressedReloadingForThePlayer = true;
+	}
+	
+	// ###############################################################
+	// When pressedReloadingForThePlayer is true
+	// playerCanShoot is false, because in the reloading time the player can't shoot
+	// Then the counter gets activated and while the counter is going that is the time that the player can shoot
+	// Then the player reloads and after that he can shoot again.
+	// ###############################################################
+	if (pressedReloadingForThePlayer) {
+		playerCanShoot = false;
+		playerReloadCounter += 0.5;
+		if (playerReloadCounter >= playerReloadDelay) {
+			playerReloadCounter = playerReloadDelay;
 
-		if (checkIfCanCarry > 32) {
-			currentAmmoInBag -= maxAmmoInMagazine - currentAmmoInMagazine;
-			currentAmmoInMagazine = maxAmmoInMagazine;
+			int checkIfCanCarry = currentAmmoInMagazine + currentAmmoInBag;
+
+			if (checkIfCanCarry > 32) {
+				currentAmmoInBag -= maxAmmoInMagazine - currentAmmoInMagazine;
+				currentAmmoInMagazine = maxAmmoInMagazine;
+			}
+			else if (checkIfCanCarry > 0) {
+				currentAmmoInMagazine += currentAmmoInBag;
+				currentAmmoInBag -= currentAmmoInBag;
+			}
+			playerReloadCounter = 0;
+			pressedReloadingForThePlayer = false;
 		}
-		else if (checkIfCanCarry > 0) {
-			currentAmmoInMagazine += currentAmmoInBag;
-			currentAmmoInBag -= currentAmmoInBag;
-		}
+	} else if (!pressedReloadingForThePlayer) {
+		playerCanShoot = true;
 	}
 
+	// ###############################################################
+	// When the ammo in magazine equals or less than 0 then it stays 0
+	// ###############################################################
 	if (currentAmmoInMagazine <= 0) {
 		currentAmmoInMagazine == 0;
 	}
-
+	// ###############################################################
+	// When the ammo in youre bag equals or less than 0 then it stays 0
+	// ###############################################################
 	if (currentAmmoInBag <= 0) {
 		currentAmmoInBag == 0;
 	}
-
+	// ###############################################################
+	// When the ammo in magazine equals to 0 and the ammo in your bag equals to 0
+	// Then you get a message that youre out of ammo,
+	// ###############################################################
 	if (currentAmmoInMagazine == 0 && currentAmmoInBag == 0) {
 		text[6]->message("You're out of ammo, find a ammunition box to continuing shooting");
 	}
-
 
 	// ###############################################################
 	// Logging current ammo and current mags
@@ -316,8 +377,6 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Setting the borders for the player_entity
 	// ###############################################################
-	int playerRaduis = 24;
-
 	if (player_entity->position.x < 0 + playerRaduis) {
 		player_entity->position.x = 0 + playerRaduis;
 	}
