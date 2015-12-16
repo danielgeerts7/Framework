@@ -41,10 +41,9 @@ Scene00::Scene00() : SuperScene()
 
 	background_entity = new LoadTiles();
 	layers[0]->addChild(background_entity);
-	//background_entity->LoadAndConvertTile;
 
 	player_entity = new Player();
-	player_entity->position = Point2(SWIDTH / 2, SHEIGHT / 2);
+	player_entity->position = Point2(800, 350);
 	player_entity->addSprite("assets/player.tga");
 	player_entity->sprite()->color = GREEN;
 
@@ -129,10 +128,13 @@ Scene00::~Scene00()
 
 	layers[2]->removeChild(player_entity);
 	player_entity->removeChild(gun_player_entity);
-	layers[3]->removeChild(p);
+
+	if (particles.size() > 0) {
+		layers[3]->removeChild(p);
+		delete p;
+	}
 
 	layers[0]->removeChild(background_entity);
-	delete p;
 	delete background_entity;
 	delete player_entity;
 	delete gun_player_entity;
