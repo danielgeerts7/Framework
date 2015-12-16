@@ -49,7 +49,8 @@ void Enemie::checkForPlayerIfWalkingInFieldOfView(Player* p)
 // ###############################################################
 int Enemie::getEnemieHealth()
 {
-	return this->health;
+	int h = health;
+	return h;
 }
 
 // ###############################################################
@@ -62,15 +63,16 @@ void Enemie::setEnemieHealth(int h)
 
 int Enemie::gettingHitByPlayerBullets(BasicEntity* b)
 {
-	int radius = 24;
+	int i = 0;
+	int radius = 26;
 	if (b->position.x > this->position.x - radius &&
 		b->position.x < this->position.x + radius &&
 		b->position.y > this->position.y - radius &&
 		b->position.y < this->position.y + radius) {
 		this->health -= 5;
-		return 1;
+		i = 1;
+	} else {
+		i = 0;
 	}
-	else {
-		return 0;
-	}
+	return i;
 }

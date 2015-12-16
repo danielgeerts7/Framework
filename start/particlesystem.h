@@ -8,11 +8,29 @@
 #ifndef PARTICLESYSTEM_H
 #define PARTICLESYSTEM_H
 
-class ParticleSystem
+#include "basicentity.h"
+#include <rt2d\sprite.h>
+
+class ParticleSystem : public BasicEntity
 {
 public:
 	ParticleSystem();
 	~ParticleSystem();
+
+	int speed;
+	float lifespan;
+
+	Vector2 acceleration;
+	Vector2 velocity;
+
+	Vector2 location;
+
+	virtual void update(float deltaTime);
+
+	void addParticleToParent(Vector2 parent);
+
+private:
+	int maxParticles;
 };
 
 #endif /* PARTICLESYSTEM_H */

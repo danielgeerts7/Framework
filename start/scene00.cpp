@@ -129,9 +129,10 @@ Scene00::~Scene00()
 
 	layers[2]->removeChild(player_entity);
 	player_entity->removeChild(gun_player_entity);
-	
+	layers[3]->removeChild(p);
 
 	layers[0]->removeChild(background_entity);
+	delete p;
 	delete background_entity;
 	delete player_entity;
 	delete gun_player_entity;
@@ -178,7 +179,9 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Rotate player_entity to the position of the mouse
 	// ###############################################################
-	Point2 mousepos = Point2(input()->getMouseX(), input()->getMouseY());
+	int mousex = input()->getMouseX() + camera()->position.x - SWIDTH / 2;
+	int mousey = input()->getMouseY() + camera()->position.y - SHEIGHT / 2;
+	Point2 mousepos = Point2(mousex, mousey);
 	Vector2 delta = Vector2(player_entity->position, mousepos);
 	float angle = delta.getAngle();
 	player_entity->rotation = angle;
@@ -221,16 +224,25 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Enemies gets hit by the player bullets
 	// ###############################################################
+	std::vector<int> toremove;
 	for (int pb = 0; pb < player_bullets.size(); pb++) {
 		for (int ee = 0; ee < enemies.size(); ee++) {
-			if (enemies[ee]->gettingHitByPlayerBullets(player_bullets[pb]) == 1 && enemies[ee]->getEnemieHealth() > 0 && player_bullets.size() > 0) {
+			if (enemies[ee]->gettingHitByPlayerBullets(player_bullets[pb]) == 1 && enemies[ee]->getEnemieHealth() >= 0 && player_bullets.size() >= 0) {
 				layers[1]->removeChild(player_bullets[pb]);
-				iterator_player_bullets = player_bullets.begin();
-				advance(iterator_player_bullets, pb);
-				iterator_player_bullets = player_bullets.erase(iterator_player_bullets);
+
+				toremove.push_back(pb);
+				
+				p = new ParticleSystem();
+				p->addParticleToParent(enemies[ee]->position);
+				layers[3]->addChild(p);
+				particles.push_back(p);
 			}
 		}
 	}
+	for (int i = 0; i < toremove.size(); i++) {
+		player_bullets.erase(player_bullets.begin()+i);
+	}
+
 
 	// ###############################################################
 	// Checking if the enemie_bullets go out of the stage, then remove them

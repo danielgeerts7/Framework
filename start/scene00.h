@@ -16,6 +16,8 @@
 #include "bullet.h"
 #include "loadtiles.h"
 #include "enemie.h"
+#include "particlesystem.h"
+
 
 class Scene00: public SuperScene
 {
@@ -46,6 +48,9 @@ class Scene00: public SuperScene
 
 		int playerRaduis;
 
+		ParticleSystem* p;
+
+		std::vector<ParticleSystem*> particles;
 		std::vector<Enemie*> enemies;
 		std::vector<BasicEntity*> guns_enemies;
 		std::vector<BasicEntity*> blocks;
