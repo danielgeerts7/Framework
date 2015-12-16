@@ -225,7 +225,7 @@ void Renderer::_renderSpriteBatch(glm::mat4& modelMatrix, std::vector<Sprite*>& 
 
 				int left_edge = camera->position.x - half_width;
 				int right_edge = camera->position.x + half_width;
-				int top_edge = camera->position.y - half_height;
+				int top_edge = camera->position.y - half_height - 128;
 				int bottom_edge = camera->position.y + half_height;
 				float posx = sprite->spriteposition.x;
 				float posy = sprite->spriteposition.y;
