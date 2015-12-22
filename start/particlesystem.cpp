@@ -13,10 +13,8 @@ ParticleSystem::ParticleSystem() : BasicEntity ()
 	speed = 1;
 	lifespan = 255;
 
-
-	BasicEntity* b = new BasicEntity();
-	b->addSprite("assets/singleparticle.tga");
-	maxParticles = 15;
+	this->addSprite("assets/singleparticle.tga");
+	this->sprite()->color = RED;
 }
 
 
@@ -24,14 +22,14 @@ ParticleSystem::~ParticleSystem()
 {
 }
 
-void ParticleSystem::addParticleToParent(Vector2 parent) {
-	location = parent;
+void ParticleSystem::addParticleToParent(BasicEntity* toParent, BasicEntity* fromBullet) {
+	location = toParent->position;
 	acceleration = Vector2(0, 0);
 	velocity = Vector2(0, 0);
 
-	this->position.x = parent.x;
-	this->position.y = parent.y;
-	this->rotation = parent.getAngleDeg();
+	this->position.x = toParent->position.x;
+	this->position.y = toParent->position.y;
+	this->rotation = toParent->rotation;
 
 	for (int a = 0; a < maxParticles; a++) {
 		
@@ -40,7 +38,18 @@ void ParticleSystem::addParticleToParent(Vector2 parent) {
 
 void ParticleSystem::update(float deltaTime)
 {
-	velocity.cross(acceleration);
-	location.cross(velocity);
-	lifespan -= 2.0;
+	velocity.x += acceleration.x;
+	velocity.y += acceleration.y;
+	location.x += velocity.x;
+	location.y += velocity.y;
+	lifespan -= 1;
+
+	this->position.x = location.x;
+	this->position.y = location.y;
+	
+	if (lifespan <= 0) {
+		lifespan = 0;
+	} else {
+		this->sprite()->color.a = lifespan;
+	}
 }

@@ -214,13 +214,15 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Player gets hit by the enemies bullets
 	// ###############################################################
+	std::vector<int> toremoveEB;
 	for (int eb = 0; eb < enemies_bullets.size(); eb++) {
 		if (player_entity->gettingHitByEnemieBullets(enemies_bullets[eb]) == 1 && player_entity->getPlayerHealth() > 0 && enemies_bullets.size() > 0) {
 			layers[1]->removeChild(enemies_bullets[eb]);
-			iterator_enemies_bullets = enemies_bullets.begin();
-			advance(iterator_enemies_bullets, eb);
-			iterator_enemies_bullets = enemies_bullets.erase(iterator_enemies_bullets);
+			toremoveEB.push_back(eb);
 		}
+	}
+	for (int i = 0; i < toremoveEB.size(); i++) {
+		enemies_bullets.erase(enemies_bullets.begin() + i);
 	}
 
 	// ###############################################################
@@ -235,7 +237,8 @@ void Scene00::update(float deltaTime)
 				toremove.push_back(pb);
 				
 				p = new ParticleSystem();
-				p->addParticleToParent(enemies[ee]->position);
+				p->addParticleToParent(enemies[ee], player_bullets[pb]);
+
 				layers[3]->addChild(p);
 				particles.push_back(p);
 			}
@@ -244,11 +247,14 @@ void Scene00::update(float deltaTime)
 	for (int i = 0; i < toremove.size(); i++) {
 		player_bullets.erase(player_bullets.begin()+i);
 	}
-
+	std::string pp = "particles: ";
+	pp.append(std::to_string(particles.size()));
+	text[12]->message(pp);
 
 	// ###############################################################
 	// Checking if the enemie_bullets go out of the stage, then remove them
 	// ###############################################################
+	std::vector<int> toremoveEB2;
 	for (int b = 0; b < enemies_bullets.size(); b++) {
 		int i = enemies_bullets[b]->position.x;
 		if (((enemies_bullets[b]->position.x < SWIDTH - SWIDTH) ||
@@ -258,10 +264,32 @@ void Scene00::update(float deltaTime)
 			enemies_bullets.size() > 0) {
 
 			layers[1]->removeChild(enemies_bullets[b]);
-			iterator_enemies_bullets = enemies_bullets.begin();
-			advance(iterator_enemies_bullets, b);
-			iterator_enemies_bullets = enemies_bullets.erase(iterator_enemies_bullets);
+			toremoveEB2.push_back(b);
 		}
+	}
+	for (int i = 0; i < toremoveEB2.size(); i++) {
+		enemies_bullets.erase(enemies_bullets.begin() + i);
+	}
+
+	// ###############################################################
+	// Checking if the player_bullets go out of the stage, then remove them
+	// ###############################################################
+	std::vector<int> toremove2;
+	if (player_bullets.size() > 0) {
+		for (int b = 0; b < player_bullets.size(); b++) {
+			int i = player_bullets[b]->position.x;
+			if (player_bullets[b]->position.x < SWIDTH - SWIDTH ||
+				player_bullets[b]->position.x > SWIDTH ||
+				player_bullets[b]->position.y < SHEIGHT - SHEIGHT ||
+				player_bullets[b]->position.y > SHEIGHT) {
+
+				layers[1]->removeChild(player_bullets[b]);
+				toremove2.push_back(b);
+			}
+		}
+	}
+	for (int i = 0; i < toremove2.size(); i++) {
+		player_bullets.erase(player_bullets.begin() + i);
 	}
 
 	// ###############################################################
@@ -292,25 +320,6 @@ void Scene00::update(float deltaTime)
 		mouseClickBulletCounter = 0;
 		currentAmmoInMagazine--;
 		playerCanShoot = false;
-	}
-
-	// ###############################################################
-	// Checking if the player_bullets go out of the stage, then remove them
-	// ###############################################################
-	if (player_bullets.size() > 0) {
-		for (int b = 0; b < player_bullets.size(); b++) {
-			int i = player_bullets[b]->position.x;
-			if (player_bullets[b]->position.x < SWIDTH - SWIDTH ||
-				player_bullets[b]->position.x > SWIDTH ||
-				player_bullets[b]->position.y < SHEIGHT - SHEIGHT ||
-				player_bullets[b]->position.y > SHEIGHT ) {
-
-				layers[1]->removeChild(player_bullets[b]);
-				iterator_player_bullets = player_bullets.begin();
-				advance(iterator_player_bullets, b);
-				iterator_player_bullets = player_bullets.erase(iterator_player_bullets);
-			}
-		}
 	}
 
 	// ###############################################################

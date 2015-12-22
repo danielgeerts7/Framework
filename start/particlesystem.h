@@ -27,7 +27,7 @@ public:
 
 	virtual void update(float deltaTime);
 
-	void addParticleToParent(Vector2 parent);
+	void addParticleToParent(BasicEntity* toParent, BasicEntity* fromBullet);
 
 private:
 	int maxParticles;
