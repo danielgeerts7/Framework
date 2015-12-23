@@ -56,10 +56,17 @@ void ParticleSystem::update(float deltaTime)
 bool ParticleSystem::isDead() {
 	if (lifespan <= 0) {
 		lifespan = 0;
-		return false;
+		return true;
 	}
 	else {
 		this->sprite()->color.a = lifespan;
+		return false;
+	}
+
+	if (((this->position.x < SWIDTH - SWIDTH) ||
+		(this->position.x > SWIDTH) ||
+		(this->position.y < SHEIGHT - SHEIGHT) ||
+		(this->position.y > SHEIGHT))) {
 		return true;
 	}
 }

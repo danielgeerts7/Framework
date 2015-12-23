@@ -126,15 +126,16 @@ Scene00::~Scene00()
 	}
 	enemies.clear();
 
-	layers[2]->removeChild(player_entity);
-	player_entity->removeChild(gun_player_entity);
-
-	if (particles.size() > 0) {
-		layers[3]->removeChild(p);
-		delete p;
+	int pp = particles.size();
+	for (int a = 0; a < pp; a++) {
+		layers[3]->removeChild(particles[a]);
+		delete particles[a];
 	}
+	particles.clear();
 
 	layers[0]->removeChild(background_entity);
+	layers[2]->removeChild(player_entity);
+	player_entity->removeChild(gun_player_entity);
 	delete background_entity;
 	delete player_entity;
 	delete gun_player_entity;
@@ -223,6 +224,7 @@ void Scene00::update(float deltaTime)
 	}
 	for (int i = 0; i < toremoveEB.size(); i++) {
 		enemies_bullets.erase(enemies_bullets.begin() + i);
+		layers[1]->removeChild(enemies_bullets[i]);
 	}
 
 	// ###############################################################
@@ -246,6 +248,22 @@ void Scene00::update(float deltaTime)
 	}
 	for (int i = 0; i < toremove.size(); i++) {
 		player_bullets.erase(player_bullets.begin()+i);
+		layers[1]->removeChild(player_bullets[i]);
+	}
+
+	// ###############################################################
+	// Deleting particles when isDead() is true
+	// ###############################################################
+	std::vector<int> toremovePart;
+	for (int j = 0; j < particles.size(); j++) {
+		if (particles[j]->isDead()) {
+			toremovePart.push_back(j);
+		}
+	}
+	
+	for (int k = 0; k < toremovePart.size(); k++) {
+		particles.erase(particles.begin() + k);
+		layers[3]->removeChild(particles[k]);
 	}
 	std::string pp = "particles: ";
 	pp.append(std::to_string(particles.size()));
@@ -269,6 +287,7 @@ void Scene00::update(float deltaTime)
 	}
 	for (int i = 0; i < toremoveEB2.size(); i++) {
 		enemies_bullets.erase(enemies_bullets.begin() + i);
+		layers[1]->removeChild(enemies_bullets[i]);
 	}
 
 	// ###############################################################
@@ -290,6 +309,7 @@ void Scene00::update(float deltaTime)
 	}
 	for (int i = 0; i < toremove2.size(); i++) {
 		player_bullets.erase(player_bullets.begin() + i);
+		layers[1]->removeChild(player_bullets[i]);
 	}
 
 	// ###############################################################
