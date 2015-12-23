@@ -19,6 +19,10 @@ public:
 
 	int speed;
 	float lifespan;
+	float angle;
+
+	float velocity_x;
+	float velocity_y;
 
 	Vector2 acceleration;
 	Vector2 velocity;
@@ -28,6 +32,7 @@ public:
 	virtual void update(float deltaTime);
 
 	void addParticleToParent(BasicEntity* toParent, BasicEntity* fromBullet);
+	bool isDead();
 
 private:
 	int maxParticles;

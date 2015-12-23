@@ -23,13 +23,16 @@ ParticleSystem::~ParticleSystem()
 }
 
 void ParticleSystem::addParticleToParent(BasicEntity* toParent, BasicEntity* fromBullet) {
-	location = toParent->position;
-	acceleration = Vector2(0, 0);
-	velocity = Vector2(0, 0);
+	this->velocity_x = cos(fromBullet->rotation + rand() % 2 - 1) * .5;
+	this->velocity_y = sin(fromBullet->rotation + rand() % 2 - 1) * .5;
 
-	this->position.x = toParent->position.x;
-	this->position.y = toParent->position.y;
-	this->rotation = toParent->rotation;
+	location = fromBullet->position;
+	acceleration = Vector2(0,0);
+	velocity = Vector2(velocity_x , velocity_y );
+
+	this->position.x = fromBullet->position.x;
+	this->position.y = fromBullet->position.y;
+	this->rotation = angle;
 
 	for (int a = 0; a < maxParticles; a++) {
 		
@@ -47,9 +50,16 @@ void ParticleSystem::update(float deltaTime)
 	this->position.x = location.x;
 	this->position.y = location.y;
 	
+	isDead();
+}
+
+bool ParticleSystem::isDead() {
 	if (lifespan <= 0) {
 		lifespan = 0;
-	} else {
+		return false;
+	}
+	else {
 		this->sprite()->color.a = lifespan;
+		return true;
 	}
 }
