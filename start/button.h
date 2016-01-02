@@ -7,11 +7,13 @@
 #define BUTTON_H
 
 #include "basicentity.h"
+#include <rt2d/text.h>
+using namespace std;
 
 class Button : public BasicEntity
 {
 public:
-	Button();
+	Button(Text* t, string s);
 	~Button();
 };
 

@@ -5,9 +5,13 @@
 
 #include "button.h"
 
-
-Button::Button() : BasicEntity()
+Button::Button(Text* t, string s) : BasicEntity()
 {
+	this->position.x = SWIDTH / 2;
+	this->addSprite("assets/block.tga");
+	this->sprite()->color = GRAY;
+
+	t->message(s);
 }
 
 

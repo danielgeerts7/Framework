@@ -15,6 +15,13 @@ class SceneMenu: public SuperScene
 public:
 	SceneMenu();
 	~SceneMenu();
+
+private:
+	Button* btnStart;
+	Button* btnCredits;
+	Button* btnHighscore;
+	Button* btnQuit;
+	Text* textStart;
 };
 
 #endif /*SCENEMENU_H*/
