@@ -182,6 +182,8 @@ add_executable(start
 	start/basicentity.h
 	start/bullet.cpp
 	start/bullet.h
+	start/button.cpp
+	start/button.h
 	start/enemie.cpp
 	start/enemie.h
 	start/loadtiles.cpp
@@ -193,6 +195,8 @@ add_executable(start
 	start/player.h
 	start/scene00.cpp
 	start/scene00.h
+	start/scenemenu.cpp
+	start/scenemenu.h
 	start/superscene.cpp
 	start/superscene.h
 )
