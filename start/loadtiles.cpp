@@ -3,7 +3,6 @@
 *     - Initial commit
 */
 
-
 #include "loadtiles.h"
 using namespace std;
 
