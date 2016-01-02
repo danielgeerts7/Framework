@@ -28,4 +28,6 @@ SceneMenu::~SceneMenu()
 {
 	layers[1]->removeChild(btnStart);
 	layers[1]->removeChild(textStart);
+	delete(btnStart);
+	delete(textStart);
 }

@@ -12,6 +12,7 @@
 #include <string>
 #include <cstddef>
 #include "basicentity.h"
+using namespace std;
 
 class LoadTiles : public BasicEntity
 {

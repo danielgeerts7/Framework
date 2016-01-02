@@ -4,7 +4,6 @@
 */
 
 #include "loadtiles.h"
-using namespace std;
 
 LoadTiles::LoadTiles() : BasicEntity()
 {
