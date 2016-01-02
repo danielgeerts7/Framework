@@ -6,7 +6,11 @@
 #ifndef SCENEMENU_H
 #define SCENEMENU_H
 
-class SceneMenu
+#include "superscene.h"
+#include "basicentity.h"
+#include "button.h"
+
+class SceneMenu: public SuperScene
 {
 public:
 	SceneMenu();

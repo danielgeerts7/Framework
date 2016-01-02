@@ -6,7 +6,9 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-class Button
+#include "basicentity.h"
+
+class Button : public BasicEntity
 {
 public:
 	Button();

@@ -6,8 +6,9 @@
 #include "scenemenu.h"
 
 
-SceneMenu::SceneMenu()
+SceneMenu::SceneMenu() : SuperScene()
 {
+	text[0]->message("Menu scene: menu of this awesome game!");
 }
 
 

@@ -15,6 +15,7 @@
  */
 #include <rt2d/core.h>
 
+#include "scenemenu.h"
 #include "scene00.h"
 
 /// @brief main entry point
@@ -22,6 +23,15 @@ int main( void )
 {
 	// Core instance
 	Core core;
+
+	//Scene Menu
+	SceneMenu* menu = new SceneMenu();
+	while (menu->isRunning()) {
+		core.run(menu);
+		core.showFrameRate(5);
+	}
+	core.cleanup();
+	delete menu;
 
 	//Scene00
 	Scene00* scene00 = new Scene00();
