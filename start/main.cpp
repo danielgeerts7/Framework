@@ -19,28 +19,32 @@
 #include "scene00.h"
 
 /// @brief main entry point
-int main( void )
+int main(void)
 {
 	// Core instance
 	Core core;
-
-	//Scene Menu
-	SceneMenu* menu = new SceneMenu();
-	while (menu->isRunning()) {
-		core.run(menu);
-		core.showFrameRate(5);
+	while (SuperScene::activescene >= 0 && SuperScene::activescene <= 1) {
+		if (SuperScene::activescene == 0) {
+			//Scene Menu
+			SceneMenu* menu = new SceneMenu();
+			while (menu->isRunning()) {
+				core.run(menu);
+				core.showFrameRate(5);
+			}
+			core.cleanup();
+			delete menu;
+		}
+		if (SuperScene::activescene == 1) {
+			//Scene00
+			Scene00* scene00 = new Scene00();
+			while (scene00->isRunning()) {
+				core.run(scene00);
+				core.showFrameRate(5);
+			}
+			core.cleanup();
+			delete scene00;
+		}
 	}
-	core.cleanup();
-	delete menu;
-
-	//Scene00
-	Scene00* scene00 = new Scene00();
-	while (scene00->isRunning()) {
-		core.run(scene00);
-		core.showFrameRate(5);
-	}
-	core.cleanup();
-	delete scene00;
 
 	// No need to explicitly clean up the core.
 	// As a local var, core will go out of scope and destroy Renderer->ResourceManager.

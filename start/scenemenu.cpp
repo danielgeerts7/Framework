@@ -52,6 +52,10 @@ void SceneMenu::update(float deltaTime)
 	if (btnStart->checkIfMouseIsOverBtn(mousepos, btnStart->scale) == 1) {
 		//TODO go to next scene
 		btnStart->sprite()->color = BLUE;
+		if (input()->getMouseUp(0)) {
+			SuperScene::stop();
+			SuperScene::activescene = 1;
+		}
 	}
 	else {
 		btnStart->sprite()->color = GRAY;
