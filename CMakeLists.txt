@@ -195,6 +195,10 @@ add_executable(start
 	start/player.h
 	start/scene00.cpp
 	start/scene00.h
+	start/scenecredits.cpp
+	start/scenecredits.h
+	start/scenehighscore.cpp
+	start/scenehighscore.h
 	start/scenemenu.cpp
 	start/scenemenu.h
 	start/superscene.cpp

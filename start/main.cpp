@@ -17,6 +17,8 @@
 
 #include "scenemenu.h"
 #include "scene00.h"
+#include "scenecredits.h"
+#include "scenehighscore.h"
 
 /// @brief main entry point
 int main(void)
@@ -45,10 +47,24 @@ int main(void)
 			delete scene00;
 		}
 		if (SuperScene::activescene == 2) {
-			//TODO::CREDITS SCENE
+			//CREDITS SCENE
+			SceneCredits* credits = new SceneCredits();
+			while (credits->isRunning()) {
+				core.run(credits);
+				core.showFrameRate(5);
+			}
+			core.cleanup();
+			delete credits;
 		}
 		if (SuperScene::activescene == 3) {
-			//TODO::HIGHSCORE SCENE
+			//HIGHSCORE SCENE
+			SceneHighscore* highscore = new SceneHighscore();
+			while (highscore->isRunning()) {
+				core.run(highscore);
+				core.showFrameRate(5);
+			}
+			core.cleanup();
+			delete highscore;
 		}
 	}
 

@@ -74,7 +74,7 @@ void SuperScene::update(float deltaTime)
 	// ###############################################################
 	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
 		this->stop();
-		activescene = -1;
+		activescene = 0;
 	}
 
 	// ###############################################################
