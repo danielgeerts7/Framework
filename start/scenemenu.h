@@ -14,7 +14,9 @@ class SceneMenu: public SuperScene
 {
 public:
 	SceneMenu();
-	~SceneMenu();
+	virtual ~SceneMenu();
+
+	virtual void update(float deltaTime);
 
 private:
 	Button* btnStart;
@@ -22,6 +24,9 @@ private:
 	Button* btnHighscore;
 	Button* btnQuit;
 	Text* textStart;
+
+	int mousePosX;
+	int mousePosY;
 };
 
 #endif /*SCENEMENU_H*/

@@ -14,7 +14,12 @@ class Button : public BasicEntity
 {
 public:
 	Button(Text* t, string s);
-	~Button();
+	virtual ~Button();
+
+	int checkIfMouseIsOverBtn(Point2 mousepos, Vector2 scale);
+
+private:
+	int resolution;
 };
 
 #endif /*BUTTON_H*/
