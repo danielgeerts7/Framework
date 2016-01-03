@@ -23,7 +23,7 @@ int main(void)
 {
 	// Core instance
 	Core core;
-	while (SuperScene::activescene >= 0 && SuperScene::activescene <= 1) {
+	while (SuperScene::activescene >= 0 && SuperScene::activescene <= 3) {
 		if (SuperScene::activescene == 0) {
 			//Scene Menu
 			SceneMenu* menu = new SceneMenu();
@@ -43,6 +43,12 @@ int main(void)
 			}
 			core.cleanup();
 			delete scene00;
+		}
+		if (SuperScene::activescene == 2) {
+			//TODO::CREDITS SCENE
+		}
+		if (SuperScene::activescene == 3) {
+			//TODO::HIGHSCORE SCENE
 		}
 	}
 

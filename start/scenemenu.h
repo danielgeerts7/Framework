@@ -24,6 +24,9 @@ private:
 	Button* btnHighscore;
 	Button* btnQuit;
 	Text* textStart;
+	Text* textCredits;
+	Text* textHighscore;
+	Text* textQuit;
 
 	int mousePosX;
 	int mousePosY;
