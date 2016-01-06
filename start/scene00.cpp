@@ -222,32 +222,34 @@ void Scene00::update(float deltaTime)
 			++toremoveEB;
 		}
 	}
+	
+	// ###############################################################
+	// Check which Enemy gets hit by the player bullets
+	// ###############################################################
+	for (int pb = 0; pb < player_bullets.size(); pb++) {
+		for (int ee = 0; ee < enemies.size(); ee++) {
+			if (enemies[ee]->gettingHitByPlayerBullets(player_bullets[pb]) == 1 && enemies[ee]->getEnemieHealth() >= 0 && player_bullets.size() >= 0) {
+				player_bullets[pb]->alive = 0;
+
+				p = new ParticleSystem();
+				p->addParticleToParent(enemies[ee], player_bullets[pb]);
+				layers[3]->addChild(p);
+				particles.push_back(p);
+			}
+		}
+	}
 
 	// ###############################################################
-	// Enemies gets hit by the player bullets
+	// Remove all bullets that hit a Enemie
 	// ###############################################################
 	std::vector<BasicEntity*>::iterator toremovePB = player_bullets.begin();
 	while (toremovePB != player_bullets.end()) {
-		for (int i = 0; enemies.size(); i++) {
-
-			bool temp = enemies[i]->gettingHitByPlayerBullets((*toremovePB)) == 1;
-
-			if (temp && enemies[i]->getEnemieHealth() > 0 && (*toremovePB) > 0) {
-				layers[1]->removeChild((*toremovePB));
-				delete (*toremovePB);
-				toremovePB = player_bullets.erase(toremovePB);
-
-				/*
-				p = new ParticleSystem();
-				p->addParticleToParent((*enemiesIT), *toremovePB);
-
-				layers[3]->addChild(p);
-				particles.push_back(p);
-				*/
-			}
-			else {
-				++toremovePB;
-			}
+		if (!(*toremovePB)->alive) {
+			layers[1]->removeChild((*toremovePB));
+			delete (*toremovePB);
+			toremovePB = player_bullets.erase(toremovePB);
+		} else {
+			++toremovePB;
 		}
 	}
 
