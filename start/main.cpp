@@ -17,14 +17,50 @@
 
 #include "scenemenu.h"
 #include "scene00.h"
-#include "scenecredits.h"
 #include "scenehighscore.h"
+#include "scenecredits.h"
 
 /// @brief main entry point
 int main(void)
 {
 	// Core instance
 	Core core;
+
+	// Create all scenes on the heap and keep a list
+	std::vector<SuperScene*> scenes;
+	scenes.push_back(new SceneMenu());
+	scenes.push_back(new Scene00());
+	scenes.push_back(new SceneHighscore());
+	scenes.push_back(new SceneCredits());
+	int s = scenes.size();
+
+	// start running with the first Scene
+	SuperScene* scene = scenes[0];
+	//int scenecounter = 0;
+	int running = 1;
+	while (running) {
+		int scenecounter = SuperScene::activescene;
+		if (scenecounter >= 0 && scenecounter <= 3) {
+			scenecounter = scene->activescene;
+			if (scenecounter > s - 1) { scenecounter = 0; scene->activescene = 0; }
+			if (scenecounter < 0) { scenecounter = s - 1; scene->activescene = s - 1; }
+			scene = scenes[scenecounter];
+			core.run(scene); // update and render the current scene
+			core.showFrameRate(5); // show framerate in output every n seconds
+		}
+		else {
+			running = 0; // check status of Scene every frame
+		}
+	}
+
+	// delete all scenes
+	for (int i = 0; i < s; i++) {
+		delete scenes[i];
+		scenes[i] = NULL;
+	}
+	scenes.clear();
+
+	/*
 	while (SuperScene::activescene >= 0 && SuperScene::activescene <= 3) {
 		if (SuperScene::activescene == 0) {
 			//Scene Menu
@@ -67,7 +103,7 @@ int main(void)
 			delete highscore;
 		}
 	}
-
+	*/
 	// No need to explicitly clean up the core.
 	// As a local var, core will go out of scope and destroy Renderer->ResourceManager.
 	// ResourceManager destructor also deletes Shaders.
