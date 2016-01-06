@@ -67,16 +67,15 @@ void Enemie::setEnemieHealth(int h)
 
 int Enemie::gettingHitByPlayerBullets(BasicEntity* b)
 {
-	int i = 0;
 	int radius = 26;
 	if (b->position.x > this->position.x - radius &&
 		b->position.x < this->position.x + radius &&
 		b->position.y > this->position.y - radius &&
 		b->position.y < this->position.y + radius) {
-		this->health -= 5;
-		i = 1;
-	} else {
-		i = 0;
+		this->health--;
+		return 1;
 	}
-	return i;
+	else {
+		return 0;
+	}
 }

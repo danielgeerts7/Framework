@@ -11,7 +11,7 @@
 
 BasicEntity::BasicEntity() : Entity()
 {
-
+	alive = 1;
 }
 
 
