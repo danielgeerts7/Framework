@@ -12,7 +12,7 @@
 #include <rt2d/input.h>
 #include <rt2d/scene.h>
 
-static class Bullet : public BasicEntity
+class Bullet : public BasicEntity
 {
 public:
 	Bullet();

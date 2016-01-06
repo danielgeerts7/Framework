@@ -7,7 +7,7 @@
 #define PARTICLESYSTEM_H
 
 #include "basicentity.h"
-#include <rt2d\sprite.h>
+#include <rt2d/sprite.h>
 
 class ParticleSystem : public BasicEntity
 {
