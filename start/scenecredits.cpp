@@ -8,6 +8,7 @@
 
 SceneCredits::SceneCredits() : SuperScene()
 {
+	text[0]->message("CREDITS: here you can see who made this game!");
 }
 
 

@@ -8,6 +8,7 @@
 
 SceneHighscore::SceneHighscore() : SuperScene()
 {
+	text[0]->message("HIGHSCORE: here you can see who is the best!");
 }
 
 

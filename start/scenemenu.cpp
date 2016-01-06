@@ -125,7 +125,7 @@ void SceneMenu::update(float deltaTime)
 		btnHighscore->sprite()->color = BLUE;
 		if (input()->getMouseUp(0)) {
 			SuperScene::stop();
-			SuperScene::activescene = 3;
+			SuperScene::activescene = 2;
 		}
 	}
 	else {
@@ -139,7 +139,7 @@ void SceneMenu::update(float deltaTime)
 		btnCredits->sprite()->color = BLUE;
 		if (input()->getMouseUp(0)) {
 			SuperScene::stop();
-			SuperScene::activescene = 2;
+			SuperScene::activescene = 3;
 		}
 	} else {
 		btnCredits->sprite()->color = GRAY;
