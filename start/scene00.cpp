@@ -184,7 +184,7 @@ void Scene00::update(float deltaTime)
 	Vector2 delta = Vector2(player_entity->position, mousepos);
 	float angle = delta.getAngle();
 	player_entity->rotation = angle;
-	
+
 	// ###############################################################
 	// Updating the enemieCounter and checking if the enemieCounter is greater then the enemieDelay
 	// ###############################################################
@@ -211,56 +211,60 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Player gets hit by the enemies bullets
 	// ###############################################################
-	std::vector<int> toremoveEB;
-	for (int eb = 0; eb < enemies_bullets.size(); eb++) {
-		if (player_entity->gettingHitByEnemieBullets(enemies_bullets[eb]) == 1 && player_entity->getPlayerHealth() > 0 && enemies_bullets.size() > 0) {
-			layers[1]->removeChild(enemies_bullets[eb]);
-			toremoveEB.push_back(eb);
+	std::vector<BasicEntity*>::iterator toremoveEB = enemies_bullets.begin();
+	while (toremoveEB != enemies_bullets.end()) {
+		if (player_entity->gettingHitByEnemieBullets((*toremoveEB)) == 1 && player_entity->getPlayerHealth() > 0 && (*toremoveEB) > 0) {
+			layers[1]->removeChild((*toremoveEB));
+			delete (*toremoveEB);
+			toremoveEB = enemies_bullets.erase(toremoveEB);
 		}
-	}
-	for (int i = 0; i < toremoveEB.size(); i++) {
-		enemies_bullets.erase(enemies_bullets.begin() + i);
-		layers[1]->removeChild(enemies_bullets[i]);
+		else {
+			++toremoveEB;
+		}
 	}
 
 	// ###############################################################
 	// Enemies gets hit by the player bullets
 	// ###############################################################
-	std::vector<int> toremove;
-	for (int pb = 0; pb < player_bullets.size(); pb++) {
-		for (int ee = 0; ee < enemies.size(); ee++) {
-			if (enemies[ee]->gettingHitByPlayerBullets(player_bullets[pb]) == 1 && enemies[ee]->getEnemieHealth() >= 0 && player_bullets.size() >= 0) {
-				layers[1]->removeChild(player_bullets[pb]);
+	std::vector<BasicEntity*>::iterator toremovePB = player_bullets.begin();
+	while (toremovePB != player_bullets.end()) {
+		for (int i = 0; enemies.size(); i++) {
 
-				toremove.push_back(pb);
-				
+			bool temp = enemies[i]->gettingHitByPlayerBullets((*toremovePB)) == 1;
+
+			if (temp && enemies[i]->getEnemieHealth() > 0 && (*toremovePB) > 0) {
+				layers[1]->removeChild((*toremovePB));
+				delete (*toremovePB);
+				toremovePB = player_bullets.erase(toremovePB);
+
+				/*
 				p = new ParticleSystem();
-				p->addParticleToParent(enemies[ee], player_bullets[pb]);
+				p->addParticleToParent((*enemiesIT), *toremovePB);
 
 				layers[3]->addChild(p);
 				particles.push_back(p);
+				*/
+			}
+			else {
+				++toremovePB;
 			}
 		}
-	}
-	for (int i = 0; i < toremove.size(); i++) {
-		player_bullets.erase(player_bullets.begin()+i);
-		layers[1]->removeChild(player_bullets[i]);
 	}
 
 	// ###############################################################
 	// Deleting particles when isDead() is true
 	// ###############################################################
-	std::vector<int> toremovePart;
-	for (int j = 0; j < particles.size(); j++) {
-		if (particles[j]->isDead()) {
-			toremovePart.push_back(j);
+	std::vector<ParticleSystem*>::iterator toremovePart = particles.begin();
+	while (toremovePart != particles.end()) {
+		if ((*toremovePart)->isDead()) {
+			layers[3]->removeChild((*toremovePart));
+			delete (*toremovePart);
+			toremovePart = particles.erase(toremovePart);
+		} else {
+			++toremovePart;
 		}
 	}
-	
-	for (int k = 0; k < toremovePart.size(); k++) {
-		particles.erase(particles.begin() + k);
-		layers[3]->removeChild(particles[k]);
-	}
+
 	std::string pp = "particles: ";
 	pp.append(std::to_string(particles.size()));
 	text[12]->message(pp);
@@ -268,44 +272,40 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Checking if the enemie_bullets go out of the stage, then remove them
 	// ###############################################################
-	std::vector<int> toremoveEB2;
-	for (int b = 0; b < enemies_bullets.size(); b++) {
-		int i = enemies_bullets[b]->position.x;
-		if (((enemies_bullets[b]->position.x < SWIDTH - SWIDTH) ||
-			(enemies_bullets[b]->position.x > SWIDTH) ||
-			(enemies_bullets[b]->position.y < SHEIGHT - SHEIGHT) ||
-			(enemies_bullets[b]->position.y > SHEIGHT)) &&
-			enemies_bullets.size() > 0) {
+	std::vector<BasicEntity*>::iterator toremoveEB2 = enemies_bullets.begin();
+	while (toremoveEB2 != enemies_bullets.end()) {
+		if ((((*toremoveEB2)->position.x < SWIDTH - SWIDTH) ||
+			((*toremoveEB2)->position.x > SWIDTH) ||
+			((*toremoveEB2)->position.y < SHEIGHT - SHEIGHT) ||
+			((*toremoveEB2)->position.y > SHEIGHT)) &&
+			(*toremoveEB2) > 0) {
 
-			layers[1]->removeChild(enemies_bullets[b]);
-			toremoveEB2.push_back(b);
+			layers[1]->removeChild((*toremoveEB2));
+			delete (*toremoveEB2);
+			toremoveEB2 = enemies_bullets.erase(toremoveEB2);
+		} else {
+			++toremoveEB2;
 		}
-	}
-	for (int i = 0; i < toremoveEB2.size(); i++) {
-		enemies_bullets.erase(enemies_bullets.begin() + i);
-		layers[1]->removeChild(enemies_bullets[i]);
 	}
 
 	// ###############################################################
 	// Checking if the player_bullets go out of the stage, then remove them
 	// ###############################################################
-	std::vector<int> toremove2;
+	std::vector<BasicEntity*>::iterator toremove2 = player_bullets.begin();
 	if (player_bullets.size() > 0) {
-		for (int b = 0; b < player_bullets.size(); b++) {
-			int i = player_bullets[b]->position.x;
-			if (player_bullets[b]->position.x < SWIDTH - SWIDTH ||
-				player_bullets[b]->position.x > SWIDTH ||
-				player_bullets[b]->position.y < SHEIGHT - SHEIGHT ||
-				player_bullets[b]->position.y > SHEIGHT) {
+		while (toremove2 != player_bullets.end()) {
+			if ((*toremove2)->position.x < SWIDTH - SWIDTH ||
+				(*toremove2)->position.x > SWIDTH ||
+				(*toremove2)->position.y < SHEIGHT - SHEIGHT ||
+				(*toremove2)->position.y > SHEIGHT) {
 
-				layers[1]->removeChild(player_bullets[b]);
-				toremove2.push_back(b);
+				layers[1]->removeChild((*toremove2));
+				delete (*toremove2);
+				toremove2 = player_bullets.erase(toremove2);
+			} else {
+				++toremove2;
 			}
 		}
-	}
-	for (int i = 0; i < toremove2.size(); i++) {
-		player_bullets.erase(player_bullets.begin() + i);
-		layers[1]->removeChild(player_bullets[i]);
 	}
 
 	// ###############################################################
@@ -379,13 +379,13 @@ void Scene00::update(float deltaTime)
 	// When the ammo in magazine equals or less than 0 then it stays 0
 	// ###############################################################
 	if (currentAmmoInMagazine <= 0) {
-		currentAmmoInMagazine == 0;
+		currentAmmoInMagazine = 0;
 	}
 	// ###############################################################
 	// When the ammo in youre bag equals or less than 0 then it stays 0
 	// ###############################################################
 	if (currentAmmoInBag <= 0) {
-		currentAmmoInBag == 0;
+		currentAmmoInBag = 0;
 	}
 	// ###############################################################
 	// When the ammo in magazine equals to 0 and the ammo in your bag equals to 0
