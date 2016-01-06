@@ -23,24 +23,11 @@ SceneMenu::SceneMenu() : SuperScene()
 	layers[1]->addChild(btnStart);
 	layers[1]->addChild(textStart);
 
-	//Text: 'Credits'
-	textCredits = new Text();
-	//Button: 'Credits'
-	btnCredits = new Button(textCredits, "Credits");
-	btnCredits->position.y = 300;
-	btnCredits->scale = Point(4, 1);
-	//Setting text to right pos in button 'Credits'
-	textCredits->position.x = btnCredits->position.x - 96;
-	textCredits->position.y = btnCredits->position.y;
-	//Adding text and button to the Scene Menu
-	layers[1]->addChild(btnCredits);
-	layers[1]->addChild(textCredits);
-
 	//Text: 'Highscore'
 	textHighscore = new Text();
 	//Button: 'Highscore'
 	btnHighscore = new Button(textHighscore, "Highscore");
-	btnHighscore->position.y = 450;
+	btnHighscore->position.y = 300;
 	btnHighscore->scale = Point(5, 1);
 	//Setting text to right pos in button 'Highscore'
 	textHighscore->position.x = btnHighscore->position.x - 128;
@@ -48,6 +35,19 @@ SceneMenu::SceneMenu() : SuperScene()
 	//Adding text and button to the Scene Menu
 	layers[1]->addChild(btnHighscore);
 	layers[1]->addChild(textHighscore);
+
+	//Text: 'Credits'
+	textCredits = new Text();
+	//Button: 'Credits'
+	btnCredits = new Button(textCredits, "Credits");
+	btnCredits->position.y = 450;
+	btnCredits->scale = Point(4, 1);
+	//Setting text to right pos in button 'Credits'
+	textCredits->position.x = btnCredits->position.x - 96;
+	textCredits->position.y = btnCredits->position.y;
+	//Adding text and button to the Scene Menu
+	layers[1]->addChild(btnCredits);
+	layers[1]->addChild(textCredits);
 
 	//Text: 'Quit'
 	textQuit = new Text();
@@ -72,17 +72,17 @@ SceneMenu::~SceneMenu()
 	delete(btnStart);
 	delete(textStart);
 
-	//Removing text and button 'Credits'
-	layers[1]->removeChild(btnCredits);
-	layers[1]->removeChild(textCredits);
-	delete(btnCredits);
-	delete(textCredits);
-
 	//Removing text and button 'Highscore'
 	layers[1]->removeChild(btnHighscore);
 	layers[1]->removeChild(textHighscore);
 	delete(btnHighscore);
 	delete(textHighscore);
+
+	//Removing text and button 'Credits'
+	layers[1]->removeChild(btnCredits);
+	layers[1]->removeChild(textCredits);
+	delete(btnCredits);
+	delete(textCredits);
 
 	//Removing text and button 'Quit'
 	layers[1]->removeChild(btnQuit);
@@ -119,19 +119,6 @@ void SceneMenu::update(float deltaTime)
 	}
 
 	// ###############################################################
-	// Checking if the mouse is over the button 'Credits'
-	// ###############################################################
-	if (btnCredits->checkIfMouseIsOverBtn(mousepos, btnCredits->scale) == 1) {
-		btnCredits->sprite()->color = BLUE;
-		if (input()->getMouseUp(0)) {
-			SuperScene::stop();
-			SuperScene::activescene = 2;
-		}
-	} else {
-		btnCredits->sprite()->color = GRAY;
-	}
-
-	// ###############################################################
 	// Checking if the mouse is over the button 'Highscore'
 	// ###############################################################
 	if (btnHighscore->checkIfMouseIsOverBtn(mousepos, btnHighscore->scale) == 1) {
@@ -143,6 +130,19 @@ void SceneMenu::update(float deltaTime)
 	}
 	else {
 		btnHighscore->sprite()->color = GRAY;
+	}
+
+	// ###############################################################
+	// Checking if the mouse is over the button 'Credits'
+	// ###############################################################
+	if (btnCredits->checkIfMouseIsOverBtn(mousepos, btnCredits->scale) == 1) {
+		btnCredits->sprite()->color = BLUE;
+		if (input()->getMouseUp(0)) {
+			SuperScene::stop();
+			SuperScene::activescene = 2;
+		}
+	} else {
+		btnCredits->sprite()->color = GRAY;
 	}
 
 	// ###############################################################
