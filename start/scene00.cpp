@@ -121,14 +121,16 @@ Scene00::~Scene00()
 
 	int es = enemies.size();
 	for (int k = 0; k < es; k++) {
+		layers[2]->removeChild(enemies_healthbar[k]);
 		enemies[k]->removeChild(guns_enemies[k]);
 		layers[1]->removeChild(enemies[k]);
-		layers[1]->removeChild(enemies_healthbar[k]);
+		delete enemies_healthbar[k];
 		delete guns_enemies[k];
 		delete enemies[k];
-		delete enemies_healthbar[k];
 	}
 	enemies.clear();
+	enemies_healthbar.clear();
+	guns_enemies.clear();
 
 	int pp = particles.size();
 	for (int a = 0; a < pp; a++) {
