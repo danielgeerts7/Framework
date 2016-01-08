@@ -51,13 +51,16 @@ Scene00::Scene00() : SuperScene()
 
 		layers[2]->addChild(enemies[e]);
 
+		HealthBar* enemieshealth = new HealthBar(enemies[e]);
+		enemies_healthbar.push_back(enemieshealth);
+		layers[2]->addChild(enemies_healthbar[e]);
+
 		BasicEntity* gun_enemie = new BasicEntity();
 		gun_enemie->addSprite("assets/gun.tga");
 		gun_enemie->sprite()->color = YELLOW;
 		gun_enemie->position = Point2(30, 25);
 
 		guns_enemies.push_back(gun_enemie);
-
 		enemies[e]->addChild(gun_enemie);
 	}
 	
@@ -120,8 +123,10 @@ Scene00::~Scene00()
 	for (int k = 0; k < es; k++) {
 		enemies[k]->removeChild(guns_enemies[k]);
 		layers[1]->removeChild(enemies[k]);
+		layers[1]->removeChild(enemies_healthbar[k]);
 		delete guns_enemies[k];
 		delete enemies[k];
+		delete enemies_healthbar[k];
 	}
 	enemies.clear();
 
