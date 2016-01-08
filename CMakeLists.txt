@@ -186,6 +186,8 @@ add_executable(start
 	start/button.h
 	start/enemie.cpp
 	start/enemie.h
+	start/healthbar.cpp
+	start/healthbar.h
 	start/loadtiles.cpp
 	start/loadtiles.h
 	start/main.cpp

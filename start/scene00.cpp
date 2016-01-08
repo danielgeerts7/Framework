@@ -43,6 +43,8 @@ Scene00::Scene00() : SuperScene()
 	player_entity->addSprite("assets/player.tga");
 	player_entity->sprite()->color = GREEN;
 
+	player_healthbar = new HealthBar(player_entity);
+
 	for (int e = 0; e < 5; e++) {
 		Enemie* enemie = new Enemie();
 		enemies.push_back(enemie);
@@ -85,6 +87,7 @@ Scene00::Scene00() : SuperScene()
 	}
 
 	layers[2]->addChild(player_entity);
+	layers[2]->addChild(player_healthbar);
 	player_entity->addChild(gun_player_entity);
 }
 
@@ -131,9 +134,11 @@ Scene00::~Scene00()
 
 	layers[0]->removeChild(background_entity);
 	layers[2]->removeChild(player_entity);
+	layers[2]->removeChild(player_healthbar);
 	player_entity->removeChild(gun_player_entity);
 	delete background_entity;
 	delete player_entity;
+	delete player_healthbar;
 	delete gun_player_entity;
 }
 

@@ -15,6 +15,7 @@
 #include "loadtiles.h"
 #include "enemie.h"
 #include "particlesystem.h"
+#include "healthbar.h"
 
 
 class Scene00: public SuperScene
@@ -29,6 +30,7 @@ class Scene00: public SuperScene
 
 		LoadTiles* background_entity;
 		Player* player_entity;
+		HealthBar* player_healthbar;
 		BasicEntity* gun_player_entity;
 
 		Timer t;
