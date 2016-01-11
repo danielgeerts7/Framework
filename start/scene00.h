@@ -33,6 +33,7 @@ class Scene00: public SuperScene
 		BasicEntity* gun_player_entity;
 
 		HealthBar* player_healthbar;
+		Text* player_health_text;
 
 		Timer t;
 		int mouseClickBulletDelay;

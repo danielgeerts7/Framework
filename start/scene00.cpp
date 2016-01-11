@@ -46,6 +46,10 @@ Scene00::Scene00() : SuperScene()
 	player_healthbar = new HealthBar();
 	player_healthbar->position.x = player_entity->position.x;
 	player_healthbar->position.y = player_entity->position.y - 60;
+	
+	player_health_text = new Text();
+	player_health_text->scale = Point2(0.4, 0.4);
+	layers[3]->addChild(player_health_text);
 
 	for (int e = 0; e < 5; e++) {
 		Enemie* enemie = new Enemie();
@@ -148,10 +152,12 @@ Scene00::~Scene00()
 	layers[2]->removeChild(player_entity);
 	layers[2]->removeChild(player_healthbar);
 	player_entity->removeChild(gun_player_entity);
+	layers[3]->removeChild(player_health_text);
 	delete background_entity;
 	delete player_entity;
 	delete player_healthbar;
 	delete gun_player_entity;
+	delete player_health_text;
 }
 
 void Scene00::update(float deltaTime)
@@ -423,7 +429,7 @@ void Scene00::update(float deltaTime)
 	// Setting healthbar to current position of the player
 	// ###############################################################
 	player_healthbar->position.x = player_entity->position.x;
-	player_healthbar->position.y = player_entity->position.y - 60;
+	player_healthbar->position.y = player_entity->position.y - 65;
 
 	// ###############################################################
 	// Setting scale of healthbar to current health of the player
@@ -444,11 +450,29 @@ void Scene00::update(float deltaTime)
 	}
 
 	// ###############################################################
+	// Setting text to the player healthbar
+	// ###############################################################
+	string health_string = to_string(player_entity->getPlayerHealth());
+
+	player_health_text->message(health_string);
+
+	if (player_entity->getPlayerHealth() <= 100) {
+		player_health_text->position.x = player_healthbar->position.x -14;
+	}
+	if (player_entity->getPlayerHealth() <= 99) {
+		player_health_text->position.x = player_healthbar->position.x - 7;
+	}
+	if (player_entity->getPlayerHealth() == 0) {
+		player_health_text->position.x = player_healthbar->position.x;
+	}
+	player_health_text->position.y = player_healthbar->position.y + 15;
+
+	// ###############################################################
 	// Setting healthbar to current position of the enemies
 	// ###############################################################
 	for (int i = 0; i < enemies.size(); i++) {
 		enemies_healthbars[i]->position.x = enemies[i]->position.x;
-		enemies_healthbars[i]->position.y = enemies[i]->position.y - 60;
+		enemies_healthbars[i]->position.y = enemies[i]->position.y - 65;
 
 		// ###############################################################
 		// Setting scale of healthbar to current health of the player
