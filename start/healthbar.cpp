@@ -45,14 +45,14 @@ void HealthBar::update(float deltaTime)
 {
 	if (!(this->b == NULL) && boolBasicEntity) {
 		this->position.x = b->position.x;
-		this->position.y = b->position.y - 75;
+		this->position.y = b->position.y - 55;
 	}
 	if (!(this->p == NULL) && boolPlayer) {
 		this->position.x = p->position.x;
-		this->position.y = p->position.y - 75;
+		this->position.y = p->position.y - 55;
 	}
 	if (!(this->e == NULL) && boolEnemie) {
 		this->position.x = e->position.x;
-		this->position.y = e->position.y - 75;
+		this->position.y = e->position.y - 55;
 	}
 }
