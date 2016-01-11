@@ -9,7 +9,7 @@
 HealthBar::HealthBar() : BasicEntity()
 {
 	this->addSprite("assets/block.tga");
-	this->scale = Point2(1, 0.1);
+	this->scale = Point2(1, 0.15);
 	this->sprite()->color = GREEN;
 }
 

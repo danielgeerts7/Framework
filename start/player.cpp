@@ -94,7 +94,7 @@ int Player::gettingHitByEnemieBullets(BasicEntity* b)
 		b->position.x < this->position.x + radius &&
 		b->position.y > this->position.y - radius &&
 		b->position.y < this->position.y + radius) {
-		this->health--;
+		this->health -= 5;
 		return 1;
 	}
 	else {
