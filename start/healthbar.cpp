@@ -9,8 +9,8 @@
 HealthBar::HealthBar(BasicEntity* parent) : BasicEntity()
 {
 	this->b = parent;
-	this->addSprite("assets/healthbar.tga");
-	this->scale = Point2(2, 0.2);
+	this->addSpriteSheet("assets/healthbar.tga", 2, 1);
+	this->scale = Point2(2, 0.1);
 	this->boolBasicEntity = true;
 	this->boolPlayer = false;
 	this->boolEnemie = false;
@@ -19,8 +19,8 @@ HealthBar::HealthBar(BasicEntity* parent) : BasicEntity()
 HealthBar::HealthBar(Player* parent) : BasicEntity()
 {
 	this->p = parent;
-	this->addSprite("assets/healthbar.tga");
-	this->scale = Point2(2, 0.2);
+	this->addSpriteSheet("assets/healthbar.tga", 2, 1);
+	this->scale = Point2(2, 0.1);
 	this->boolBasicEntity = false;
 	this->boolPlayer = true;
 	this->boolEnemie = false;
@@ -29,8 +29,8 @@ HealthBar::HealthBar(Player* parent) : BasicEntity()
 HealthBar::HealthBar(Enemie* parent) : BasicEntity()
 {
 	this->e = parent;
-	this->addSprite("assets/healthbar.tga");
-	this->scale = Point2(2, 0.2);
+	this->addSpriteSheet("assets/healthbar.tga", 2, 1);
+	this->scale = Point2(2, 0.1);
 	this->boolBasicEntity = false;
 	this->boolPlayer = false;
 	this->boolEnemie = true;
