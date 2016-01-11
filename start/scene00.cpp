@@ -43,17 +43,15 @@ Scene00::Scene00() : SuperScene()
 	player_entity->addSprite("assets/player.tga");
 	player_entity->sprite()->color = GREEN;
 
-	player_healthbar = new HealthBar(player_entity);
+	player_healthbar = new HealthBar();
+	player_healthbar->position.x = player_entity->position.x;
+	player_healthbar->position.y = player_entity->position.y - 60;
 
 	for (int e = 0; e < 5; e++) {
 		Enemie* enemie = new Enemie();
 		enemies.push_back(enemie);
 
 		layers[2]->addChild(enemies[e]);
-
-		HealthBar* enemieshealth = new HealthBar(enemies[e]);
-		enemies_healthbar.push_back(enemieshealth);
-		layers[2]->addChild(enemies_healthbar[e]);
 
 		BasicEntity* gun_enemie = new BasicEntity();
 		gun_enemie->addSprite("assets/gun.tga");
@@ -62,6 +60,13 @@ Scene00::Scene00() : SuperScene()
 
 		guns_enemies.push_back(gun_enemie);
 		enemies[e]->addChild(gun_enemie);
+
+		HealthBar* healthbar_enemie = new HealthBar();
+		healthbar_enemie->position.x = enemies[e]->position.x;
+		healthbar_enemie->position.y = enemies[e]->position.y - 60;
+
+		enemies_healthbars.push_back(healthbar_enemie);
+		layers[2]->addChild(healthbar_enemie);
 	}
 	
 	enemies[0]->position = Point(100, 100);
@@ -121,16 +126,16 @@ Scene00::~Scene00()
 
 	int es = enemies.size();
 	for (int k = 0; k < es; k++) {
-		layers[2]->removeChild(enemies_healthbar[k]);
 		enemies[k]->removeChild(guns_enemies[k]);
-		layers[1]->removeChild(enemies[k]);
-		delete enemies_healthbar[k];
+		layers[2]->removeChild(enemies[k]);
+		layers[2]->removeChild(enemies_healthbars[k]);
 		delete guns_enemies[k];
 		delete enemies[k];
+		delete enemies_healthbars[k];
 	}
 	enemies.clear();
-	enemies_healthbar.clear();
 	guns_enemies.clear();
+	enemies_healthbars.clear();
 
 	int pp = particles.size();
 	for (int a = 0; a < pp; a++) {
@@ -234,7 +239,7 @@ void Scene00::update(float deltaTime)
 			++toremoveEB;
 		}
 	}
-	
+
 	// ###############################################################
 	// Check which Enemy gets hit by the player bullets
 	// ###############################################################
@@ -260,7 +265,8 @@ void Scene00::update(float deltaTime)
 			layers[1]->removeChild((*toremovePB));
 			delete (*toremovePB);
 			toremovePB = player_bullets.erase(toremovePB);
-		} else {
+		}
+		else {
 			++toremovePB;
 		}
 	}
@@ -274,7 +280,8 @@ void Scene00::update(float deltaTime)
 			layers[3]->removeChild((*toremovePart));
 			delete (*toremovePart);
 			toremovePart = particles.erase(toremovePart);
-		} else {
+		}
+		else {
 			++toremovePart;
 		}
 	}
@@ -297,7 +304,8 @@ void Scene00::update(float deltaTime)
 			layers[1]->removeChild((*toremoveEB2));
 			delete (*toremoveEB2);
 			toremoveEB2 = enemies_bullets.erase(toremoveEB2);
-		} else {
+		}
+		else {
 			++toremoveEB2;
 		}
 	}
@@ -316,7 +324,8 @@ void Scene00::update(float deltaTime)
 				layers[1]->removeChild((*toremove2));
 				delete (*toremove2);
 				toremove2 = player_bullets.erase(toremove2);
-			} else {
+			}
+			else {
 				++toremove2;
 			}
 		}
@@ -329,7 +338,7 @@ void Scene00::update(float deltaTime)
 	for (int i = 0; i < blocks.size(); i++) {
 		player_entity->playerCollidWithBlock(player_entity, blocks[i], 32, 27);
 	}
-	
+
 	// ###############################################################
 	// Updating mouseClickBulletCounter and checking if the mouseClickBulletCounter is greater then the mouseClickBulletDelay
 	// ###############################################################
@@ -337,7 +346,7 @@ void Scene00::update(float deltaTime)
 	if (mouseClickBulletCounter >= mouseClickBulletDelay) {
 		mouseClickBulletCounter = mouseClickBulletDelay;
 	}
-	
+
 	// ###############################################################
 	// Creating Bullet* on the position of the player_entity when left mouse button is clicked
 	// ###############################################################
@@ -359,7 +368,7 @@ void Scene00::update(float deltaTime)
 	if (input()->getKeyDown(GLFW_KEY_R) && currentAmmoInBag > 0) {
 		pressedReloadingForThePlayer = true;
 	}
-	
+
 	// ###############################################################
 	// When pressedReloadingForThePlayer is true
 	// playerCanShoot is false, because in the reloading time the player can't shoot
@@ -385,7 +394,8 @@ void Scene00::update(float deltaTime)
 			playerReloadCounter = 0;
 			pressedReloadingForThePlayer = false;
 		}
-	} else if (!pressedReloadingForThePlayer) {
+	}
+	else if (!pressedReloadingForThePlayer) {
 		playerCanShoot = true;
 	}
 
@@ -407,6 +417,56 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	if (currentAmmoInMagazine == 0 && currentAmmoInBag == 0) {
 		text[6]->message("You're out of ammo, find a ammunition box to continuing shooting");
+	}
+
+	// ###############################################################
+	// Setting healthbar to current position of the player
+	// ###############################################################
+	player_healthbar->position.x = player_entity->position.x;
+	player_healthbar->position.y = player_entity->position.y - 60;
+
+	// ###############################################################
+	// Setting scale of healthbar to current health of the player
+	// ###############################################################
+	player_healthbar->scale.x = (float)player_entity->getPlayerHealth() / 100;
+
+	if ((player_entity->getPlayerHealth() <= 100) && (player_entity->getPlayerHealth() >= 76)) {
+		player_healthbar->sprite()->color = GREEN;
+	}
+	if ((player_entity->getPlayerHealth() <= 75) && (player_entity->getPlayerHealth() >= 51)) {
+		player_healthbar->sprite()->color = YELLOW;
+	}
+	if ((player_entity->getPlayerHealth() <= 50) && (player_entity->getPlayerHealth() >= 26)) {
+		player_healthbar->sprite()->color = ORANGE;
+	}
+	if ((player_entity->getPlayerHealth() <= 25) && (player_entity->getPlayerHealth() >= 0)) {
+		player_healthbar->sprite()->color = RED;
+	}
+
+	// ###############################################################
+	// Setting healthbar to current position of the enemies
+	// ###############################################################
+	for (int i = 0; i < enemies.size(); i++) {
+		enemies_healthbars[i]->position.x = enemies[i]->position.x;
+		enemies_healthbars[i]->position.y = enemies[i]->position.y - 60;
+
+		// ###############################################################
+		// Setting scale of healthbar to current health of the player
+		// ###############################################################
+		enemies_healthbars[i]->scale.x = (float)enemies[i]->getEnemieHealth() / 100;
+
+		if ((enemies[i]->getEnemieHealth() <= 100) && (enemies[i]->getEnemieHealth() >= 76)) {
+			enemies_healthbars[i]->sprite()->color = GREEN;
+		}
+		if ((enemies[i]->getEnemieHealth() <= 75) && (enemies[i]->getEnemieHealth() >= 51)) {
+			enemies_healthbars[i]->sprite()->color = YELLOW;
+		}
+		if ((enemies[i]->getEnemieHealth() <= 50) && (enemies[i]->getEnemieHealth() >= 26)) {
+			enemies_healthbars[i]->sprite()->color = ORANGE;
+		}
+		if ((enemies[i]->getEnemieHealth() <= 25) && (enemies[i]->getEnemieHealth() >= 0)) {
+			enemies_healthbars[i]->sprite()->color = RED;
+		}
 	}
 
 	// ###############################################################

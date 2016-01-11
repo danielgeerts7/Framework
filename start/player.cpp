@@ -84,6 +84,9 @@ void Player::setPlayerHealth(int h)
 	this->health = h;
 }
 
+// ###############################################################
+// Enemie bullets hit the player
+// ###############################################################
 int Player::gettingHitByEnemieBullets(BasicEntity* b)
 {
 	int radius = 24;

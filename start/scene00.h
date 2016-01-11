@@ -30,8 +30,9 @@ class Scene00: public SuperScene
 
 		LoadTiles* background_entity;
 		Player* player_entity;
-		HealthBar* player_healthbar;
 		BasicEntity* gun_player_entity;
+
+		HealthBar* player_healthbar;
 
 		Timer t;
 		int mouseClickBulletDelay;
@@ -56,7 +57,8 @@ class Scene00: public SuperScene
 		std::vector<BasicEntity*> blocks;
 		std::vector<BasicEntity*> player_bullets;
 		std::vector<BasicEntity*> enemies_bullets;
-		std::vector<HealthBar*> enemies_healthbar;
+
+		std::vector<HealthBar*> enemies_healthbars;
 
 		int maxAmmoInMagazine;
 		int currentAmmoInMagazine;
