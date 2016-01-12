@@ -26,7 +26,7 @@ Scene00::Scene00() : SuperScene()
 	countEnemiesDied = 0;
 
 	score = 10;
-	highscore = new HighScore();
+	currentscore = 0;
 
 	pressedReloadingForThePlayer = false;
 	playerCanShoot = false;
@@ -111,7 +111,6 @@ Scene00::Scene00() : SuperScene()
 
 Scene00::~Scene00()
 {
-
 	int s = blocks.size();
 	for (int i = 0; i<s; i++) {
 		layers[2]->removeChild(blocks[i]);
@@ -509,7 +508,7 @@ void Scene00::update(float deltaTime)
 	vector<Enemie*>::iterator toremoveEnemies = enemies.begin();
 	while (toremoveEnemies != enemies.end()) {
 		if ((*toremoveEnemies)->alive == false && countEnemiesDied <= deadEnemies.size()) {
-			highscore->addScore(score);
+			currentscore += score;
 			countEnemiesDied++;
 			deadEnemies.push_back((*toremoveEnemies));
 			toremoveEnemies = enemies.erase(toremoveEnemies);
@@ -522,8 +521,8 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Logging current score
 	// ###############################################################
-	string currentscore = to_string(highscore->getHighScore());
-	text[6]->message("Score: " + currentscore);
+	string currentscorestr = to_string(currentscore);
+	text[6]->message("Score: " + currentscorestr);
 
 	// ###############################################################
 	// Logging current ammo and current mags
@@ -558,4 +557,8 @@ void Scene00::update(float deltaTime)
 	if (player_entity->position.y > SHEIGHT - playerRaduis) {
 		player_entity->position.y = SHEIGHT - playerRaduis;
 	}
+}
+
+int Scene00::gethighscorelist() {
+	return this->currentscore;
 }

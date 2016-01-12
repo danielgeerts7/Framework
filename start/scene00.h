@@ -16,8 +16,7 @@
 #include "enemie.h"
 #include "particlesystem.h"
 #include "healthbar.h"
-#include "highscore.h"
-
+#include "highscorelist.h"
 
 class Scene00: public SuperScene
 {
@@ -26,6 +25,8 @@ class Scene00: public SuperScene
 		virtual ~Scene00();
 
 		virtual void update(float deltaTime);
+
+		int gethighscorelist();
 	
 	private:
 
@@ -70,7 +71,7 @@ class Scene00: public SuperScene
 		int countEnemiesDied;
 
 		int score;
-		HighScore* highscore;
+		int currentscore;
 };
 
 #endif /* SCENE00_H */ 

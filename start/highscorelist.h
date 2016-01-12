@@ -10,17 +10,17 @@
 #include <algorithm>
 
 using namespace std;
-class HighScore
+class HighScoreList
 {
 public:
-	HighScore();
-	~HighScore();
+	HighScoreList();
+	~HighScoreList();
 
 	void setHighScore(int score);
 	int getHighScore();
 	void addScore(int score);
 
-	vector<int> addCurrentHighScoreToList();
+	vector<int> getCurrentHighScoreToList();
 
 private:
 	int highscore;
