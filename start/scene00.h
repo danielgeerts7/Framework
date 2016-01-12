@@ -16,6 +16,7 @@
 #include "enemie.h"
 #include "particlesystem.h"
 #include "healthbar.h"
+#include "highscore.h"
 
 
 class Scene00: public SuperScene
@@ -54,6 +55,7 @@ class Scene00: public SuperScene
 
 		std::vector<ParticleSystem*> particles;
 		std::vector<Enemie*> enemies;
+		std::vector<Enemie*> deadEnemies;
 		std::vector<BasicEntity*> guns_enemies;
 		std::vector<BasicEntity*> blocks;
 		std::vector<BasicEntity*> player_bullets;
@@ -64,6 +66,11 @@ class Scene00: public SuperScene
 		int maxAmmoInMagazine;
 		int currentAmmoInMagazine;
 		int currentAmmoInBag;
+
+		int countEnemiesDied;
+
+		int score;
+		HighScore* highscore;
 };
 
 #endif /* SCENE00_H */ 

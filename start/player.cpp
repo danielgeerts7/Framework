@@ -23,6 +23,7 @@ void Player::update(float deltaTime)
 	if (this->health <= 0) {
 		this->health = 0;
 		this->sprite()->color = RED;
+		this->alive = false;
 	}
 }
 
@@ -89,13 +90,15 @@ void Player::setPlayerHealth(int h)
 // ###############################################################
 int Player::gettingHitByEnemieBullets(BasicEntity* b)
 {
-	int radius = 24;
-	if (b->position.x > this->position.x - radius &&
-		b->position.x < this->position.x + radius &&
-		b->position.y > this->position.y - radius &&
-		b->position.y < this->position.y + radius) {
-		this->health -= 5;
-		return 1;
+	if (this->alive == true) {
+		int radius = 24;
+		if (b->position.x > this->position.x - radius &&
+			b->position.x < this->position.x + radius &&
+			b->position.y > this->position.y - radius &&
+			b->position.y < this->position.y + radius) {
+			this->health -= 5;
+			return 1;
+		}
 	}
 	else {
 		return 0;

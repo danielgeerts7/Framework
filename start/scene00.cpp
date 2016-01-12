@@ -23,6 +23,11 @@ Scene00::Scene00() : SuperScene()
 	enemieDelay = 10;
 	enemieCounter = 0;
 
+	countEnemiesDied = 0;
+
+	score = 10;
+	highscore = new HighScore();
+
 	pressedReloadingForThePlayer = false;
 	playerCanShoot = false;
 
@@ -175,21 +180,23 @@ void Scene00::update(float deltaTime)
 	Vector2 playerRight = Vector2(1, 0);
 	Vector2 playerUp = Vector2(0, 1);
 
-	// Move up
-	if (input()->getKey(GLFW_KEY_W)) {
-		player_entity->position -= playerUp * deltaTime * speed;
-	}
-	// Move down
-	if (input()->getKey(GLFW_KEY_S)) {
-		player_entity->position += playerUp * deltaTime * speed;
-	}
-	// move left
-	if (input()->getKey(GLFW_KEY_A)) {
-		player_entity->position -= playerRight * deltaTime * speed;
-	}
-	// move right
-	if (input()->getKey(GLFW_KEY_D)) {
-		player_entity->position += playerRight * deltaTime * speed;
+	if (player_entity->alive) {
+		// Move up
+		if (input()->getKey(GLFW_KEY_W)) {
+			player_entity->position -= playerUp * deltaTime * speed;
+		}
+		// Move down
+		if (input()->getKey(GLFW_KEY_S)) {
+			player_entity->position += playerUp * deltaTime * speed;
+		}
+		// move left
+		if (input()->getKey(GLFW_KEY_A)) {
+			player_entity->position -= playerRight * deltaTime * speed;
+		}
+		// move right
+		if (input()->getKey(GLFW_KEY_D)) {
+			player_entity->position += playerRight * deltaTime * speed;
+		}
 	}
 
 	// ###############################################################
@@ -220,29 +227,33 @@ void Scene00::update(float deltaTime)
 	// Giving the new Bullet(s)* b the rotation of the enemies[a]
 	// ###############################################################
 	for (int a = 0; a < enemies.size(); a++) {
-		enemies[a]->checkForPlayerIfWalkingInFieldOfView(player_entity);
-		if (enemies[a]->checkIfPlayerIsInFieldOfView && enemieCounter >= enemieDelay) {
-			Bullet* b = new Bullet();
-			b->setPositionAndRotation(enemies[a]);
-			layers[1]->addChild(b);
-			enemies_bullets.push_back(b);
+		if (enemies[a]->alive && player_entity->alive) {
+			enemies[a]->checkForPlayerIfWalkingInFieldOfView(player_entity);
+			if (enemies[a]->checkIfPlayerIsInFieldOfView && enemieCounter >= enemieDelay) {
+				Bullet* b = new Bullet();
+				b->setPositionAndRotation(enemies[a]);
+				layers[1]->addChild(b);
+				enemies_bullets.push_back(b);
 
-			enemieCounter = 0;
+				enemieCounter = 0;
+			}
 		}
 	}
 
 	// ###############################################################
 	// Player gets hit by the enemies bullets
 	// ###############################################################
-	std::vector<BasicEntity*>::iterator toremoveEB = enemies_bullets.begin();
-	while (toremoveEB != enemies_bullets.end()) {
-		if (player_entity->gettingHitByEnemieBullets((*toremoveEB)) == 1 && player_entity->getPlayerHealth() > 0 && (*toremoveEB) > 0) {
-			layers[1]->removeChild((*toremoveEB));
-			delete (*toremoveEB);
-			toremoveEB = enemies_bullets.erase(toremoveEB);
-		}
-		else {
-			++toremoveEB;
+	vector<BasicEntity*>::iterator toremoveEB = enemies_bullets.begin();
+	if (player_entity->alive) {
+		while (toremoveEB != enemies_bullets.end()) {
+			if (player_entity->gettingHitByEnemieBullets((*toremoveEB)) == 1 && player_entity->getPlayerHealth() > 0 && (*toremoveEB) > 0) {
+				layers[1]->removeChild((*toremoveEB));
+				delete (*toremoveEB);
+				toremoveEB = enemies_bullets.erase(toremoveEB);
+			}
+			else {
+				++toremoveEB;
+			}
 		}
 	}
 
@@ -251,8 +262,8 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	for (int pb = 0; pb < player_bullets.size(); pb++) {
 		for (int ee = 0; ee < enemies.size(); ee++) {
-			if (enemies[ee]->gettingHitByPlayerBullets(player_bullets[pb]) == 1 && enemies[ee]->getEnemieHealth() >= 0 && player_bullets.size() >= 0) {
-				player_bullets[pb]->alive = 0;
+			if (enemies[ee]->gettingHitByPlayerBullets(player_bullets[pb]) == 1 && enemies[ee]->alive && player_entity->alive && player_bullets.size() >= 0) {
+				player_bullets[pb]->alive = false;
 
 				p = new ParticleSystem();
 				p->addParticleToParent(enemies[ee], player_bullets[pb]);
@@ -265,7 +276,7 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Remove all bullets that hit a Enemie
 	// ###############################################################
-	std::vector<BasicEntity*>::iterator toremovePB = player_bullets.begin();
+	vector<BasicEntity*>::iterator toremovePB = player_bullets.begin();
 	while (toremovePB != player_bullets.end()) {
 		if (!(*toremovePB)->alive) {
 			layers[1]->removeChild((*toremovePB));
@@ -280,7 +291,7 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Deleting particles when isDead() is true
 	// ###############################################################
-	std::vector<ParticleSystem*>::iterator toremovePart = particles.begin();
+	vector<ParticleSystem*>::iterator toremovePart = particles.begin();
 	while (toremovePart != particles.end()) {
 		if ((*toremovePart)->isDead()) {
 			layers[3]->removeChild((*toremovePart));
@@ -291,15 +302,14 @@ void Scene00::update(float deltaTime)
 			++toremovePart;
 		}
 	}
-
-	std::string pp = "particles: ";
-	pp.append(std::to_string(particles.size()));
+	string pp = "particles: ";
+	pp.append(to_string(particles.size()));
 	text[12]->message(pp);
 
 	// ###############################################################
 	// Checking if the enemie_bullets go out of the stage, then remove them
 	// ###############################################################
-	std::vector<BasicEntity*>::iterator toremoveEB2 = enemies_bullets.begin();
+	vector<BasicEntity*>::iterator toremoveEB2 = enemies_bullets.begin();
 	while (toremoveEB2 != enemies_bullets.end()) {
 		if ((((*toremoveEB2)->position.x < SWIDTH - SWIDTH) ||
 			((*toremoveEB2)->position.x > SWIDTH) ||
@@ -319,7 +329,7 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Checking if the player_bullets go out of the stage, then remove them
 	// ###############################################################
-	std::vector<BasicEntity*>::iterator toremove2 = player_bullets.begin();
+	vector<BasicEntity*>::iterator toremove2 = player_bullets.begin();
 	if (player_bullets.size() > 0) {
 		while (toremove2 != player_bullets.end()) {
 			if ((*toremove2)->position.x < SWIDTH - SWIDTH ||
@@ -356,7 +366,7 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Creating Bullet* on the position of the player_entity when left mouse button is clicked
 	// ###############################################################
-	if (input()->getMouse(GLFW_MOUSE_BUTTON_1) && mouseClickBulletCounter >= mouseClickBulletDelay && currentAmmoInMagazine > 0 && playerCanShoot) {
+	if (input()->getMouse(GLFW_MOUSE_BUTTON_1) && mouseClickBulletCounter >= mouseClickBulletDelay && currentAmmoInMagazine > 0 && playerCanShoot && player_entity->alive) {
 		Bullet* b = new Bullet();
 		b->setPositionAndRotation(player_entity);
 		layers[1]->addChild(b);
@@ -371,7 +381,7 @@ void Scene00::update(float deltaTime)
 	// When R pressed and currentAmmoInBag is greater then 0
 	// Then, pressedReloadingForThePlayer is true
 	// ###############################################################
-	if (input()->getKeyDown(GLFW_KEY_R) && currentAmmoInBag > 0) {
+	if (input()->getKeyDown(GLFW_KEY_R) && currentAmmoInBag > 0 && player_entity->alive) {
 		pressedReloadingForThePlayer = true;
 	}
 
@@ -422,7 +432,7 @@ void Scene00::update(float deltaTime)
 	// Then you get a message that youre out of ammo,
 	// ###############################################################
 	if (currentAmmoInMagazine == 0 && currentAmmoInBag == 0) {
-		text[6]->message("You're out of ammo, find a ammunition box to continuing shooting");
+		text[7]->message("You're out of ammo, find a ammunition box to continuing shooting");
 	}
 
 	// ###############################################################
@@ -494,19 +504,41 @@ void Scene00::update(float deltaTime)
 	}
 
 	// ###############################################################
+	// Adding highscore when player kills a enemie
+	// ###############################################################
+	vector<Enemie*>::iterator toremoveEnemies = enemies.begin();
+	while (toremoveEnemies != enemies.end()) {
+		if ((*toremoveEnemies)->alive == false && countEnemiesDied <= deadEnemies.size()) {
+			highscore->addScore(score);
+			countEnemiesDied++;
+			deadEnemies.push_back((*toremoveEnemies));
+			toremoveEnemies = enemies.erase(toremoveEnemies);
+		}
+		else {
+			++toremoveEnemies;
+		}
+	}
+
+	// ###############################################################
+	// Logging current score
+	// ###############################################################
+	string currentscore = to_string(highscore->getHighScore());
+	text[6]->message("Score: " + currentscore);
+
+	// ###############################################################
 	// Logging current ammo and current mags
 	// ###############################################################
-	std::string AmmoLeftToUseText = "Ammo: ";
-	AmmoLeftToUseText.append(std::to_string(currentAmmoInMagazine));
+	string AmmoLeftToUseText = "Ammo: ";
+	AmmoLeftToUseText.append(to_string(currentAmmoInMagazine));
 	AmmoLeftToUseText.append("/");
-	AmmoLeftToUseText.append(std::to_string(currentAmmoInBag));
+	AmmoLeftToUseText.append(to_string(currentAmmoInBag));
 	text[4]->message(AmmoLeftToUseText);
 
 	// ###############################################################
 	// Logging current health and max health
 	// ###############################################################
-	std::string playerHealthToText = "Health: ";
-	playerHealthToText.append(std::to_string(player_entity->getPlayerHealth()));
+	string playerHealthToText = "Health: ";
+	playerHealthToText.append(to_string(player_entity->getPlayerHealth()));
 	playerHealthToText.append("/");
 	playerHealthToText.append("100");
 	text[5]->message(playerHealthToText);

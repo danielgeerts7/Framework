@@ -188,6 +188,8 @@ add_executable(start
 	start/enemie.h
 	start/healthbar.cpp
 	start/healthbar.h
+	start/highscore.cpp
+	start/highscore.h
 	start/loadtiles.cpp
 	start/loadtiles.h
 	start/main.cpp
