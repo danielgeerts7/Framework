@@ -47,14 +47,6 @@ int main( void )
 	scenes.push_back(new Scene10());
 	int s = scenes.size();
 
-	// SuperScene::Player in superscene.h
-	Player* player = new Player();
-
-	// add our Player to the (Super)Scenes to keep track of it
-	for (int i = 0; i < s; i++) {
-		scenes[i]->addPlayer(player);
-	}
-
 	// start running with the first Scene
 	SuperScene* scene = scenes[0];
 	int scenecounter = 0;
@@ -87,12 +79,6 @@ int main( void )
 	core.cleanup(); // cleanup ResourceManager (Textures + Meshes, but not Shaders)
 	delete scene; // delete Scene and everything in it from the heap to make space for next Scene
 */
-
-	// show player results
-	std::cout << "Player clicks: " << player->mouseclicks << std::endl;
-
-	// and delete the player
-	delete player;
 
 	// No need to explicitly clean up the core.
 	// As a local var, core will go out of scope and destroy Renderer->ResourceManager.
