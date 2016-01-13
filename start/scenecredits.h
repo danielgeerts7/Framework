@@ -10,10 +10,13 @@
 
 class SceneCredits: public SuperScene
 {
-public:
-	SceneCredits();
-	~SceneCredits();
+	public:
+		SceneCredits();
+		virtual ~SceneCredits();
+
+		virtual void update(float deltaTime);
+	private:
 };
 
-#endif /*SCENECREDITS_H*/
+#endif /* SCENECREDITS_H */
 

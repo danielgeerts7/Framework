@@ -25,6 +25,17 @@ public:
 	virtual void update(float deltaTime);
 
 	static int activescene;
+	enum state { START, STOP, WIN, LOSE };
+
+	void setState(SuperScene::state st)
+	{
+		_st = st;
+	}
+
+	SuperScene::state getState() const
+	{
+		return _st;
+	}
 
 protected:
 	unsigned int top_layer;
@@ -36,6 +47,8 @@ protected:
 private:
 	BasicEntity* logo;
 	Timer fpstimer;
+
+	SuperScene::state _st;
 };
 
 #endif /* SUPERSCENE_H */

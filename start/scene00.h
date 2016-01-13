@@ -26,7 +26,7 @@ class Scene00: public SuperScene
 
 		virtual void update(float deltaTime);
 
-		int gethighscorelist();
+		int getscore();
 	
 	private:
 

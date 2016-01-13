@@ -8,6 +8,8 @@
 
 SceneMenu::SceneMenu() : SuperScene()
 {
+	SuperScene::setState(START);
+
 	text[0]->message("Menu scene: menu of this awesome game!");
 
 	//Text: 'Start'
@@ -119,6 +121,7 @@ void SceneMenu::update(float deltaTime)
 	if (btnStart->checkIfMouseIsOverBtn(mousepos, btnStart->scale) == 1) {
 		btnStart->sprite()->color = BLUE;
 		if (input()->getMouseUp(0)) {
+			SuperScene::setState(STOP);
 			SuperScene::stop();
 			SuperScene::activescene = 1;
 		}
@@ -132,6 +135,7 @@ void SceneMenu::update(float deltaTime)
 	if (btnHighscore->checkIfMouseIsOverBtn(mousepos, btnHighscore->scale) == 1) {
 		btnHighscore->sprite()->color = BLUE;
 		if (input()->getMouseUp(0)) {
+			SuperScene::setState(STOP);
 			SuperScene::stop();
 			SuperScene::activescene = 2;
 		}
@@ -146,6 +150,7 @@ void SceneMenu::update(float deltaTime)
 	if (btnCredits->checkIfMouseIsOverBtn(mousepos, btnCredits->scale) == 1) {
 		btnCredits->sprite()->color = BLUE;
 		if (input()->getMouseUp(0)) {
+			SuperScene::setState(STOP);
 			SuperScene::stop();
 			SuperScene::activescene = 3;
 		}
@@ -160,6 +165,7 @@ void SceneMenu::update(float deltaTime)
 		btnQuit->sprite()->color = BLUE;
 		if (input()->getMouseUp(0)) {
 			SuperScene::stop();
+			SuperScene::setState(STOP);
 			SuperScene::activescene = -1;
 		}
 	}

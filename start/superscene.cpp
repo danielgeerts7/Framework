@@ -73,6 +73,7 @@ void SuperScene::update(float deltaTime)
 	// Escape key stops the Scene
 	// ###############################################################
 	if (input()->getKeyUp( GLFW_KEY_ESCAPE )) {
+		SuperScene::setState(STOP);
 		this->stop();
 		activescene = 0;
 	}

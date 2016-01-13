@@ -7,6 +7,9 @@
 
 Scene00::Scene00() : SuperScene()
 {
+
+	SuperScene::setState(START);
+
 	// ###############################################################
 	// Setting the variables
 	// ###############################################################
@@ -531,6 +534,16 @@ void Scene00::update(float deltaTime)
 	}
 
 	// ###############################################################
+	// Setting state when WIN of LOSE
+	// ###############################################################
+	if (enemies.size() <= 0) {
+		SuperScene::setState(WIN);
+	}
+	if (player_entity->getPlayerHealth() <= 0) {
+		SuperScene::setState(LOSE);
+	}
+
+	// ###############################################################
 	// Logging current score
 	// ###############################################################
 	string currentscorestr = to_string(currentscore);
@@ -571,6 +584,6 @@ void Scene00::update(float deltaTime)
 	}
 }
 
-int Scene00::gethighscorelist() {
+int Scene00::getscore() {
 	return this->currentscore;
 }

@@ -11,16 +11,20 @@
 
 class SceneHighscore: public SuperScene
 {
-public:
-	SceneHighscore(HighScoreList* highscore);
-	~SceneHighscore();
+	public:
+		SceneHighscore(HighScoreList* highscore);
+		virtual ~SceneHighscore();
 
-private:
-	Text* t;
+		virtual void update(float deltaTime);
 
-	HighScoreList* highscorelist;
-	vector<int> v;
+	private:
+		int tophighscores;
+		Text* t;
+		HighScoreList* h;
+		bool loaded;
+		vector<int> highscoreList;
+		vector<Text*> texts;
 };
 
-#endif /*SCENEHIGHSCORE_H*/
+#endif /* SCENEHIGHSCORE_H */
 

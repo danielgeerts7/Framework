@@ -46,20 +46,33 @@ int main(void)
 
 	// start running with the first Scene
 	SuperScene* scene = scenes[0];
-	//int scenecounter = 0;
+	int scenecounter = 0;
 	int running = 1;
+	bool canAddScoreToTheList = false;
+
 	while (running) {
-		int scenecounter = SuperScene::activescene;
+		scenecounter = scene->activescene;
+		SuperScene::state state = scene->getState();
 		if (scenecounter >= 0 && scenecounter <= 3) {
-			scenecounter = scene->activescene;
-			//if (scene00->isRunning() == false) { highscore->addScore(scene00->gethighscorelist()); }
-			if (scenecounter > s - 1) { scenecounter = 0; scene->activescene = 0; }
-			if (scenecounter < 0) { scenecounter = s - 1; scene->activescene = s - 1; }
+			int getcurrentstate = scene00->getState();
+
+			if (getcurrentstate == SuperScene::state::START && scene00->isRunning() && !canAddScoreToTheList)
+			{
+				canAddScoreToTheList = true;
+			}
+			if (getcurrentstate == SuperScene::state::STOP && !scene00->isRunning() && canAddScoreToTheList)
+			{
+				highscore->addScore(scene00->getscore());
+				canAddScoreToTheList = false;
+			}
+
+			vector<int> HighScoreList = highscore->getHighScoreList();
 			scene = scenes[scenecounter];
 			core.run(scene); // update and render the current scene
 			core.showFrameRate(5); // show framerate in output every n seconds
+			//if (glfwWindowShouldClose(_renderer.window()) == 1) { scene->stop(); SuperScene::activescene = -1; }
 		}
-		else {
+		if (!scene->isRunning() && scenecounter == -1) {
 			running = 0; // check status of Scene every frame
 		}
 	}

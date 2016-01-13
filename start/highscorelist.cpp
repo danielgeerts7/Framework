@@ -8,7 +8,6 @@
 
 HighScoreList::HighScoreList()
 {
-	highscore = 0;
 	int a;
 	int b;
 	int c;
@@ -20,27 +19,27 @@ HighScoreList::HighScoreList()
 	int i;
 	int j;
 
-	top10list.push_back(a);
-	top10list.push_back(b);
-	top10list.push_back(c);
-	top10list.push_back(d);
-	top10list.push_back(e);
-	top10list.push_back(f);
-	top10list.push_back(g);
-	top10list.push_back(h);
-	top10list.push_back(i);
-	top10list.push_back(j);
+	highscoreList.push_back(a);
+	highscoreList.push_back(b);
+	highscoreList.push_back(c);
+	highscoreList.push_back(d);
+	highscoreList.push_back(e);
+	highscoreList.push_back(f);
+	highscoreList.push_back(g);
+	highscoreList.push_back(h);
+	highscoreList.push_back(i);
+	highscoreList.push_back(j);
 
-	top10list[0] = 420;
-	top10list[1] = 1337;
-	top10list[2] = 12;
-	top10list[3] = 42;
-	top10list[4] = 130;
-	top10list[5] = 83;
-	top10list[6] = 5;
-	top10list[7] = 32310;
-	top10list[8] = 150;
-	top10list[9] = 10000;
+	highscoreList[0] = 1;
+	highscoreList[1] = 2;
+	highscoreList[2] = 3;
+	highscoreList[3] = 4;
+	highscoreList[4] = 5;
+	highscoreList[5] = 6;
+	highscoreList[6] = 7;
+	highscoreList[7] = 8;
+	highscoreList[8] = 9;
+	highscoreList[9] = 10;
 }
 
 
@@ -48,20 +47,11 @@ HighScoreList::~HighScoreList()
 {
 }
 
-void HighScoreList::setHighScore(int score) {
-	this->highscore = score;
-}
-
-int HighScoreList::getHighScore() {
-	return this->highscore;
-}
-
 void HighScoreList::addScore(int score) {
-	this->highscore = this->highscore + score;
+	highscoreList.push_back(score);
+	sort(highscoreList.begin(), highscoreList.end());
 }
 
-vector<int> HighScoreList::getCurrentHighScoreToList() {
-	top10list.push_back(this->highscore);
-	sort(top10list.begin(), top10list.end());
-	return top10list;
+vector<int> HighScoreList::getHighScoreList() {
+	return highscoreList;
 }
