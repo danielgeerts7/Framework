@@ -115,6 +115,7 @@ Scene00::~Scene00()
 	for (int i = 0; i<s; i++) {
 		layers[2]->removeChild(blocks[i]);
 		delete blocks[i];
+		blocks[i] == NULL;
 	}
 	blocks.clear();
 
@@ -122,6 +123,7 @@ Scene00::~Scene00()
 	for (int j = 0; j<p_b; j++) {
 		layers[1]->removeChild(player_bullets[j]);
 		delete player_bullets[j];
+		player_bullets[j] == NULL;
 	}
 	player_bullets.clear();
 
@@ -129,6 +131,7 @@ Scene00::~Scene00()
 	for (int l = 0; l<e_b; l++) {
 		layers[1]->removeChild(enemies_bullets[l]);
 		delete enemies_bullets[l];
+		enemies_bullets[l] == NULL;
 	}
 	enemies_bullets.clear();
 
@@ -140,6 +143,9 @@ Scene00::~Scene00()
 		delete guns_enemies[k];
 		delete enemies[k];
 		delete enemies_healthbars[k];
+		guns_enemies[k] == NULL;
+		enemies[k] == NULL;
+		enemies_healthbars[k] == NULL;
 	}
 	enemies.clear();
 	guns_enemies.clear();
@@ -149,6 +155,7 @@ Scene00::~Scene00()
 	for (int a = 0; a < pp; a++) {
 		layers[3]->removeChild(particles[a]);
 		delete particles[a];
+		particles[a] == NULL;
 	}
 	particles.clear();
 
@@ -162,6 +169,11 @@ Scene00::~Scene00()
 	delete player_healthbar;
 	delete gun_player_entity;
 	delete player_health_text;
+	background_entity == NULL;
+	player_entity == NULL;
+	player_healthbar == NULL;
+	gun_player_entity == NULL;
+	player_health_text == NULL;
 }
 
 void Scene00::update(float deltaTime)
