@@ -37,7 +37,7 @@ void Core::run(Scene* scene)
 	_renderer.renderScene(scene);
 
 	// user clicked the 'close' button in the window
-	if (glfwWindowShouldClose(_renderer.window()) == 1) { scene->stop(); SuperScene::activescene = -1; }
+	if (glfwWindowShouldClose(_renderer.window()) == 1) { scene->stop(); }
 }
 
 void Core::showFrameRate(float numsecs)
