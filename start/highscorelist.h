@@ -7,7 +7,7 @@
 #define HIGHSCORE_H
 
 #include <vector>
-#include <algorithm>
+#include <algorithm>	// std::sort
 
 using namespace std;
 class HighScoreList
@@ -17,7 +17,7 @@ public:
 	~HighScoreList();
 
 	void addScore(int score, string name);
-	vector<pair <int, string> > getHighScoreList();
+	vector<pair <int, string> > sortHighScoreList();
 
 private:
 	vector<pair <int, string> > highscoreList;

@@ -105,8 +105,8 @@ void SceneHighscore::update(float deltaTime)
 	// Make SuperScene do what it needs to do (Escape key stops Scene)
 	// ###############################################################
 	SuperScene::update(deltaTime);
-	if (highscoreList != h->getHighScoreList()) {
-		highscoreList = h->getHighScoreList();
+	if (highscoreList != h->sortHighScoreList()) {
+		highscoreList = h->sortHighScoreList();
 		loaded = false;
 	}
 

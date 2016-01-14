@@ -8,16 +8,16 @@
 
 HighScoreList::HighScoreList()
 {
-	int a = 10;
-	int b = 20;
-	int c = 30;
-	int d = 40;
-	int e = 50;
-	int f = 60;
-	int g = 70;
-	int h = 80;
-	int i = 90;
-	int j = 100;
+	int a = 60;
+	int b = 50;
+	int c = 10;
+	int d = 20;
+	int e = 80;
+	int f = 70;
+	int g = 100;
+	int h = 30;
+	int i = 40;
+	int j = 90;
 
 	string aa = "aaa";
 	string bb = "bbb";
@@ -47,11 +47,17 @@ HighScoreList::~HighScoreList()
 {
 }
 
-void HighScoreList::addScore(int score, string name) {
-	highscoreList.emplace_back(score, name);
-	sort(highscoreList.begin(), highscoreList.end());
+bool compare(const pair<int, string>&i, const pair<int, string>&j)
+{
+	return i.first > j.first;
 }
 
-vector<pair <int, string> > HighScoreList::getHighScoreList() {
+void HighScoreList::addScore(int score, string name) {
+	highscoreList.emplace_back(score, name);
+	sort(highscoreList.begin(), highscoreList.end(), compare);
+}
+
+vector<pair <int, string> > HighScoreList::sortHighScoreList() {
+	sort(highscoreList.begin(), highscoreList.end(), compare);
 	return highscoreList;
 }
