@@ -14,6 +14,7 @@ SceneHighscore::SceneHighscore(HighScoreList* highscore) : SuperScene()
 
 	text[0]->message("HIGHSCORE: here you can see who is the best!");
 
+	/* RANKS */
 	for (int i = 0; i < tophighscores; i++) {
 		Text* tr = new Text();
 		tr->scale = Point2(0.75, 0.75);
@@ -22,6 +23,7 @@ SceneHighscore::SceneHighscore(HighScoreList* highscore) : SuperScene()
 		textsRanks.push_back(tr);
 	}
 
+	/* NAMES */
 	for (int i = 0; i < tophighscores; i++) {
 		Text* tn = new Text();
 		tn->scale = Point2(0.75, 0.75);
@@ -30,6 +32,7 @@ SceneHighscore::SceneHighscore(HighScoreList* highscore) : SuperScene()
 		textsnames.push_back(tn);
 	}
 
+	/* HIGHSCORES */
 	for (int i = 0; i < tophighscores; i++) {
 		Text* t = new Text();
 		t->scale = Point2(0.75, 0.75);
@@ -41,18 +44,21 @@ SceneHighscore::SceneHighscore(HighScoreList* highscore) : SuperScene()
 
 	loaded = false;
 
+	/* RANK */
 	rankText = new Text();
 	rankText->message("RANK");
 	rankText->position.x = textsRanks[0]->position.x;
 	rankText->position.y = 150;
 	layers[1]->addChild(rankText);
 
+	/* NAME */
 	titleNameText = new Text();
 	titleNameText->message("NAME");
 	titleNameText->position.x = textsnames[0]->position.x;
 	titleNameText->position.y = 150;
 	layers[1]->addChild(titleNameText);
 
+	/* HIGHSCORE */
 	highscoreText = new Text();
 	highscoreText->message("HIGHSCORE");
 	highscoreText->position.x = textsHighscores[0]->position.x;
@@ -63,18 +69,19 @@ SceneHighscore::SceneHighscore(HighScoreList* highscore) : SuperScene()
 
 SceneHighscore::~SceneHighscore()
 {
+	/* RANKS */
 	for (int i = 0; i < textsRanks.size(); i++) {
 		layers[1]->removeChild(textsRanks[i]);
 		delete textsRanks[i];
 		textsRanks[i] == NULL;
 	}
-
+	/* NAMES */
 	for (int i = 0; i < textsnames.size(); i++) {
 		layers[1]->removeChild(textsnames[i]);
 		delete textsnames[i];
 		textsnames[i] == NULL;
 	}
-
+	/* HIGHSCORES */
 	for (int i = 0; i < textsHighscores.size(); i++) {
 		layers[1]->removeChild(textsHighscores[i]);
 		delete textsHighscores[i];
@@ -102,6 +109,7 @@ void SceneHighscore::update(float deltaTime)
 		highscoreList = h->getHighScoreList();
 		loaded = false;
 	}
+
 	if (!loaded) {
 		for (int i = 0; i < tophighscores; i++) {
 			/* RANKS */
