@@ -73,7 +73,21 @@ class Scene00: public SuperScene
 
 		int score;
 		int currentscore;
+
+		string firstLetter;
+		string secondLetter;
+		string thirdLetter;
 		string username;
+		Text* enterUsername;
+
+		BasicEntity* arrow;
+
+		bool triggerWhenFinished;
+
+		bool numberone = false;
+		bool numbertwo = false;
+		bool numberthree = false;
+		bool pressed = false;
 };
 
 #endif /* SCENE00_H */ 

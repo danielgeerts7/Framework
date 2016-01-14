@@ -31,7 +31,20 @@ Scene00::Scene00() : SuperScene()
 	score = 10;
 	currentscore = 0;
 
-	username = "aaa";
+	firstLetter = "a";
+	secondLetter = "a";
+	thirdLetter = "a";
+	username = firstLetter + secondLetter + thirdLetter;
+	username.resize(3);
+
+	triggerWhenFinished = true;
+
+	arrow = new BasicEntity();
+	arrow->addSprite("assets/block.tga");
+	arrow->scale = Point2(0.5, 0.5);
+
+	enterUsername = new Text();
+	enterUsername->position = Point2(0, 0);
 
 	pressedReloadingForThePlayer = false;
 	playerCanShoot = false;
@@ -543,6 +556,419 @@ void Scene00::update(float deltaTime)
 	}
 	if (player_entity->getPlayerHealth() <= 0) {
 		SuperScene::setState(LOSE);
+	}
+
+	if (SuperScene::getState() == WIN || SuperScene::getState() == LOSE) {
+		if (triggerWhenFinished) {
+			enterUsername->position.x = camera()->position.x;
+			enterUsername->position.y = camera()->position.y;
+			enterUsername->message(username);
+			layers[4]->addChild(enterUsername);
+
+			arrow->position.y = enterUsername->position.y + 40;
+			layers[4]->addChild(arrow);
+
+			numberone = true;
+			numbertwo = false;
+			numberthree = false;
+
+			triggerWhenFinished = false;
+		}
+
+		if (numberone) {
+			arrow->position.x = enterUsername->position.x;
+		}
+		if (numbertwo) {
+			arrow->position.x = enterUsername->position.x + 32;
+		}
+		if (numberthree) {
+			arrow->position.x = enterUsername->position.x + 64;
+		}
+
+		if (input()->getKey(GLFW_KEY_LEFT) && !pressed) {
+			if (numberone && !pressed) {
+				numberone = false;
+				numbertwo = false;
+				numberthree = true;
+
+				pressed = true;
+			}
+			if (numbertwo && !pressed) {
+				numberone = true;
+				numbertwo = false;
+				numberthree = false;
+
+				pressed = true;
+			}
+			if (numberthree && !pressed) {
+				numberone = false;
+				numbertwo = true;
+				numberthree = false;
+
+				pressed = true;
+			}
+		}
+
+		if (input()->getKeyUp(GLFW_KEY_LEFT) && pressed) {
+			pressed = false;
+		}
+
+		if (input()->getKey(GLFW_KEY_RIGHT) && !pressed) {
+			if (numberone && !pressed) {
+				numberone = false;
+				numbertwo = true;
+				numberthree = false;
+
+				pressed = true;
+			}
+			if (numbertwo && !pressed) {
+				numberone = false;
+				numbertwo = false;
+				numberthree = true;
+
+				pressed = true;
+			}
+			if (numberthree && !pressed) {
+				numberone = true;
+				numbertwo = false;
+				numberthree = false;
+
+				pressed = true;
+			}
+		}
+
+		if (input()->getKeyUp(GLFW_KEY_RIGHT) && pressed) {
+			pressed = false;
+		}
+
+		if (input()->getKey(GLFW_KEY_UP) && !pressed) {
+			if (numberone && !pressed) {
+				if (firstLetter == "a" && !pressed) {
+					firstLetter = "b";
+					pressed = true;
+				}
+				if (firstLetter == "b" && !pressed) {
+					firstLetter = "c";
+					pressed = true;
+				}
+				if (firstLetter == "c" && !pressed) {
+					firstLetter = "d";
+					pressed = true;
+				}
+				if (firstLetter == "d" && !pressed) {
+					firstLetter = "e";
+					pressed = true;
+				}
+				if (firstLetter == "e" && !pressed) {
+					firstLetter = "f";
+					pressed = true;
+				}
+				if (firstLetter == "f" && !pressed) {
+					firstLetter = "g";
+					pressed = true;
+				}
+				if (firstLetter == "g" && !pressed) {
+					firstLetter = "h";
+					pressed = true;
+				}
+				if (firstLetter == "h" && !pressed) {
+					firstLetter = "i";
+					pressed = true;
+				}
+				if (firstLetter == "i" && !pressed) {
+					firstLetter = "j";
+					pressed = true;
+				}
+				if (firstLetter == "j" && !pressed) {
+					firstLetter = "k";
+					pressed = true;
+				}
+				if (firstLetter == "k" && !pressed) {
+					firstLetter = "l";
+					pressed = true;
+				}
+				if (firstLetter == "l" && !pressed) {
+					firstLetter = "m";
+					pressed = true;
+				}
+				if (firstLetter == "m" && !pressed) {
+					firstLetter = "n";
+					pressed = true;
+				}
+				if (firstLetter == "n" && !pressed) {
+					firstLetter = "o";
+					pressed = true;
+				}
+				if (firstLetter == "o" && !pressed) {
+					firstLetter = "p";
+					pressed = true;
+				}
+				if (firstLetter == "p" && !pressed) {
+					firstLetter = "q";
+					pressed = true;
+				}
+				if (firstLetter == "q" && !pressed) {
+					firstLetter = "r";
+					pressed = true;
+				}
+				if (firstLetter == "r" && !pressed) {
+					firstLetter = "s";
+					pressed = true;
+				}
+				if (firstLetter == "s" && !pressed) {
+					firstLetter = "t";
+					pressed = true;
+				}
+				if (firstLetter == "t" && !pressed) {
+					firstLetter = "u";
+					pressed = true;
+				}
+				if (firstLetter == "u" && !pressed) {
+					firstLetter = "v";
+					pressed = true;
+				}
+				if (firstLetter == "v" && !pressed) {
+					firstLetter = "w";
+					pressed = true;
+				}
+				if (firstLetter == "w" && !pressed) {
+					firstLetter = "x";
+					pressed = true;
+				}
+				if (firstLetter == "x" && !pressed) {
+					firstLetter = "y";
+					pressed = true;
+				}
+				if (firstLetter == "y" && !pressed) {
+					firstLetter = "z";
+					pressed = true;
+				}
+				if (firstLetter == "z" && !pressed) {
+					firstLetter = "a";
+					pressed = true;
+				}
+			}
+			if (numbertwo && !pressed) {
+				if (secondLetter == "a" && !pressed) {
+					secondLetter = "b";
+					pressed = true;
+				}
+				if (secondLetter == "b" && !pressed) {
+					secondLetter = "c";
+					pressed = true;
+				}
+				if (secondLetter == "c" && !pressed) {
+					secondLetter = "d";
+					pressed = true;
+				}
+				if (secondLetter == "d" && !pressed) {
+					secondLetter = "e";
+					pressed = true;
+				}
+				if (secondLetter == "e" && !pressed) {
+					secondLetter = "f";
+					pressed = true;
+				}
+				if (secondLetter == "f" && !pressed) {
+					secondLetter = "g";
+					pressed = true;
+				}
+				if (secondLetter == "g" && !pressed) {
+					secondLetter = "h";
+					pressed = true;
+				}
+				if (secondLetter == "h" && !pressed) {
+					secondLetter = "i";
+					pressed = true;
+				}
+				if (secondLetter == "i" && !pressed) {
+					secondLetter = "j";
+					pressed = true;
+				}
+				if (secondLetter == "j" && !pressed) {
+					secondLetter = "k";
+					pressed = true;
+				}
+				if (secondLetter == "k" && !pressed) {
+					secondLetter = "l";
+					pressed = true;
+				}
+				if (secondLetter == "l" && !pressed) {
+					secondLetter = "m";
+					pressed = true;
+				}
+				if (secondLetter == "m" && !pressed) {
+					secondLetter = "n";
+					pressed = true;
+				}
+				if (secondLetter == "n" && !pressed) {
+					secondLetter = "o";
+					pressed = true;
+				}
+				if (secondLetter == "o" && !pressed) {
+					secondLetter = "p";
+					pressed = true;
+				}
+				if (secondLetter == "p" && !pressed) {
+					secondLetter = "q";
+					pressed = true;
+				}
+				if (secondLetter == "q" && !pressed) {
+					secondLetter = "r";
+					pressed = true;
+				}
+				if (secondLetter == "r" && !pressed) {
+					secondLetter = "s";
+					pressed = true;
+				}
+				if (secondLetter == "s" && !pressed) {
+					secondLetter = "t";
+					pressed = true;
+				}
+				if (secondLetter == "t" && !pressed) {
+					secondLetter = "u";
+					pressed = true;
+				}
+				if (secondLetter == "u" && !pressed) {
+					secondLetter = "v";
+					pressed = true;
+				}
+				if (secondLetter == "v" && !pressed) {
+					secondLetter = "w";
+					pressed = true;
+				}
+				if (secondLetter == "w" && !pressed) {
+					secondLetter = "x";
+					pressed = true;
+				}
+				if (secondLetter == "x" && !pressed) {
+					secondLetter = "y";
+					pressed = true;
+				}
+				if (secondLetter == "y" && !pressed) {
+					secondLetter = "z";
+					pressed = true;
+				}
+				if (secondLetter == "z" && !pressed) {
+					secondLetter = "a";
+					pressed = true;
+				}
+			}
+			if (numberthree && !pressed) {
+				if (thirdLetter == "a" && !pressed) {
+					thirdLetter = "b";
+					pressed = true;
+				}
+				if (thirdLetter == "b" && !pressed) {
+					thirdLetter = "c";
+					pressed = true;
+				}
+				if (thirdLetter == "c" && !pressed) {
+					thirdLetter = "d";
+					pressed = true;
+				}
+				if (thirdLetter == "d" && !pressed) {
+					thirdLetter = "e";
+					pressed = true;
+				}
+				if (thirdLetter == "e" && !pressed) {
+					thirdLetter = "f";
+					pressed = true;
+				}
+				if (thirdLetter == "f" && !pressed) {
+					thirdLetter = "g";
+					pressed = true;
+				}
+				if (thirdLetter == "g" && !pressed) {
+					thirdLetter = "h";
+					pressed = true;
+				}
+				if (thirdLetter == "h" && !pressed) {
+					thirdLetter = "i";
+					pressed = true;
+				}
+				if (thirdLetter == "i" && !pressed) {
+					thirdLetter = "j";
+					pressed = true;
+				}
+				if (thirdLetter == "j" && !pressed) {
+					thirdLetter = "k";
+					pressed = true;
+				}
+				if (thirdLetter == "k" && !pressed) {
+					thirdLetter = "l";
+					pressed = true;
+				}
+				if (thirdLetter == "l" && !pressed) {
+					thirdLetter = "m";
+					pressed = true;
+				}
+				if (thirdLetter == "m" && !pressed) {
+					thirdLetter = "n";
+					pressed = true;
+				}
+				if (thirdLetter == "n" && !pressed) {
+					thirdLetter = "o";
+					pressed = true;
+				}
+				if (thirdLetter == "o" && !pressed) {
+					thirdLetter = "p";
+					pressed = true;
+				}
+				if (thirdLetter == "p" && !pressed) {
+					thirdLetter = "q";
+					pressed = true;
+				}
+				if (thirdLetter == "q" && !pressed) {
+					thirdLetter = "r";
+					pressed = true;
+				}
+				if (thirdLetter == "r" && !pressed) {
+					thirdLetter = "s";
+					pressed = true;
+				}
+				if (thirdLetter == "s" && !pressed) {
+					thirdLetter = "t";
+					pressed = true;
+				}
+				if (thirdLetter == "t" && !pressed) {
+					thirdLetter = "u";
+					pressed = true;
+				}
+				if (thirdLetter == "u" && !pressed) {
+					thirdLetter = "v";
+					pressed = true;
+				}
+				if (thirdLetter == "v" && !pressed) {
+					thirdLetter = "w";
+					pressed = true;
+				}
+				if (thirdLetter == "w" && !pressed) {
+					thirdLetter = "x";
+					pressed = true;
+				}
+				if (thirdLetter == "x" && !pressed) {
+					thirdLetter = "y";
+					pressed = true;
+				}
+				if (thirdLetter == "y" && !pressed) {
+					thirdLetter = "z";
+					pressed = true;
+				}
+				if (thirdLetter == "z" && !pressed) {
+					thirdLetter = "a";
+					pressed = true;
+				}
+			}
+		}
+
+		if (input()->getKeyUp(GLFW_KEY_UP) && pressed) {
+			pressed = false;
+		}
+		layers[4]->removeChild(enterUsername);
+		username = firstLetter + secondLetter + thirdLetter;
+		enterUsername->message(username);
+		layers[4]->addChild(enterUsername);
 	}
 
 	// ###############################################################
