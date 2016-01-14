@@ -22,8 +22,15 @@ class SceneHighscore: public SuperScene
 		Text* t;
 		HighScoreList* h;
 		bool loaded;
-		vector<int> highscoreList;
-		vector<Text*> texts;
+
+		Text* rankText;
+		Text* titleNameText;
+		Text* highscoreText;
+
+		vector<pair <int, string> > highscoreList;
+		vector<Text*> textsRanks;
+		vector<Text*> textsnames;
+		vector<Text*> textsHighscores;
 };
 
 #endif /* SCENEHIGHSCORE_H */

@@ -31,6 +31,8 @@ Scene00::Scene00() : SuperScene()
 	score = 10;
 	currentscore = 0;
 
+	username = "aaa";
+
 	pressedReloadingForThePlayer = false;
 	playerCanShoot = false;
 
@@ -586,4 +588,8 @@ void Scene00::update(float deltaTime)
 
 int Scene00::getscore() {
 	return this->currentscore;
+}
+
+string Scene00::getname() {
+	return this->username;
 }

@@ -16,11 +16,11 @@ public:
 	HighScoreList();
 	~HighScoreList();
 
-	void addScore(int score);
-	vector<int> getHighScoreList();
+	void addScore(int score, string name);
+	vector<pair <int, string> > getHighScoreList();
 
 private:
-	vector<int> highscoreList;
+	vector<pair <int, string> > highscoreList;
 };
 
 #endif /* HIGHSCORE_H */

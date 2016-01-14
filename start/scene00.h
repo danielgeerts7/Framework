@@ -27,6 +27,7 @@ class Scene00: public SuperScene
 		virtual void update(float deltaTime);
 
 		int getscore();
+		string getname();
 	
 	private:
 
@@ -72,6 +73,7 @@ class Scene00: public SuperScene
 
 		int score;
 		int currentscore;
+		string username;
 };
 
 #endif /* SCENE00_H */ 

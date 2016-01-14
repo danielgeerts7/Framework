@@ -8,38 +8,38 @@
 
 HighScoreList::HighScoreList()
 {
-	int a;
-	int b;
-	int c;
-	int d;
-	int e;
-	int f;
-	int g;
-	int h;
-	int i;
-	int j;
+	int a = 10;
+	int b = 20;
+	int c = 30;
+	int d = 40;
+	int e = 50;
+	int f = 60;
+	int g = 70;
+	int h = 80;
+	int i = 90;
+	int j = 100;
 
-	highscoreList.push_back(a);
-	highscoreList.push_back(b);
-	highscoreList.push_back(c);
-	highscoreList.push_back(d);
-	highscoreList.push_back(e);
-	highscoreList.push_back(f);
-	highscoreList.push_back(g);
-	highscoreList.push_back(h);
-	highscoreList.push_back(i);
-	highscoreList.push_back(j);
+	string aa = "aaa";
+	string bb = "bbb";
+	string cc = "ccc";
+	string dd = "ddd";
+	string ee = "eee";
+	string ff = "fff";
+	string gg = "ggg";
+	string hh = "hhh";
+	string ii = "iii";
+	string jj = "jjj";
 
-	highscoreList[0] = 1;
-	highscoreList[1] = 2;
-	highscoreList[2] = 3;
-	highscoreList[3] = 4;
-	highscoreList[4] = 5;
-	highscoreList[5] = 6;
-	highscoreList[6] = 7;
-	highscoreList[7] = 8;
-	highscoreList[8] = 9;
-	highscoreList[9] = 10;
+	highscoreList.emplace_back(a, aa);
+	highscoreList.emplace_back(b, bb);
+	highscoreList.emplace_back(c, cc);
+	highscoreList.emplace_back(d, dd);
+	highscoreList.emplace_back(e, ee);
+	highscoreList.emplace_back(f, ff);
+	highscoreList.emplace_back(g, gg);
+	highscoreList.emplace_back(h, hh);
+	highscoreList.emplace_back(i, ii);
+	highscoreList.emplace_back(j, jj);
 }
 
 
@@ -47,11 +47,11 @@ HighScoreList::~HighScoreList()
 {
 }
 
-void HighScoreList::addScore(int score) {
-	highscoreList.push_back(score);
+void HighScoreList::addScore(int score, string name) {
+	highscoreList.emplace_back(score, name);
 	sort(highscoreList.begin(), highscoreList.end());
 }
 
-vector<int> HighScoreList::getHighScoreList() {
+vector<pair <int, string> > HighScoreList::getHighScoreList() {
 	return highscoreList;
 }

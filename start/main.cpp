@@ -62,11 +62,11 @@ int main(void)
 			}
 			if (getcurrentstate == SuperScene::state::STOP && !scene00->isRunning() && canAddScoreToTheList)
 			{
-				highscore->addScore(scene00->getscore());
+				highscore->addScore(scene00->getscore(), scene00->getname());
 				canAddScoreToTheList = false;
 			}
 
-			vector<int> HighScoreList = highscore->getHighScoreList();
+			vector<pair <int, string> > HighScoreList = highscore->getHighScoreList();
 			scene = scenes[scenecounter];
 			core.run(scene); // update and render the current scene
 			core.showFrameRate(5); // show framerate in output every n seconds
