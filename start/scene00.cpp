@@ -965,6 +965,332 @@ void Scene00::update(float deltaTime)
 		if (input()->getKeyUp(GLFW_KEY_UP) && pressed) {
 			pressed = false;
 		}
+
+
+		if (input()->getKey(GLFW_KEY_DOWN) && !pressed) {
+			if (numberone && !pressed) {
+				if (firstLetter == "b" && !pressed) {
+					firstLetter = "a";
+					pressed = true;
+				}
+				if (firstLetter == "c" && !pressed) {
+					firstLetter = "b";
+					pressed = true;
+				}
+				if (firstLetter == "d" && !pressed) {
+					firstLetter = "c";
+					pressed = true;
+				}
+				if (firstLetter == "e" && !pressed) {
+					firstLetter = "d";
+					pressed = true;
+				}
+				if (firstLetter == "f" && !pressed) {
+					firstLetter = "e";
+					pressed = true;
+				}
+				if (firstLetter == "g" && !pressed) {
+					firstLetter = "f";
+					pressed = true;
+				}
+				if (firstLetter == "h" && !pressed) {
+					firstLetter = "g";
+					pressed = true;
+				}
+				if (firstLetter == "i" && !pressed) {
+					firstLetter = "h";
+					pressed = true;
+				}
+				if (firstLetter == "j" && !pressed) {
+					firstLetter = "i";
+					pressed = true;
+				}
+				if (firstLetter == "k" && !pressed) {
+					firstLetter = "j";
+					pressed = true;
+				}
+				if (firstLetter == "l" && !pressed) {
+					firstLetter = "k";
+					pressed = true;
+				}
+				if (firstLetter == "m" && !pressed) {
+					firstLetter = "l";
+					pressed = true;
+				}
+				if (firstLetter == "n" && !pressed) {
+					firstLetter = "m";
+					pressed = true;
+				}
+				if (firstLetter == "o" && !pressed) {
+					firstLetter = "n";
+					pressed = true;
+				}
+				if (firstLetter == "p" && !pressed) {
+					firstLetter = "o";
+					pressed = true;
+				}
+				if (firstLetter == "q" && !pressed) {
+					firstLetter = "p";
+					pressed = true;
+				}
+				if (firstLetter == "r" && !pressed) {
+					firstLetter = "q";
+					pressed = true;
+				}
+				if (firstLetter == "s" && !pressed) {
+					firstLetter = "r";
+					pressed = true;
+				}
+				if (firstLetter == "t" && !pressed) {
+					firstLetter = "s";
+					pressed = true;
+				}
+				if (firstLetter == "u" && !pressed) {
+					firstLetter = "t";
+					pressed = true;
+				}
+				if (firstLetter == "v" && !pressed) {
+					firstLetter = "u";
+					pressed = true;
+				}
+				if (firstLetter == "w" && !pressed) {
+					firstLetter = "v";
+					pressed = true;
+				}
+				if (firstLetter == "x" && !pressed) {
+					firstLetter = "w";
+					pressed = true;
+				}
+				if (firstLetter == "y" && !pressed) {
+					firstLetter = "x";
+					pressed = true;
+				}
+				if (firstLetter == "z" && !pressed) {
+					firstLetter = "y";
+					pressed = true;
+				}
+				if (firstLetter == "a" && !pressed) {
+					firstLetter = "z";
+					pressed = true;
+				}
+			}
+			if (numbertwo && !pressed) {
+				if (secondLetter == "b" && !pressed) {
+					secondLetter = "a";
+					pressed = true;
+				}
+				if (secondLetter == "c" && !pressed) {
+					secondLetter = "b";
+					pressed = true;
+				}
+				if (secondLetter == "d" && !pressed) {
+					secondLetter = "c";
+					pressed = true;
+				}
+				if (secondLetter == "e" && !pressed) {
+					secondLetter = "d";
+					pressed = true;
+				}
+				if (secondLetter == "f" && !pressed) {
+					secondLetter = "e";
+					pressed = true;
+				}
+				if (secondLetter == "g" && !pressed) {
+					secondLetter = "f";
+					pressed = true;
+				}
+				if (secondLetter == "h" && !pressed) {
+					secondLetter = "g";
+					pressed = true;
+				}
+				if (secondLetter == "i" && !pressed) {
+					secondLetter = "h";
+					pressed = true;
+				}
+				if (secondLetter == "j" && !pressed) {
+					secondLetter = "i";
+					pressed = true;
+				}
+				if (secondLetter == "k" && !pressed) {
+					secondLetter = "j";
+					pressed = true;
+				}
+				if (secondLetter == "l" && !pressed) {
+					secondLetter = "k";
+					pressed = true;
+				}
+				if (secondLetter == "m" && !pressed) {
+					secondLetter = "l";
+					pressed = true;
+				}
+				if (secondLetter == "n" && !pressed) {
+					secondLetter = "m";
+					pressed = true;
+				}
+				if (secondLetter == "o" && !pressed) {
+					secondLetter = "n";
+					pressed = true;
+				}
+				if (secondLetter == "p" && !pressed) {
+					secondLetter = "o";
+					pressed = true;
+				}
+				if (secondLetter == "q" && !pressed) {
+					secondLetter = "p";
+					pressed = true;
+				}
+				if (secondLetter == "r" && !pressed) {
+					secondLetter = "q";
+					pressed = true;
+				}
+				if (secondLetter == "s" && !pressed) {
+					secondLetter = "r";
+					pressed = true;
+				}
+				if (secondLetter == "t" && !pressed) {
+					secondLetter = "s";
+					pressed = true;
+				}
+				if (secondLetter == "u" && !pressed) {
+					secondLetter = "t";
+					pressed = true;
+				}
+				if (secondLetter == "v" && !pressed) {
+					secondLetter = "u";
+					pressed = true;
+				}
+				if (secondLetter == "w" && !pressed) {
+					secondLetter = "v";
+					pressed = true;
+				}
+				if (secondLetter == "x" && !pressed) {
+					secondLetter = "w";
+					pressed = true;
+				}
+				if (secondLetter == "y" && !pressed) {
+					secondLetter = "x";
+					pressed = true;
+				}
+				if (secondLetter == "z" && !pressed) {
+					secondLetter = "y";
+					pressed = true;
+				}
+				if (secondLetter == "a" && !pressed) {
+					secondLetter = "z";
+					pressed = true;
+				}
+			}
+			if (numberthree && !pressed) {
+				if (thirdLetter == "b" && !pressed) {
+					thirdLetter = "a";
+					pressed = true;
+				}
+				if (thirdLetter == "c" && !pressed) {
+					thirdLetter = "b";
+					pressed = true;
+				}
+				if (thirdLetter == "d" && !pressed) {
+					thirdLetter = "c";
+					pressed = true;
+				}
+				if (thirdLetter == "e" && !pressed) {
+					thirdLetter = "d";
+					pressed = true;
+				}
+				if (thirdLetter == "f" && !pressed) {
+					thirdLetter = "e";
+					pressed = true;
+				}
+				if (thirdLetter == "g" && !pressed) {
+					thirdLetter = "f";
+					pressed = true;
+				}
+				if (thirdLetter == "h" && !pressed) {
+					thirdLetter = "g";
+					pressed = true;
+				}
+				if (thirdLetter == "i" && !pressed) {
+					thirdLetter = "h";
+					pressed = true;
+				}
+				if (thirdLetter == "j" && !pressed) {
+					thirdLetter = "i";
+					pressed = true;
+				}
+				if (thirdLetter == "k" && !pressed) {
+					thirdLetter = "j";
+					pressed = true;
+				}
+				if (thirdLetter == "l" && !pressed) {
+					thirdLetter = "k";
+					pressed = true;
+				}
+				if (thirdLetter == "m" && !pressed) {
+					thirdLetter = "l";
+					pressed = true;
+				}
+				if (thirdLetter == "n" && !pressed) {
+					thirdLetter = "m";
+					pressed = true;
+				}
+				if (thirdLetter == "o" && !pressed) {
+					thirdLetter = "n";
+					pressed = true;
+				}
+				if (thirdLetter == "p" && !pressed) {
+					thirdLetter = "o";
+					pressed = true;
+				}
+				if (thirdLetter == "q" && !pressed) {
+					thirdLetter = "p";
+					pressed = true;
+				}
+				if (thirdLetter == "r" && !pressed) {
+					thirdLetter = "q";
+					pressed = true;
+				}
+				if (thirdLetter == "s" && !pressed) {
+					thirdLetter = "r";
+					pressed = true;
+				}
+				if (thirdLetter == "t" && !pressed) {
+					thirdLetter = "s";
+					pressed = true;
+				}
+				if (thirdLetter == "u" && !pressed) {
+					thirdLetter = "t";
+					pressed = true;
+				}
+				if (thirdLetter == "v" && !pressed) {
+					thirdLetter = "u";
+					pressed = true;
+				}
+				if (thirdLetter == "w" && !pressed) {
+					thirdLetter = "v";
+					pressed = true;
+				}
+				if (thirdLetter == "x" && !pressed) {
+					thirdLetter = "w";
+					pressed = true;
+				}
+				if (thirdLetter == "y" && !pressed) {
+					thirdLetter = "x";
+					pressed = true;
+				}
+				if (thirdLetter == "z" && !pressed) {
+					thirdLetter = "y";
+					pressed = true;
+				}
+				if (thirdLetter == "a" && !pressed) {
+					thirdLetter = "z";
+					pressed = true;
+				}
+			}
+		}
+
+		if (input()->getKeyUp(GLFW_KEY_DOWN) && pressed) {
+			pressed = false;
+		}
 		layers[4]->removeChild(enterUsername);
 		username = firstLetter + secondLetter + thirdLetter;
 		enterUsername->message(username);
@@ -1019,3 +1345,4 @@ int Scene00::getscore() {
 string Scene00::getname() {
 	return this->username;
 }
+
