@@ -195,6 +195,8 @@ add_executable(start
 	start/main.cpp
 	start/particlesystem.cpp
 	start/particlesystem.h
+	start/pickup.cpp
+	start/pickup.h
 	start/player.cpp
 	start/player.h
 	start/scene00.cpp
