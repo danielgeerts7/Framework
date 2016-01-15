@@ -17,6 +17,7 @@
 #include "particlesystem.h"
 #include "healthbar.h"
 #include "highscorelist.h"
+#include "pickup.h"
 
 class Scene00: public SuperScene
 {
@@ -73,6 +74,9 @@ class Scene00: public SuperScene
 
 		int score;
 		int currentscore;
+
+		vector<Pickup*> ammunitionpickups;
+		vector<Pickup*> healthpickups;
 
 		string firstLetter;
 		string secondLetter;

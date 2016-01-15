@@ -107,6 +107,29 @@ Scene00::Scene00() : SuperScene()
 	gun_player_entity->sprite()->color = YELLOW;
 	gun_player_entity->position = Point2(30, 25);
 	
+	// ammunition pickup
+	int ammunition_pickup_amount = 3;
+	for (int i = 0; i < ammunition_pickup_amount; i++) {
+		Pickup* ammo = new Pickup("ammo");
+
+		ammunitionpickups.push_back(ammo);
+		layers[2]->addChild(ammunitionpickups[i]);
+	}
+	ammunitionpickups[0]->position = Point2(425, 500);
+	ammunitionpickups[1]->position = Point2(60, 200);
+	ammunitionpickups[2]->position = Point2(800, 800);
+
+	// health pickup
+	int health_pickup_amount = 2;
+	for (int i = 0; i < health_pickup_amount; i++) {
+		Pickup* health = new Pickup("health");
+
+		healthpickups.push_back(health);
+		layers[2]->addChild(healthpickups[i]);
+	}
+	healthpickups[0]->position = Point2(1250, 300);
+	healthpickups[1]->position = Point2(150, 900);
+
 	int amount = 10;
 
 	for (int i = 0; i<amount; i++) {
@@ -133,7 +156,7 @@ Scene00::~Scene00()
 	for (int i = 0; i<s; i++) {
 		layers[2]->removeChild(blocks[i]);
 		delete blocks[i];
-		blocks[i] == NULL;
+		blocks[i] = NULL;
 	}
 	blocks.clear();
 
@@ -141,7 +164,7 @@ Scene00::~Scene00()
 	for (int j = 0; j<p_b; j++) {
 		layers[1]->removeChild(player_bullets[j]);
 		delete player_bullets[j];
-		player_bullets[j] == NULL;
+		player_bullets[j] = NULL;
 	}
 	player_bullets.clear();
 
@@ -149,7 +172,7 @@ Scene00::~Scene00()
 	for (int l = 0; l<e_b; l++) {
 		layers[1]->removeChild(enemies_bullets[l]);
 		delete enemies_bullets[l];
-		enemies_bullets[l] == NULL;
+		enemies_bullets[l] = NULL;
 	}
 	enemies_bullets.clear();
 
@@ -161,9 +184,9 @@ Scene00::~Scene00()
 		delete guns_enemies[k];
 		delete enemies[k];
 		delete enemies_healthbars[k];
-		guns_enemies[k] == NULL;
-		enemies[k] == NULL;
-		enemies_healthbars[k] == NULL;
+		guns_enemies[k] = NULL;
+		enemies[k] = NULL;
+		enemies_healthbars[k] = NULL;
 	}
 	enemies.clear();
 	guns_enemies.clear();
@@ -173,9 +196,27 @@ Scene00::~Scene00()
 	for (int a = 0; a < pp; a++) {
 		layers[3]->removeChild(particles[a]);
 		delete particles[a];
-		particles[a] == NULL;
+		particles[a] = NULL;
 	}
 	particles.clear();
+
+	// remove ammo pickups
+	int ammopickupsize = ammunitionpickups.size();
+	for (int i = 0; i < ammopickupsize; i++) {
+		layers[2]->removeChild(ammunitionpickups[i]);
+		delete ammunitionpickups[i];
+		ammunitionpickups[i] = NULL;
+	}
+	ammunitionpickups.clear();
+
+	// remove health pickups
+	int healthpickupsize = healthpickups.size();
+	for (int i = 0; i < healthpickupsize; i++) {
+		layers[2]->removeChild(healthpickups[i]);
+		delete healthpickups[i];
+		healthpickups[i] = NULL;
+	}
+	healthpickups.clear();
 
 	layers[0]->removeChild(background_entity);
 	layers[2]->removeChild(player_entity);
@@ -187,11 +228,11 @@ Scene00::~Scene00()
 	delete player_healthbar;
 	delete gun_player_entity;
 	delete player_health_text;
-	background_entity == NULL;
-	player_entity == NULL;
-	player_healthbar == NULL;
-	gun_player_entity == NULL;
-	player_health_text == NULL;
+	background_entity = NULL;
+	player_entity = NULL;
+	player_healthbar = NULL;
+	gun_player_entity = NULL;
+	player_health_text = NULL;
 }
 
 void Scene00::update(float deltaTime)
@@ -501,7 +542,7 @@ void Scene00::update(float deltaTime)
 
 	player_health_text->message(health_string);
 
-	if (player_entity->getPlayerHealth() <= 100) {
+	if (player_entity->getPlayerHealth() <= 100 || player_entity->getPlayerHealth() > 100) {
 		player_health_text->position.x = player_healthbar->position.x -14;
 	}
 	if (player_entity->getPlayerHealth() <= 99) {
@@ -538,7 +579,7 @@ void Scene00::update(float deltaTime)
 			enemies_healthbars[i]->sprite()->color = RED;
 		}
 	}
-	enemie_size == NULL;
+	enemie_size = NULL;
 
 	// ###############################################################
 	// Adding highscore when player kills a enemie
@@ -555,6 +596,46 @@ void Scene00::update(float deltaTime)
 			++toremoveEnemies;
 		}
 	}
+
+	// ###############################################################
+	// Check when player pick up ammunition
+	// ###############################################################
+	vector<Pickup*>::iterator playerPickupsAmmunition_it = ammunitionpickups.begin();
+	while (playerPickupsAmmunition_it != ammunitionpickups.end()) {
+		if (player_entity->player_pickup_item(*playerPickupsAmmunition_it) == 1 &&
+			(*playerPickupsAmmunition_it)->getItem() == "ammo") {
+
+			currentAmmoInBag += maxAmmoInMagazine;
+
+			layers[2]->removeChild((*playerPickupsAmmunition_it));
+			delete (*playerPickupsAmmunition_it);
+			playerPickupsAmmunition_it = ammunitionpickups.erase(playerPickupsAmmunition_it);
+		}
+		else {
+			++playerPickupsAmmunition_it;
+		}
+	}
+
+	
+	// ###############################################################
+	// Check when player pick up health
+	// ###############################################################
+	vector<Pickup*>::iterator playerPickupsHealth_it = healthpickups.begin();
+	while (playerPickupsHealth_it != healthpickups.end()) {
+		if (player_entity->player_pickup_item(*playerPickupsHealth_it) == 1 &&
+			(*playerPickupsHealth_it)->getItem() == "health") {
+
+			player_entity->addHealth(25);
+
+			layers[2]->removeChild((*playerPickupsHealth_it));
+			delete (*playerPickupsHealth_it);
+			playerPickupsHealth_it = healthpickups.erase(playerPickupsHealth_it);
+		}
+		else {
+			++playerPickupsHealth_it;
+		}
+	}
+	
 
 	// ###############################################################
 	// Setting state when WIN of LOSE

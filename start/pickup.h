@@ -6,13 +6,19 @@
 #ifndef PICKUP_H
 #define PICKUP_H
 
-class Pickup
+#include "basicentity.h";
+
+using namespace std;
+class Pickup : public BasicEntity
 {
 	public:
-		Pickup();
+		Pickup(string pickup);
 		~Pickup();
 
+		string getItem();
+
 	private:
+		string item;
 };
 
 #endif /* PICKUP_H */

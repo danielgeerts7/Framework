@@ -80,9 +80,27 @@ int Player::getPlayerHealth()
 // ###############################################################
 // Set player health
 // ###############################################################
-void Player::setPlayerHealth(int h)
+void Player::addHealth(int h)
 {
-	this->health = h;
+	this->health = this->health + h;
+}
+
+// ###############################################################
+// Player pickup a item
+// ###############################################################
+bool Player::player_pickup_item(Pickup* p)
+{
+	int radius_player = 26;
+	int raduis_pickup = 16;
+	if (this->position.x + radius_player > p->position.x - raduis_pickup && 
+		this->position.x - radius_player < p->position.x + raduis_pickup &&
+		this->position.y + radius_player > p->position.y - raduis_pickup &&
+		this->position.y - radius_player < p->position.y + raduis_pickup ) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
 }
 
 // ###############################################################
