@@ -255,7 +255,8 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Giving the new Bullet(s)* b the rotation of the enemies[a]
 	// ###############################################################
-	for (int a = 0; a < enemies.size(); a++) {
+	int enemiesSize = enemies.size();
+	for (int a = 0; a < enemiesSize; a++) {
 		if (enemies[a]->alive && player_entity->alive) {
 			enemies[a]->checkForPlayerIfWalkingInFieldOfView(player_entity);
 			if (enemies[a]->checkIfPlayerIsInFieldOfView && enemieCounter >= enemieDelay) {
@@ -268,6 +269,7 @@ void Scene00::update(float deltaTime)
 			}
 		}
 	}
+	enemiesSize = NULL;
 
 	// ###############################################################
 	// Player gets hit by the enemies bullets
@@ -289,7 +291,8 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Check which Enemy gets hit by the player bullets
 	// ###############################################################
-	for (int pb = 0; pb < player_bullets.size(); pb++) {
+	int player_bullets_size = player_bullets.size();
+	for (int pb = 0; pb < player_bullets_size; pb++) {
 		for (int ee = 0; ee < enemies.size(); ee++) {
 			if (enemies[ee]->gettingHitByPlayerBullets(player_bullets[pb]) == 1 && enemies[ee]->alive && player_entity->alive && player_bullets.size() >= 0) {
 				player_bullets[pb]->alive = false;
@@ -301,6 +304,7 @@ void Scene00::update(float deltaTime)
 			}
 		}
 	}
+	player_bullets_size = NULL;
 
 	// ###############################################################
 	// Remove all bullets that hit a Enemie
@@ -380,9 +384,11 @@ void Scene00::update(float deltaTime)
 	// Calling the playerCollidWithBlock function to every block that is on stage
 	// But that function doens't do anything yet
 	// ###############################################################
-	for (int i = 0; i < blocks.size(); i++) {
+	int blocks_size = blocks.size();
+	for (int i = 0; i < blocks_size; i++) {
 		player_entity->playerCollidWithBlock(player_entity, blocks[i], 32, 27);
 	}
+	blocks_size = NULL;
 
 	// ###############################################################
 	// Updating mouseClickBulletCounter and checking if the mouseClickBulletCounter is greater then the mouseClickBulletDelay
@@ -509,7 +515,8 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Setting healthbar to current position of the enemies
 	// ###############################################################
-	for (int i = 0; i < enemies.size(); i++) {
+	int enemie_size = enemies.size();
+	for (int i = 0; i < enemie_size; i++) {
 		enemies_healthbars[i]->position.x = enemies[i]->position.x;
 		enemies_healthbars[i]->position.y = enemies[i]->position.y - 65;
 
@@ -531,6 +538,7 @@ void Scene00::update(float deltaTime)
 			enemies_healthbars[i]->sprite()->color = RED;
 		}
 	}
+	enemie_size == NULL;
 
 	// ###############################################################
 	// Adding highscore when player kills a enemie
