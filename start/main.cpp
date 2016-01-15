@@ -58,7 +58,7 @@ int main(void)
 			{
 				canAddScoreToTheList = true;
 			}
-			if ((scene00->getState() == SuperScene::state::STOP || scene00->getState() == SuperScene::state::WIN || scene00->getState() == SuperScene::state::LOSE) && !scene00->isRunning() && canAddScoreToTheList)
+			if ((scene00->getState() == SuperScene::state::WIN || scene00->getState() == SuperScene::state::LOSE) && !scene00->isRunning() && canAddScoreToTheList)
 			{
 				int newscore = scene00->getscore();
 				string newname = scene00->getname();

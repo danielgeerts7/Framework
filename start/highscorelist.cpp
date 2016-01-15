@@ -20,15 +20,15 @@ HighScoreList::HighScoreList()
 	int j = 90;
 
 	string aa = "aaa";
-	string bb = "bbb";
-	string cc = "ccc";
-	string dd = "ddd";
-	string ee = "eee";
-	string ff = "fff";
-	string gg = "ggg";
-	string hh = "hhh";
-	string ii = "iii";
-	string jj = "jjj";
+	string bb = "aaa";
+	string cc = "aaa";
+	string dd = "aaa";
+	string ee = "aaa";
+	string ff = "aaa";
+	string gg = "aaa";
+	string hh = "aaa";
+	string ii = "aaa";
+	string jj = "aaa";
 
 	highscoreList.emplace_back(a, aa);
 	highscoreList.emplace_back(b, bb);
