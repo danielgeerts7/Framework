@@ -28,8 +28,8 @@ void Bullet::setPositionAndRotation(BasicEntity* parent)
 	// ###############################################################
 	this->position = parent->position;
 	this->rotation = parent->rotation;
-	this->velocity_x = cos(this->rotation)*1;
-	this->velocity_y = sin(this->rotation)*1;
+	this->velocity_x = cos(this->rotation)*4;
+	this->velocity_y = sin(this->rotation)*4;
 	this->velocity = Vector2(velocity_x, velocity_y);
 }
 
