@@ -378,7 +378,7 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	vector<Bullet*>::iterator toremovePB = player_bullets.begin();
 	while (toremovePB != player_bullets.end()) {
-		if (!(*toremovePB)->alive) {
+		if ((*toremovePB)->alive == false) {
 			layers[1]->removeChild((*toremovePB));
 			delete (*toremovePB);
 			toremovePB = player_bullets.erase(toremovePB);
@@ -668,28 +668,63 @@ void Scene00::update(float deltaTime)
 	int blocksSize = blocks.size();
 	int bulletListP = player_bullets.size();
 	for (int i = 0; i < blocksSize; i++) {
-		for (int j = 0; j < player_bullets.size(); j++) {
-			if (player_bullets[j]->position.x < blocks[i]->position.x - 32 &&
-				player_bullets[j]->position.x > blocks[i]->position.x + 32 &&
-				player_bullets[j]->position.y < blocks[i]->position.y - 32 &&
-				player_bullets[j]->position.y > blocks[i]->position.y + 32) {
+		for (int j = 0; j < bulletListP; j++) {
+			if (player_bullets[j]->position.x < blocks[i]->position.x + 32 &&
+				player_bullets[j]->position.x > blocks[i]->position.x - 32 &&
+				player_bullets[j]->position.y < blocks[i]->position.y + 32 &&
+				player_bullets[j]->position.y > blocks[i]->position.y - 32) {
 				player_bullets[j]->alive = false;
 			}
+		}
+	}
+	blocksSize = NULL;
+	bulletListP = NULL;
+
+	// ###############################################################
+	// Deleting player bullets when bullets are !alive
+	// ###############################################################
+	vector<Bullet*>::iterator bulletP = player_bullets.begin();
+	while (bulletP != player_bullets.end()) {
+		if ((*bulletP)->alive == false) {
+			layers[1]->removeChild((*bulletP));
+			delete (*bulletP);
+			bulletP = player_bullets.erase(bulletP);
+		}
+		else {
+			++bulletP;
 		}
 	}
 
 	// ###############################################################
 	// Checking if the player's bullets hit a "collision" block
 	// ###############################################################
-	vector<Bullet*>::iterator bulletP = player_bullets.begin();
-	while (bulletP != player_bullets.end()) {
-		if ((*bulletP)->alive) {
-			layers[2]->removeChild((*bulletP));
-			delete (*bulletP);
-			bulletP = player_bullets.erase(bulletP);
+	int blocksSizeEnemies = blocks.size();
+	int bulletListE = enemies_bullets.size();
+	for (int i = 0; i < blocksSizeEnemies; i++) {
+		for (int j = 0; j < bulletListE; j++) {
+			if (enemies_bullets[j]->position.x < blocks[i]->position.x + 32 &&
+				enemies_bullets[j]->position.x > blocks[i]->position.x - 32 &&
+				enemies_bullets[j]->position.y < blocks[i]->position.y + 32 &&
+				enemies_bullets[j]->position.y > blocks[i]->position.y - 32) {
+				enemies_bullets[j]->alive = false;
+			}
+		}
+	}
+	blocksSizeEnemies = NULL;
+	bulletListE = NULL;
+
+	// ###############################################################
+	// Deleting bullets when bullets are !alive
+	// ###############################################################
+	vector<Bullet*>::iterator bulletE = enemies_bullets.begin();
+	while (bulletE != enemies_bullets.end()) {
+		if ((*bulletE)->alive == false) {
+			layers[1]->removeChild((*bulletE));
+			delete (*bulletE);
+			bulletE = enemies_bullets.erase(bulletE);
 		}
 		else {
-			++bulletP;
+			++bulletE;
 		}
 	}
 
