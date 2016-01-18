@@ -22,7 +22,7 @@ ParticleSystem::~ParticleSystem()
 {
 }
 
-void ParticleSystem::addParticleToParent(BasicEntity* toParent, BasicEntity* fromBullet) {
+void ParticleSystem::addParticleToParent(BasicEntity* toParent, Bullet* fromBullet) {
 	this->velocity_x = cos(fromBullet->rotation + rand() % 2 - 1) * .5;
 	this->velocity_y = sin(fromBullet->rotation + rand() % 2 - 1) * .5;
 
@@ -33,10 +33,6 @@ void ParticleSystem::addParticleToParent(BasicEntity* toParent, BasicEntity* fro
 	this->position.x = fromBullet->position.x;
 	this->position.y = fromBullet->position.y;
 	this->rotation = angle;
-
-	for (int a = 0; a < maxParticles; a++) {
-		
-	}
 }
 
 void ParticleSystem::update(float deltaTime)

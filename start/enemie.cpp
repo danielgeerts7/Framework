@@ -69,7 +69,7 @@ void Enemie::setEnemieHealth(int h)
 	this->health = h;
 }
 
-int Enemie::gettingHitByPlayerBullets(BasicEntity* b)
+int Enemie::gettingHitByPlayerBullets(Bullet* b)
 {
 	if (this->alive == true) {
 		int radius = 26;

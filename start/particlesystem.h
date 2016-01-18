@@ -7,6 +7,7 @@
 #define PARTICLESYSTEM_H
 
 #include "basicentity.h"
+#include "bullet.h"
 #include <rt2d/sprite.h>
 
 class ParticleSystem : public BasicEntity
@@ -29,7 +30,7 @@ public:
 
 	virtual void update(float deltaTime);
 
-	void addParticleToParent(BasicEntity* toParent, BasicEntity* fromBullet);
+	void addParticleToParent(BasicEntity* toParent, Bullet* fromBullet);
 	bool isDead();
 
 private:

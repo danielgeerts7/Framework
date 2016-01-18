@@ -64,8 +64,8 @@ class Scene00: public SuperScene
 		std::vector<Enemie*> deadEnemies;
 		std::vector<BasicEntity*> guns_enemies;
 		std::vector<Block*> blocks;
-		std::vector<BasicEntity*> player_bullets;
-		std::vector<BasicEntity*> enemies_bullets;
+		std::vector<Bullet*> player_bullets;
+		std::vector<Bullet*> enemies_bullets;
 
 		std::vector<HealthBar*> enemies_healthbars;
 

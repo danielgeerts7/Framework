@@ -8,6 +8,7 @@
 
 #include "basicentity.h"
 #include "player.h"
+#include "bullet.h"
 
 class Enemie : public BasicEntity
 {
@@ -23,7 +24,7 @@ public:
 	int getEnemieHealth();
 	void setEnemieHealth(int h);
 
-	int gettingHitByPlayerBullets(BasicEntity* b);
+	int gettingHitByPlayerBullets(Bullet* b);
 
 private:
 	int fieldOfView;

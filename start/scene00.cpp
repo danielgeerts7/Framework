@@ -341,7 +341,7 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Player gets hit by the enemies bullets
 	// ###############################################################
-	vector<BasicEntity*>::iterator toremoveEB = enemies_bullets.begin();
+	vector<Bullet*>::iterator toremoveEB = enemies_bullets.begin();
 	if (player_entity->alive) {
 		while (toremoveEB != enemies_bullets.end()) {
 			if (player_entity->gettingHitByEnemieBullets((*toremoveEB)) == 1 && player_entity->getPlayerHealth() > 0 && (*toremoveEB) > 0) {
@@ -376,7 +376,7 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Remove all bullets that hit a Enemie
 	// ###############################################################
-	vector<BasicEntity*>::iterator toremovePB = player_bullets.begin();
+	vector<Bullet*>::iterator toremovePB = player_bullets.begin();
 	while (toremovePB != player_bullets.end()) {
 		if (!(*toremovePB)->alive) {
 			layers[1]->removeChild((*toremovePB));
@@ -409,7 +409,7 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Checking if the enemie_bullets go out of the stage, then remove them
 	// ###############################################################
-	vector<BasicEntity*>::iterator toremoveEB2 = enemies_bullets.begin();
+	vector<Bullet*>::iterator toremoveEB2 = enemies_bullets.begin();
 	while (toremoveEB2 != enemies_bullets.end()) {
 		if ((((*toremoveEB2)->position.x < SWIDTH - SWIDTH) ||
 			((*toremoveEB2)->position.x > SWIDTH) ||
@@ -429,7 +429,7 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Checking if the player_bullets go out of the stage, then remove them
 	// ###############################################################
-	vector<BasicEntity*>::iterator toremove2 = player_bullets.begin();
+	vector<Bullet*>::iterator toremove2 = player_bullets.begin();
 	if (player_bullets.size() > 0) {
 		while (toremove2 != player_bullets.end()) {
 			if ((*toremove2)->position.x < SWIDTH - SWIDTH ||
@@ -661,7 +661,37 @@ void Scene00::update(float deltaTime)
 			++playerPickupsHealth_it;
 		}
 	}
-	
+
+	// ###############################################################
+	// Checking if the player's bullets hit a "collision" block
+	// ###############################################################
+	int blocksSize = blocks.size();
+	int bulletListP = player_bullets.size();
+	for (int i = 0; i < blocksSize; i++) {
+		for (int j = 0; j < player_bullets.size(); j++) {
+			if (player_bullets[j]->position.x < blocks[i]->position.x - 32 &&
+				player_bullets[j]->position.x > blocks[i]->position.x + 32 &&
+				player_bullets[j]->position.y < blocks[i]->position.y - 32 &&
+				player_bullets[j]->position.y > blocks[i]->position.y + 32) {
+				player_bullets[j]->alive = false;
+			}
+		}
+	}
+
+	// ###############################################################
+	// Checking if the player's bullets hit a "collision" block
+	// ###############################################################
+	vector<Bullet*>::iterator bulletP = player_bullets.begin();
+	while (bulletP != player_bullets.end()) {
+		if ((*bulletP)->alive) {
+			layers[2]->removeChild((*bulletP));
+			delete (*bulletP);
+			bulletP = player_bullets.erase(bulletP);
+		}
+		else {
+			++bulletP;
+		}
+	}
 
 	// ###############################################################
 	// Setting state when WIN of LOSE
