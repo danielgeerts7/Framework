@@ -755,6 +755,11 @@ void Scene00::update(float deltaTime)
 			triggerWhenFinished = false;
 		}
 
+		if (input()->getKey(GLFW_KEY_ENTER)) {
+			this->stop();
+			SuperScene::activescene = 0;
+		}
+
 		if (numberone) {
 			arrow->position.x = enterUsername->position.x;
 		}
