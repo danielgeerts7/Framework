@@ -180,6 +180,8 @@ file(
 add_executable(start
 	start/basicentity.cpp
 	start/basicentity.h
+	start/block.cpp
+	start/block.h
 	start/bullet.cpp
 	start/bullet.h
 	start/button.cpp

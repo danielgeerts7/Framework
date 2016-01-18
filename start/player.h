@@ -16,8 +16,6 @@ public:
 	Player();
 	~Player();
 	virtual void update(float deltaTime);
-
-	void playerCollidWithBlock(BasicEntity* objplayer, BasicEntity* objBlock, int blockHalfSize, int playerRadius);
 	
 	int getPlayerHealth();
 	void addHealth(int h);

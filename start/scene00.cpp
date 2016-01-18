@@ -133,12 +133,9 @@ Scene00::Scene00() : SuperScene()
 	int amount = 10;
 
 	for (int i = 0; i<amount; i++) {
-		BasicEntity* b = new BasicEntity();
-		b->addSprite("assets/block.tga");
-
-		b->sprite()->color = BLUE;
-		b->position.x = 250;
-		b->position.y = rand() % 300 + 150;
+		Block* b = new Block();
+		b->position.x = 1150;
+		b->position.y = 75 + (64 * i);
 		blocks.push_back(b);
 
 		layers[2]->addChild(blocks[i]);
@@ -427,7 +424,7 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	int blocks_size = blocks.size();
 	for (int i = 0; i < blocks_size; i++) {
-		player_entity->playerCollidWithBlock(player_entity, blocks[i], 32, 27);
+		blocks[i]->baiscEntityCollidWithBlock(player_entity, 32, 24);
 	}
 	blocks_size = NULL;
 

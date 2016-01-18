@@ -18,6 +18,7 @@
 #include "healthbar.h"
 #include "highscorelist.h"
 #include "pickup.h"
+#include "block.h"
 
 class Scene00: public SuperScene
 {
@@ -60,7 +61,7 @@ class Scene00: public SuperScene
 		std::vector<Enemie*> enemies;
 		std::vector<Enemie*> deadEnemies;
 		std::vector<BasicEntity*> guns_enemies;
-		std::vector<BasicEntity*> blocks;
+		std::vector<Block*> blocks;
 		std::vector<BasicEntity*> player_bullets;
 		std::vector<BasicEntity*> enemies_bullets;
 
