@@ -62,6 +62,8 @@ Scene00::Scene00() : SuperScene()
 	layers[0]->addChild(background_entity);
 
 	player_entity = new Player();
+	// cell 12 ; row 12
+	player_entity->position = Point2(posTile(12), posTile(12));
 
 	player_healthbar = new HealthBar();
 	player_healthbar->position.x = player_entity->position.x;
@@ -71,7 +73,7 @@ Scene00::Scene00() : SuperScene()
 	player_health_text->scale = Point2(0.4, 0.4);
 	layers[3]->addChild(player_health_text);
 
-	for (int e = 0; e < 5; e++) {
+	for (int e = 0; e < 8; e++) {
 		Enemie* enemie = new Enemie();
 		enemies.push_back(enemie);
 
@@ -93,11 +95,17 @@ Scene00::Scene00() : SuperScene()
 		layers[2]->addChild(healthbar_enemie);
 	}
 	
-	enemies[0]->position = Point(100, 100);
-	enemies[1]->position = Point(700, 800);
-	enemies[2]->position = Point(750, 100);
-	enemies[3]->position = Point(400, 400);
-	enemies[4]->position = Point(200, 650);
+	// cell 3,5,7 ; row 3
+	enemies[0]->position = Point(posTile(3), posTile(3));
+	enemies[1]->position = Point(posTile(5), posTile(3));
+	enemies[2]->position = Point(posTile(7), posTile(3));
+	// cell 3,7 ; row 5
+	enemies[3]->position = Point(posTile(3), posTile(5));
+	enemies[4]->position = Point(posTile(7), posTile(5));
+	// cell 3,57 ; row 7
+	enemies[5]->position = Point(posTile(3), posTile(7));
+	enemies[6]->position = Point(posTile(5), posTile(7));
+	enemies[7]->position = Point(posTile(7), posTile(7));
 
 	gun_player_entity = new BasicEntity();
 	gun_player_entity->addSprite("assets/gun.tga");
@@ -112,9 +120,11 @@ Scene00::Scene00() : SuperScene()
 		ammunitionpickups.push_back(ammo);
 		layers[2]->addChild(ammunitionpickups[i]);
 	}
-	ammunitionpickups[0]->position = Point2(425, 500);
-	ammunitionpickups[1]->position = Point2(60, 200);
-	ammunitionpickups[2]->position = Point2(800, 800);
+
+	// cell 21 ; row 5,8,11
+	ammunitionpickups[0]->position = Point2(posTile(21), posTile(5));
+	ammunitionpickups[1]->position = Point2(posTile(21), posTile(8));
+	ammunitionpickups[2]->position = Point2(posTile(21), posTile(11));
 
 	// health pickup
 	int health_pickup_amount = 2;
@@ -124,19 +134,41 @@ Scene00::Scene00() : SuperScene()
 		healthpickups.push_back(health);
 		layers[2]->addChild(healthpickups[i]);
 	}
-	healthpickups[0]->position = Point2(1250, 300);
-	healthpickups[1]->position = Point2(150, 900);
+	//cell 19,23 ; row 8
+	healthpickups[0]->position = Point2(posTile(19), posTile(8));
+	healthpickups[1]->position = Point2(posTile(23), posTile(8));
 
-	int amount = 10;
+	int amount = 17;
 
-	for (int i = 0; i<amount; i++) {
+	for (int i = 0; i < amount; i++) {
 		Block* b = new Block();
-		b->position.x = 1150;
-		b->position.y = 75 + (64 * i);
 		blocks.push_back(b);
 
 		layers[2]->addChild(blocks[i]);
 	}
+	// cell 10,11,13,14 ; row 9
+	blocks[0]->position = Point2(posTile(10), posTile(9));
+	blocks[1]->position = Point2(posTile(11), posTile(9));
+	blocks[2]->position = Point2(posTile(13), posTile(9));
+	blocks[3]->position = Point2(posTile(14), posTile(9));
+	// cell 9,15 ; row 10
+	blocks[4]->position = Point2(posTile(9), posTile(10));
+	blocks[5]->position = Point2(posTile(15), posTile(10));
+	// cell 8,16 ; row 11
+	blocks[6]->position = Point2(posTile(8), posTile(11));
+	blocks[7]->position = Point2(posTile(16), posTile(11));
+	// cell 8,16 ; row 12
+	blocks[8]->position = Point2(posTile(8), posTile(12));
+	blocks[9]->position = Point2(posTile(16), posTile(12));
+	// cell 9,15; row 13
+	blocks[10]->position = Point2(posTile(9), posTile(13));
+	blocks[11]->position = Point2(posTile(15), posTile(13));
+	// cell 10,11,12,13,14 ; row 14
+	blocks[12]->position = Point2(posTile(10), posTile(14));
+	blocks[13]->position = Point2(posTile(11), posTile(14));
+	blocks[14]->position = Point2(posTile(12), posTile(14));
+	blocks[15]->position = Point2(posTile(13), posTile(14));
+	blocks[16]->position = Point2(posTile(14), posTile(14));
 
 	layers[2]->addChild(player_entity);
 	layers[2]->addChild(player_healthbar);
@@ -266,8 +298,8 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Camera follow the player_entity
 	// ###############################################################
-	camera()->position.x = player_entity->position.x;
-	camera()->position.y = player_entity->position.y;
+	//camera()->position.x = player_entity->position.x;
+	//camera()->position.y = player_entity->position.y;
 
 	// ###############################################################
 	// Rotate player_entity to the position of the mouse
@@ -1407,17 +1439,17 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Setting the borders for the player_entity
 	// ###############################################################
-	if (player_entity->position.x < 0 + playerRaduis) {
-		player_entity->position.x = 0 + playerRaduis;
+	if (player_entity->position.x < 0 + playerRaduis + 64) {
+		player_entity->position.x = 0 + playerRaduis + 64;
 	}
-	if (player_entity->position.x > SWIDTH - playerRaduis) {
-		player_entity->position.x = SWIDTH - playerRaduis;
+	if (player_entity->position.x > SWIDTH - playerRaduis - 64) {
+		player_entity->position.x = SWIDTH - playerRaduis - 64;
 	}
-	if (player_entity->position.y < 0 + playerRaduis) {
-		player_entity->position.y = 0 + playerRaduis;
+	if (player_entity->position.y < 0 + playerRaduis + 64) {
+		player_entity->position.y = 0 + playerRaduis + 64;
 	}
-	if (player_entity->position.y > SHEIGHT - playerRaduis) {
-		player_entity->position.y = SHEIGHT - playerRaduis;
+	if (player_entity->position.y > SHEIGHT - playerRaduis - 64) {
+		player_entity->position.y = SHEIGHT - playerRaduis - 64;
 	}
 }
 
@@ -1429,3 +1461,7 @@ string Scene00::getname() {
 	return this->username;
 }
 
+int Scene00::posTile(int rowOrCell) {
+	int i = 64 * rowOrCell - 32;
+	return i;
+}

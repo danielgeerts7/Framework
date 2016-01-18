@@ -20,8 +20,6 @@ public:
 	LoadTiles();
 	virtual ~LoadTiles();
 
-	void LoadAndConvertTile();
-
 private:
 	int gridwidth;
 	int gridheight;

@@ -62,7 +62,3 @@ LoadTiles::LoadTiles() : BasicEntity()
 LoadTiles::~LoadTiles()
 {
 }
-
-void LoadTiles::LoadAndConvertTile()
-{
-}

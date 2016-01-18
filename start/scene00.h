@@ -33,6 +33,8 @@ class Scene00: public SuperScene
 	
 	private:
 
+		int posTile(int rowOrCell);
+
 		LoadTiles* background_entity;
 		Player* player_entity;
 		BasicEntity* gun_player_entity;

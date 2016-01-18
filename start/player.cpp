@@ -11,7 +11,6 @@ Player::Player() : BasicEntity()
 	// ###############################################################
 	// Setting the variables
 	// ###############################################################
-	this->position = Point2(SWIDTH/2, SHEIGHT/2);
 	this->addSprite("assets/player.tga");
 	this->sprite()->color = GREEN;
 
