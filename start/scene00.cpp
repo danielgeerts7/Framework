@@ -62,9 +62,6 @@ Scene00::Scene00() : SuperScene()
 	layers[0]->addChild(background_entity);
 
 	player_entity = new Player();
-	player_entity->position = Point2(800, 350);
-	player_entity->addSprite("assets/player.tga");
-	player_entity->sprite()->color = GREEN;
 
 	player_healthbar = new HealthBar();
 	player_healthbar->position.x = player_entity->position.x;
@@ -97,7 +94,7 @@ Scene00::Scene00() : SuperScene()
 	}
 	
 	enemies[0]->position = Point(100, 100);
-	enemies[1]->position = Point(700, 600);
+	enemies[1]->position = Point(700, 800);
 	enemies[2]->position = Point(750, 100);
 	enemies[3]->position = Point(400, 400);
 	enemies[4]->position = Point(200, 650);
