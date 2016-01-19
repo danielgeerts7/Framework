@@ -38,10 +38,10 @@ void Enemie::checkForPlayerIfWalkingInFieldOfView(Player* p)
 		this->radius = 32;
 
 		if (p->position.x - radius < this->position.x + fieldOfView && p->position.x + radius > this->position.x - fieldOfView && p->position.y + radius > this->position.y - fieldOfView && p->position.y - radius < this->position.y + fieldOfView) {
-			Point2 mousepos1 = Point2(p->position.x, p->position.y);
-			Vector2 delta1 = Vector2(this->position, mousepos1);
-			float angle1 = delta1.getAngle();
-			this->rotation = angle1;
+			Point2 playerpos = Point2(p->position.x, p->position.y);
+			Vector2 delta = Vector2(this->position, playerpos);
+			float angle = delta.getAngle();
+			this->rotation = angle;
 
 			this->checkIfPlayerIsInFieldOfView = true;
 		}
@@ -50,6 +50,14 @@ void Enemie::checkForPlayerIfWalkingInFieldOfView(Player* p)
 			this->checkIfPlayerIsInFieldOfView = false;
 		}
 	}
+}
+
+// ###############################################################
+// Get enemie health
+// ###############################################################
+bool Enemie::getIfPlayerInField()
+{
+	return checkIfPlayerIsInFieldOfView;
 }
 
 // ###############################################################

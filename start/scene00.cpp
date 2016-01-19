@@ -332,17 +332,20 @@ void Scene00::update(float deltaTime)
 	for (int a = 0; a < enemiesSize; a++) {
 		if (enemies[a]->alive && player_entity->alive) {
 			enemies[a]->checkForPlayerIfWalkingInFieldOfView(player_entity);
-			if (enemies[a]->checkIfPlayerIsInFieldOfView && enemieCounter >= enemieDelay) {
+			if (enemies[a]->getIfPlayerInField() && enemieCounter >= enemieDelay) {
 				Bullet* b = new Bullet();
 				b->setPositionAndRotation(enemies[a]);
 				layers[1]->addChild(b);
 				enemies_bullets.push_back(b);
-
-				enemieCounter = 0;
 			}
 		}
 	}
 	enemiesSize = NULL;
+
+	// Setting the counter to 0 for a bullet shooting delay
+	if (enemieCounter >= enemieDelay) {
+		enemieCounter = 0;
+	}
 
 	// ###############################################################
 	// Player gets hit by the enemies bullets

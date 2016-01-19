@@ -19,6 +19,7 @@ public:
 	virtual void update(float deltaTime);
 
 	void checkForPlayerIfWalkingInFieldOfView(Player* p);
+	bool getIfPlayerInField();
 	bool checkIfPlayerIsInFieldOfView;
 
 	int getEnemieHealth();
