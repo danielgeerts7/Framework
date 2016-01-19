@@ -604,8 +604,27 @@ void Scene00::update(float deltaTime)
 		if ((enemies[i]->getEnemieHealth() <= 25) && (enemies[i]->getEnemieHealth() >= 0)) {
 			enemies_healthbars[i]->sprite()->color = RED;
 		}
+		if (enemies[i]->getEnemieHealth() <= 0) {
+			enemies_healthbars[i]->alive = false;
+			enemies[i]->alive = false;
+		}
 	}
 	enemie_size = NULL;
+
+	// ###############################################################
+	// Removing the healthbar when the health of the enemie is 0 or lower
+	// ###############################################################
+	vector<HealthBar*>::iterator toremoveHealthbarsEnemies = enemies_healthbars.begin();
+	while (toremoveHealthbarsEnemies != enemies_healthbars.end()) {
+		if ((*toremoveHealthbarsEnemies)->alive == false) {
+			layers[2]->removeChild(*toremoveHealthbarsEnemies);
+			delete (*toremoveHealthbarsEnemies);
+			toremoveHealthbarsEnemies = enemies_healthbars.erase(toremoveHealthbarsEnemies);
+		}
+		else {
+			++toremoveHealthbarsEnemies;
+		}
+	}
 
 	// ###############################################################
 	// Adding highscore when player kills a enemie
@@ -616,6 +635,8 @@ void Scene00::update(float deltaTime)
 			currentscore += score;
 			countEnemiesDied++;
 			deadEnemies.push_back((*toremoveEnemies));
+			layers[2]->removeChild(*toremoveEnemies);
+			delete (*toremoveEnemies);
 			toremoveEnemies = enemies.erase(toremoveEnemies);
 		}
 		else {
