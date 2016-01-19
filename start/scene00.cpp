@@ -178,6 +178,7 @@ Scene00::Scene00() : SuperScene()
 
 Scene00::~Scene00()
 {
+// remove blocks
 	int s = blocks.size();
 	for (int i = 0; i<s; i++) {
 		layers[2]->removeChild(blocks[i]);
@@ -186,6 +187,7 @@ Scene00::~Scene00()
 	}
 	blocks.clear();
 
+// remove player bullets
 	int p_b = player_bullets.size();
 	for (int j = 0; j<p_b; j++) {
 		layers[1]->removeChild(player_bullets[j]);
@@ -194,6 +196,7 @@ Scene00::~Scene00()
 	}
 	player_bullets.clear();
 
+// remove enemies bullets
 	int e_b = enemies_bullets.size();
 	for (int l = 0; l<e_b; l++) {
 		layers[1]->removeChild(enemies_bullets[l]);
@@ -202,6 +205,7 @@ Scene00::~Scene00()
 	}
 	enemies_bullets.clear();
 
+// remove enemies, guns_enemies, enemies_healthbars
 	int es = enemies.size();
 	for (int k = 0; k < es; k++) {
 		enemies[k]->removeChild(guns_enemies[k]);
@@ -218,6 +222,7 @@ Scene00::~Scene00()
 	guns_enemies.clear();
 	enemies_healthbars.clear();
 
+// remove particles
 	int pp = particles.size();
 	for (int a = 0; a < pp; a++) {
 		layers[3]->removeChild(particles[a]);
@@ -226,7 +231,7 @@ Scene00::~Scene00()
 	}
 	particles.clear();
 
-	// remove ammo pickups
+// remove ammo pickups
 	int ammopickupsize = ammunitionpickups.size();
 	for (int i = 0; i < ammopickupsize; i++) {
 		layers[2]->removeChild(ammunitionpickups[i]);
@@ -235,7 +240,7 @@ Scene00::~Scene00()
 	}
 	ammunitionpickups.clear();
 
-	// remove health pickups
+// remove health pickups
 	int healthpickupsize = healthpickups.size();
 	for (int i = 0; i < healthpickupsize; i++) {
 		layers[2]->removeChild(healthpickups[i]);
@@ -244,6 +249,7 @@ Scene00::~Scene00()
 	}
 	healthpickups.clear();
 
+// removing the rest
 	layers[0]->removeChild(background_entity);
 	layers[2]->removeChild(player_entity);
 	layers[2]->removeChild(player_healthbar);
@@ -759,6 +765,9 @@ void Scene00::update(float deltaTime)
 		SuperScene::setState(LOSE);
 	}
 
+	// ###############################################################
+	// When WIN or LOSE, enter username
+	// ###############################################################
 	if (SuperScene::getState() == WIN || SuperScene::getState() == LOSE) {
 		if (triggerWhenFinished) {
 			enterUsername->position.x = camera()->position.x;
@@ -1544,14 +1553,17 @@ void Scene00::update(float deltaTime)
 	}
 }
 
+// Getting current score of the current game
 int Scene00::getscore() {
 	return this->currentscore;
 }
 
+// Getting the username which the player enters when WIN or LOSE
 string Scene00::getname() {
 	return this->username;
 }
 
+// Calculates int (x or y) when input 'rowOrCell' tile number
 int Scene00::posTile(int rowOrCell) {
 	int i = 64 * rowOrCell - 32;
 	return i;
