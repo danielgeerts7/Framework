@@ -15,7 +15,9 @@ class SceneCredits: public SuperScene
 		virtual ~SceneCredits();
 
 		virtual void update(float deltaTime);
+
 	private:
+		BasicEntity* logo;
 };
 
 #endif /* SCENECREDITS_H */
