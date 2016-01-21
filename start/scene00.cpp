@@ -62,8 +62,8 @@ Scene00::Scene00() : SuperScene()
 	layers[0]->addChild(background_entity);
 
 	player_entity = new Player();
-	// cell 12 ; row 12
-	player_entity->position = Point2(posTile(12), posTile(12));
+	// cell 13 ; row 12
+	player_entity->position = Point2(posTile(13), posTile(12));
 
 	player_healthbar = new HealthBar();
 	player_healthbar->position.x = player_entity->position.x;
@@ -73,7 +73,7 @@ Scene00::Scene00() : SuperScene()
 	player_health_text->scale = Point2(0.4, 0.4);
 	layers[3]->addChild(player_health_text);
 
-	for (int e = 0; e < 8; e++) {
+	for (int e = 0; e < 4; e++) {
 		Enemie* enemie = new Enemie();
 		enemies.push_back(enemie);
 
@@ -95,17 +95,12 @@ Scene00::Scene00() : SuperScene()
 		layers[2]->addChild(healthbar_enemie);
 	}
 	
-	// cell 3,5,7 ; row 3
-	enemies[0]->position = Point(posTile(3), posTile(3));
-	enemies[1]->position = Point(posTile(5), posTile(3));
-	enemies[2]->position = Point(posTile(7), posTile(3));
-	// cell 3,7 ; row 5
-	enemies[3]->position = Point(posTile(3), posTile(5));
-	enemies[4]->position = Point(posTile(7), posTile(5));
-	// cell 3,57 ; row 7
-	enemies[5]->position = Point(posTile(3), posTile(7));
-	enemies[6]->position = Point(posTile(5), posTile(7));
-	enemies[7]->position = Point(posTile(7), posTile(7));
+	// cell 3,23; row 4
+	enemies[0]->position = Point(posTile(3), posTile(4));
+	enemies[1]->position = Point(posTile(23), posTile(4));
+	// cell 4,22 ; row 10
+	enemies[2]->position = Point(posTile(4), posTile(10));
+	enemies[3]->position = Point(posTile(22), posTile(10));
 
 	gun_player_entity = new BasicEntity();
 	gun_player_entity->addSprite("assets/gun.tga");
@@ -113,7 +108,7 @@ Scene00::Scene00() : SuperScene()
 	gun_player_entity->position = Point2(30, 25);
 	
 	// ammunition pickup
-	int ammunition_pickup_amount = 3;
+	int ammunition_pickup_amount = 4;
 	for (int i = 0; i < ammunition_pickup_amount; i++) {
 		Pickup* ammo = new Pickup("ammo");
 
@@ -121,24 +116,27 @@ Scene00::Scene00() : SuperScene()
 		layers[2]->addChild(ammunitionpickups[i]);
 	}
 
-	// cell 21 ; row 5,8,11
-	ammunitionpickups[0]->position = Point2(posTile(21), posTile(5));
-	ammunitionpickups[1]->position = Point2(posTile(21), posTile(8));
-	ammunitionpickups[2]->position = Point2(posTile(21), posTile(11));
+	// cell 3,9,18,23 ; row 2,14
+	ammunitionpickups[0]->position = Point2(posTile(3), posTile(2));
+	ammunitionpickups[1]->position = Point2(posTile(9), posTile(14));
+	ammunitionpickups[2]->position = Point2(posTile(18), posTile(2));
+	ammunitionpickups[3]->position = Point2(posTile(23), posTile(14));
 
 	// health pickup
-	int health_pickup_amount = 2;
+	int health_pickup_amount = 4;
 	for (int i = 0; i < health_pickup_amount; i++) {
 		Pickup* health = new Pickup("health");
 
 		healthpickups.push_back(health);
 		layers[2]->addChild(healthpickups[i]);
 	}
-	//cell 19,23 ; row 8
-	healthpickups[0]->position = Point2(posTile(19), posTile(8));
-	healthpickups[1]->position = Point2(posTile(23), posTile(8));
+	//cell 3,8,17,23 ; row 2,14
+	healthpickups[0]->position = Point2(posTile(3), posTile(14));
+	healthpickups[1]->position = Point2(posTile(8), posTile(2));
+	healthpickups[2]->position = Point2(posTile(17), posTile(14));
+	healthpickups[3]->position = Point2(posTile(23), posTile(2));
 
-	int amount = 17;
+	int amount = 23;
 
 	for (int i = 0; i < amount; i++) {
 		Block* b = new Block();
@@ -146,29 +144,35 @@ Scene00::Scene00() : SuperScene()
 
 		layers[2]->addChild(blocks[i]);
 	}
-	// cell 10,11,13,14 ; row 9
+	// cell 10,11,15,16 ; row 9
 	blocks[0]->position = Point2(posTile(10), posTile(9));
 	blocks[1]->position = Point2(posTile(11), posTile(9));
-	blocks[2]->position = Point2(posTile(13), posTile(9));
-	blocks[3]->position = Point2(posTile(14), posTile(9));
-	// cell 9,15 ; row 10
+	blocks[2]->position = Point2(posTile(15), posTile(9));
+	blocks[3]->position = Point2(posTile(16), posTile(9));
+	// cell 9,10,16,17 ; row 10
 	blocks[4]->position = Point2(posTile(9), posTile(10));
-	blocks[5]->position = Point2(posTile(15), posTile(10));
-	// cell 8,16 ; row 11
-	blocks[6]->position = Point2(posTile(8), posTile(11));
-	blocks[7]->position = Point2(posTile(16), posTile(11));
-	// cell 8,16 ; row 12
-	blocks[8]->position = Point2(posTile(8), posTile(12));
-	blocks[9]->position = Point2(posTile(16), posTile(12));
-	// cell 9,15; row 13
-	blocks[10]->position = Point2(posTile(9), posTile(13));
-	blocks[11]->position = Point2(posTile(15), posTile(13));
-	// cell 10,11,12,13,14 ; row 14
-	blocks[12]->position = Point2(posTile(10), posTile(14));
-	blocks[13]->position = Point2(posTile(11), posTile(14));
-	blocks[14]->position = Point2(posTile(12), posTile(14));
-	blocks[15]->position = Point2(posTile(13), posTile(14));
-	blocks[16]->position = Point2(posTile(14), posTile(14));
+	blocks[5]->position = Point2(posTile(10), posTile(10));
+	blocks[6]->position = Point2(posTile(16), posTile(10));
+	blocks[7]->position = Point2(posTile(17), posTile(10));
+	// cell 9,17 ; row 11
+	blocks[8]->position = Point2(posTile(9), posTile(11));
+	blocks[9]->position = Point2(posTile(17), posTile(11));
+	// cell 9,17 ; row 12
+	blocks[10]->position = Point2(posTile(9), posTile(12));
+	blocks[11]->position = Point2(posTile(17), posTile(12));
+	// cell 9,10,16,17 ; row 13
+	blocks[12]->position = Point2(posTile(9), posTile(13));
+	blocks[13]->position = Point2(posTile(10), posTile(13));
+	blocks[14]->position = Point2(posTile(16), posTile(13));
+	blocks[15]->position = Point2(posTile(17), posTile(13));
+	// cell 10,11,12,13,14,15,16 ; row 14
+	blocks[16]->position = Point2(posTile(10), posTile(14));
+	blocks[17]->position = Point2(posTile(11), posTile(14));
+	blocks[18]->position = Point2(posTile(12), posTile(14));
+	blocks[19]->position = Point2(posTile(13), posTile(14));
+	blocks[20]->position = Point2(posTile(14), posTile(14));
+	blocks[21]->position = Point2(posTile(15), posTile(14));
+	blocks[22]->position = Point2(posTile(16), posTile(14));
 
 	layers[2]->addChild(player_entity);
 	layers[2]->addChild(player_healthbar);
