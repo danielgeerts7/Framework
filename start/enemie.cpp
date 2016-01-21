@@ -14,6 +14,11 @@ Enemie::Enemie() : BasicEntity ()
 	this->fieldOfView = 192;
 	this->health = 100;
 	this->checkIfPlayerIsInFieldOfView = false;
+
+	this->spawnForPoint = 0;
+	this->waypoint = 0;
+	this->newPosition = Point2(0, 0);
+	this->newWaypoint = 0;
 }
 
 
@@ -77,6 +82,73 @@ void Enemie::setEnemieHealth(int h)
 	this->health = h;
 }
 
+// ###############################################################
+// Get enemie health
+// ###############################################################
+int Enemie::getSpawnPoint()
+{
+	return this->spawnForPoint;
+}
+
+// ###############################################################
+// Set enemie health
+// ###############################################################
+void Enemie::setSpawnPoint(int spawnPoint)
+{
+	this->spawnForPoint = spawnPoint;
+}
+
+// ###############################################################
+// Get enemie CurrentWaypoint
+// ###############################################################
+int Enemie::getCurrentWaypoint()
+{
+	return waypoint;
+}
+
+// ###############################################################
+// Set enemie CurrentWaypoint
+// ###############################################################
+void Enemie::setCurrentWaypoint(int waypoint)
+{
+	this->waypoint = waypoint;
+}
+
+// ###############################################################
+// Get enemie New Position
+// ###############################################################
+Point2 Enemie::getNewPosition()
+{
+	return newPosition;
+}
+
+// ###############################################################
+// Set enemie New Position
+// ###############################################################
+void Enemie::setNewPosition(Point2 newSpawnPos)
+{
+	this->newPosition = newSpawnPos;
+}
+
+// ###############################################################
+// Get enemie New Waypoint
+// ###############################################################
+int Enemie::getNewWaypoint()
+{
+	return newWaypoint;
+}
+
+// ###############################################################
+// Set enemie New Waypoint
+// ###############################################################
+void Enemie::setNewWaypoint(int newWaypoint)
+{
+	this->newWaypoint = newWaypoint;
+}
+
+// ###############################################################
+// Return true or false when Bullet* hits enemie
+// ###############################################################
 int Enemie::gettingHitByPlayerBullets(Bullet* b)
 {
 	if (this->alive == true) {

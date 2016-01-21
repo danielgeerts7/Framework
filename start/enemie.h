@@ -25,12 +25,30 @@ public:
 	int getEnemieHealth();
 	void setEnemieHealth(int h);
 
+	int getSpawnPoint();
+	void setSpawnPoint(int spawnPoint);
+
+	int getCurrentWaypoint();
+	void setCurrentWaypoint(int waypoint);
+
+	Point2 getNewPosition();
+	void setNewPosition(Point2 newSpawnPos);
+
+	int getNewWaypoint();
+	void setNewWaypoint(int newWayPoint);
+
 	int gettingHitByPlayerBullets(Bullet* b);
 
 private:
 	int fieldOfView;
 	int radius;
 	int health;
+
+// variables for the enemie spawnpoints
+	int spawnForPoint;
+	int waypoint;
+	Point2 newPosition;
+	int newWaypoint;
 };
 
 #endif /* ENEMIE_H */

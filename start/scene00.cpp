@@ -94,13 +94,13 @@ Scene00::Scene00() : SuperScene()
 		enemies_healthbars.push_back(healthbar_enemie);
 		layers[2]->addChild(healthbar_enemie);
 	}
-	
-	// cell 3,23; row 4
-	enemies[0]->position = Point(posTile(3), posTile(4));
-	enemies[1]->position = Point(posTile(23), posTile(4));
-	// cell 4,22 ; row 10
-	enemies[2]->position = Point(posTile(4), posTile(10));
-	enemies[3]->position = Point(posTile(22), posTile(10));
+
+	int eSize = enemies.size();
+	for (int i = 0; i < eSize; i++) {
+		enemies[i]->setCurrentWaypoint(0);
+		enemies[i]->setSpawnPoint(i);
+		enemieSpawnAddSpawnpoint(enemies[i], enemies[i]->getSpawnPoint());
+	}
 
 	gun_player_entity = new BasicEntity();
 	gun_player_entity->addSprite("assets/gun.tga");
@@ -350,6 +350,195 @@ void Scene00::update(float deltaTime)
 	if (enemieCounter >= enemieDelay) {
 		enemieCounter = 0;
 	}
+
+	// ###############################################################
+	// All enemies walk to 'waypoints' and then to the player
+	// ###############################################################
+	int enemiesSizeForWaypoints = enemies.size();
+	
+	for (int i = 0; i < enemiesSizeForWaypoints; i++) {
+		if (enemies[i]->getSpawnPoint() == 0) {
+			if (enemies[i]->getCurrentWaypoint() == 0 && enemies[i]->getNewWaypoint() == 0) {
+				Point2 newPosition0 = Point2(posTile(rand() % 3 + 5), posTile(rand() % 3 + 4));
+				enemies[i]->setNewPosition(newPosition0);
+				enemies[i]->setNewWaypoint(1);
+			}
+			if (enemies[i]->getCurrentWaypoint() == 1 && enemies[i]->getNewWaypoint() == 1) {
+				Point2 newPosition1 = Point2(posTile(rand() % 3 + 12), posTile(rand() % 3 + 6));
+				enemies[i]->setNewPosition(newPosition1);
+				enemies[i]->setNewWaypoint(2);
+			}
+
+			if (enemies[i]->position.x < enemies[i]->getNewPosition().x + 5 &&
+				enemies[i]->position.x > enemies[i]->getNewPosition().x - 5 &&
+				enemies[i]->position.y < enemies[i]->getNewPosition().y + 5 &&
+				enemies[i]->position.y > enemies[i]->getNewPosition().y - 5 &&
+				enemies[i]->getCurrentWaypoint() < 2) {
+				int a = enemies[i]->getCurrentWaypoint() + 1;
+				enemies[i]->setCurrentWaypoint(a);
+			}
+			if (enemies[i]->getCurrentWaypoint() < 2) {
+				Point2 newpos = Point2(enemies[i]->getNewPosition().x, enemies[i]->getNewPosition().y);
+				Vector2 delta1 = Vector2(enemies[i]->position, newpos);
+				float angle1 = delta1.getAngle();
+				enemies[i]->rotation = angle1;
+
+				float velocity_x = cos(enemies[i]->rotation) * 1;
+				float velocity_y = sin(enemies[i]->rotation) * 1;
+				Vector2 velocity = Vector2(velocity_x, velocity_y);
+
+				enemies[i]->position += velocity;
+			} else {
+				Point2 newpos = Point2(player_entity->position.x, player_entity->position.y);
+				Vector2 delta1 = Vector2(enemies[i]->position, newpos);
+				float angle1 = delta1.getAngle();
+				enemies[i]->rotation = angle1;
+
+				float velocity_x = cos(enemies[i]->rotation) * 1;
+				float velocity_y = sin(enemies[i]->rotation) * 1;
+				Vector2 velocity = Vector2(velocity_x, velocity_y);
+
+				enemies[i]->position += velocity;
+			}
+		}
+		if (enemies[i]->getSpawnPoint() == 1) {
+			if (enemies[i]->getCurrentWaypoint() == 0 && enemies[i]->getNewWaypoint() == 0) {
+				Point2 newPosition0 = Point2(posTile(rand() % 3 + 19), posTile(rand() % 3 + 4));
+				enemies[i]->setNewPosition(newPosition0);
+				enemies[i]->setNewWaypoint(1);
+			}
+			if (enemies[i]->getCurrentWaypoint() == 1 && enemies[i]->getNewWaypoint() == 1) {
+				Point2 newPosition1 = Point2(posTile(rand() % 3 + 12), posTile(rand() % 3 + 6));
+				enemies[i]->setNewPosition(newPosition1);
+				enemies[i]->setNewWaypoint(2);
+			}
+
+			if (enemies[i]->position.x < enemies[i]->getNewPosition().x + 5 &&
+				enemies[i]->position.x > enemies[i]->getNewPosition().x - 5 &&
+				enemies[i]->position.y < enemies[i]->getNewPosition().y + 5 &&
+				enemies[i]->position.y > enemies[i]->getNewPosition().y - 5 &&
+				enemies[i]->getCurrentWaypoint() < 2) {
+				int a = enemies[i]->getCurrentWaypoint() + 1;
+				enemies[i]->setCurrentWaypoint(a);
+			}
+			if (enemies[i]->getCurrentWaypoint() < 2) {
+				Point2 newpos = Point2(enemies[i]->getNewPosition().x, enemies[i]->getNewPosition().y);
+				Vector2 delta1 = Vector2(enemies[i]->position, newpos);
+				float angle1 = delta1.getAngle();
+				enemies[i]->rotation = angle1;
+
+				float velocity_x = cos(enemies[i]->rotation) * 1;
+				float velocity_y = sin(enemies[i]->rotation) * 1;
+				Vector2 velocity = Vector2(velocity_x, velocity_y);
+
+				enemies[i]->position += velocity;
+			}
+			else {
+				Point2 newpos = Point2(player_entity->position.x, player_entity->position.y);
+				Vector2 delta1 = Vector2(enemies[i]->position, newpos);
+				float angle1 = delta1.getAngle();
+				enemies[i]->rotation = angle1;
+
+				float velocity_x = cos(enemies[i]->rotation) * 1;
+				float velocity_y = sin(enemies[i]->rotation) * 1;
+				Vector2 velocity = Vector2(velocity_x, velocity_y);
+
+				enemies[i]->position += velocity;
+			}
+		}
+		if (enemies[i]->getSpawnPoint() == 2) {
+			if (enemies[i]->getCurrentWaypoint() == 0 && enemies[i]->getNewWaypoint() == 0) {
+				Point2 newPosition0 = Point2(posTile(rand() % 3 + 6), posTile(rand() % 3 + 6));
+				enemies[i]->setNewPosition(newPosition0);
+				enemies[i]->setNewWaypoint(1);
+			}
+			if (enemies[i]->getCurrentWaypoint() == 1 && enemies[i]->getNewWaypoint() == 1) {
+				Point2 newPosition1 = Point2(posTile(rand() % 3 + 12), posTile(rand() % 3 + 6));
+				enemies[i]->setNewPosition(newPosition1);
+				enemies[i]->setNewWaypoint(2);
+			}
+
+			if (enemies[i]->position.x < enemies[i]->getNewPosition().x + 5 &&
+				enemies[i]->position.x > enemies[i]->getNewPosition().x - 5 &&
+				enemies[i]->position.y < enemies[i]->getNewPosition().y + 5 &&
+				enemies[i]->position.y > enemies[i]->getNewPosition().y - 5 &&
+				enemies[i]->getCurrentWaypoint() < 2) {
+				int a = enemies[i]->getCurrentWaypoint() + 1;
+				enemies[i]->setCurrentWaypoint(a);
+			}
+			if (enemies[i]->getCurrentWaypoint() < 2) {
+				Point2 newpos = Point2(enemies[i]->getNewPosition().x, enemies[i]->getNewPosition().y);
+				Vector2 delta1 = Vector2(enemies[i]->position, newpos);
+				float angle1 = delta1.getAngle();
+				enemies[i]->rotation = angle1;
+
+				float velocity_x = cos(enemies[i]->rotation) * 1;
+				float velocity_y = sin(enemies[i]->rotation) * 1;
+				Vector2 velocity = Vector2(velocity_x, velocity_y);
+
+				enemies[i]->position += velocity;
+			}
+			else {
+				Point2 newpos = Point2(player_entity->position.x, player_entity->position.y);
+				Vector2 delta1 = Vector2(enemies[i]->position, newpos);
+				float angle1 = delta1.getAngle();
+				enemies[i]->rotation = angle1;
+
+				float velocity_x = cos(enemies[i]->rotation) * 1;
+				float velocity_y = sin(enemies[i]->rotation) * 1;
+				Vector2 velocity = Vector2(velocity_x, velocity_y);
+
+				enemies[i]->position += velocity;
+			}
+		}
+		if (enemies[i]->getSpawnPoint() == 3) {
+			if (enemies[i]->getCurrentWaypoint() == 0 && enemies[i]->getNewWaypoint() == 0) {
+				Point2 newPosition0 = Point2(posTile(rand() % 3 + 19), posTile(rand() % 3 + 6));
+				enemies[i]->setNewPosition(newPosition0);
+				enemies[i]->setNewWaypoint(1);
+			}
+			if (enemies[i]->getCurrentWaypoint() == 1 && enemies[i]->getNewWaypoint() == 1) {
+				Point2 newPosition1 = Point2(posTile(rand() % 3 + 12), posTile(rand() % 3 + 6));
+				enemies[i]->setNewPosition(newPosition1);
+				enemies[i]->setNewWaypoint(2);
+			}
+
+			if (enemies[i]->position.x < enemies[i]->getNewPosition().x + 5 &&
+				enemies[i]->position.x > enemies[i]->getNewPosition().x - 5 &&
+				enemies[i]->position.y < enemies[i]->getNewPosition().y + 5 &&
+				enemies[i]->position.y > enemies[i]->getNewPosition().y - 5 &&
+				enemies[i]->getCurrentWaypoint() < 2) {
+				int a = enemies[i]->getCurrentWaypoint() + 1;
+				enemies[i]->setCurrentWaypoint(a);
+			}
+			if (enemies[i]->getCurrentWaypoint() < 2) {
+				Point2 newpos = Point2(enemies[i]->getNewPosition().x, enemies[i]->getNewPosition().y);
+				Vector2 delta1 = Vector2(enemies[i]->position, newpos);
+				float angle1 = delta1.getAngle();
+				enemies[i]->rotation = angle1;
+
+				float velocity_x = cos(enemies[i]->rotation) * 1;
+				float velocity_y = sin(enemies[i]->rotation) * 1;
+				Vector2 velocity = Vector2(velocity_x, velocity_y);
+
+				enemies[i]->position += velocity;
+			}
+			else {
+				Point2 newpos = Point2(player_entity->position.x, player_entity->position.y);
+				Vector2 delta1 = Vector2(enemies[i]->position, newpos);
+				float angle1 = delta1.getAngle();
+				enemies[i]->rotation = angle1;
+
+				float velocity_x = cos(enemies[i]->rotation) * 1;
+				float velocity_y = sin(enemies[i]->rotation) * 1;
+				Vector2 velocity = Vector2(velocity_x, velocity_y);
+
+				enemies[i]->position += velocity;
+			}
+		}
+	}
+	enemiesSizeForWaypoints = NULL;
+	
 
 	// ###############################################################
 	// Player gets hit by the enemies bullets
@@ -1574,4 +1763,23 @@ string Scene00::getname() {
 int Scene00::posTile(int rowOrCell) {
 	int i = 64 * rowOrCell - 32;
 	return i;
+}
+
+void Scene00::enemieSpawnAddSpawnpoint(Enemie* e, int spawnPointNumber) {
+	if (spawnPointNumber == 0) {
+		// cell 3 row 4
+		e->position = Point(posTile(3), posTile(4));
+	}
+	if (spawnPointNumber == 1) {
+		// cell 23, row 4
+		e->position = Point(posTile(23), posTile(4));
+	}
+	if (spawnPointNumber == 2) {
+		// cel 4, row 10
+		e->position = Point(posTile(4), posTile(10));
+	}
+	if (spawnPointNumber == 3) {
+		// cell 22, row 10
+		e->position = Point(posTile(22), posTile(10));
+	}
 }

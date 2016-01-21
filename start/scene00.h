@@ -35,6 +35,8 @@ class Scene00: public SuperScene
 
 		int posTile(int rowOrCell);
 
+		void enemieSpawnAddSpawnpoint(Enemie * e, int spawnPointNumber);
+
 		LoadTiles* background_entity;
 		Player* player_entity;
 		BasicEntity* gun_player_entity;
