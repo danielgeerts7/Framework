@@ -1,3 +1,4 @@
 build
 *.md.html
 *.psd
+start/assets/highscore_list.csv

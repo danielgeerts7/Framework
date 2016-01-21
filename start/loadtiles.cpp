@@ -27,11 +27,9 @@ LoadTiles::LoadTiles() : BasicEntity()
 	// ###############################################################
 	string line, cell;
 	ifstream myfile("assets/default_tile_grid.csv");
-	// try to open the file, else if you cannot throw exception
-	try
-	{
-		myfile.is_open();
 
+	//check if file is open
+	if (myfile.is_open()) {
 		// read each line into line
 		while (getline(myfile, line))
 		{
@@ -51,10 +49,6 @@ LoadTiles::LoadTiles() : BasicEntity()
 				ints.push_back(result);
 			}
 		}
-	}
-	// display the exception thrown
-	catch (ifstream::failure e) {
-		cout << "Exception opening/reading file: " << e.what();
 	}
 }
 
