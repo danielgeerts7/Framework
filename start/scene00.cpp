@@ -356,7 +356,7 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	// Spawning new enemies when counter is greater or equal delay
 	// ###############################################################
-	if (enemieSpawnCounter >= enemieSpawnDelay) {
+	if (enemieSpawnCounter >= enemieSpawnDelay && player_entity->alive) {
 		Enemie* enemie = new Enemie();
 		layers[2]->addChild(enemie);
 		enemies.push_back(enemie);
@@ -842,6 +842,11 @@ void Scene00::update(float deltaTime)
 			enemies_healthbars[i]->alive = false;
 			enemies[i]->alive = false;
 		}
+
+		if (player_entity->alive == false) {
+			enemies_healthbars[i]->alive = false;
+			enemies[i]->alive = false;
+		}
 	}
 	enemie_size = NULL;
 
@@ -866,9 +871,11 @@ void Scene00::update(float deltaTime)
 	vector<Enemie*>::iterator toremoveEnemies = enemies.begin();
 	while (toremoveEnemies != enemies.end()) {
 		if ((*toremoveEnemies)->alive == false && countEnemiesDied <= deadEnemies.size()) {
-			currentscore += score;
-			countEnemiesDied++;
-			deadEnemies.push_back((*toremoveEnemies));
+			if (player_entity->alive) {
+				currentscore += score;
+				countEnemiesDied++;
+				deadEnemies.push_back((*toremoveEnemies));
+			}
 			layers[2]->removeChild(*toremoveEnemies);
 			delete (*toremoveEnemies);
 			toremoveEnemies = enemies.erase(toremoveEnemies);
