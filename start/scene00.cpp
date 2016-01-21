@@ -26,6 +26,9 @@ Scene00::Scene00() : SuperScene()
 	enemieDelay = 10;
 	enemieCounter = 0;
 
+	enemieSpawnDelay = 150;
+	enemieSpawnCounter = 0;
+
 	countEnemiesDied = 0;
 
 	score = 10;
@@ -68,39 +71,33 @@ Scene00::Scene00() : SuperScene()
 	player_healthbar = new HealthBar();
 	player_healthbar->position.x = player_entity->position.x;
 	player_healthbar->position.y = player_entity->position.y - 60;
-	
+
 	player_health_text = new Text();
 	player_health_text->scale = Point2(0.4, 0.4);
 	layers[3]->addChild(player_health_text);
 
-	for (int e = 0; e < 4; e++) {
-		Enemie* enemie = new Enemie();
-		enemies.push_back(enemie);
+	Enemie* enemie = new Enemie();
+	layers[2]->addChild(enemie);
+	enemies.push_back(enemie);
 
-		layers[2]->addChild(enemies[e]);
+	enemie->setCurrentWaypoint(0);
+	enemie->setSpawnPoint(rand() % 3);
+	enemieSpawnAddSpawnpoint(enemie, enemie->getSpawnPoint());
 
-		BasicEntity* gun_enemie = new BasicEntity();
-		gun_enemie->addSprite("assets/gun.tga");
-		gun_enemie->sprite()->color = YELLOW;
-		gun_enemie->position = Point2(30, 25);
+	BasicEntity* gun_enemie = new BasicEntity();
+	gun_enemie->addSprite("assets/gun.tga");
+	gun_enemie->sprite()->color = YELLOW;
+	gun_enemie->position = Point2(30, 25);
 
-		guns_enemies.push_back(gun_enemie);
-		enemies[e]->addChild(gun_enemie);
+	guns_enemies.push_back(gun_enemie);
+	enemie->addChild(gun_enemie);
 
-		HealthBar* healthbar_enemie = new HealthBar();
-		healthbar_enemie->position.x = enemies[e]->position.x;
-		healthbar_enemie->position.y = enemies[e]->position.y - 60;
+	HealthBar* healthbar_enemie = new HealthBar();
+	healthbar_enemie->position.x = enemie->position.x;
+	healthbar_enemie->position.y = enemie->position.y - 60;
 
-		enemies_healthbars.push_back(healthbar_enemie);
-		layers[2]->addChild(healthbar_enemie);
-	}
-
-	int eSize = enemies.size();
-	for (int i = 0; i < eSize; i++) {
-		enemies[i]->setCurrentWaypoint(0);
-		enemies[i]->setSpawnPoint(i);
-		enemieSpawnAddSpawnpoint(enemies[i], enemies[i]->getSpawnPoint());
-	}
+	enemies_healthbars.push_back(healthbar_enemie);
+	layers[2]->addChild(healthbar_enemie);
 
 	gun_player_entity = new BasicEntity();
 	gun_player_entity->addSprite("assets/gun.tga");
@@ -349,6 +346,41 @@ void Scene00::update(float deltaTime)
 	// Setting the counter to 0 for a bullet shooting delay
 	if (enemieCounter >= enemieDelay) {
 		enemieCounter = 0;
+	}
+
+	// 
+	enemieSpawnCounter += 0.5;
+	if (enemieSpawnCounter >= enemieSpawnDelay) {
+		enemieSpawnCounter = enemieSpawnDelay;
+	}
+	// ###############################################################
+	// Spawning new enemies when counter is greater or equal delay
+	// ###############################################################
+	if (enemieSpawnCounter >= enemieSpawnDelay) {
+		Enemie* enemie = new Enemie();
+		layers[2]->addChild(enemie);
+		enemies.push_back(enemie);
+
+		enemie->setCurrentWaypoint(0);
+		enemie->setSpawnPoint(rand() % 3);
+		enemieSpawnAddSpawnpoint(enemie, enemie->getSpawnPoint());
+
+		BasicEntity* gun_enemie = new BasicEntity();
+		gun_enemie->addSprite("assets/gun.tga");
+		gun_enemie->sprite()->color = YELLOW;
+		gun_enemie->position = Point2(30, 25);
+
+		guns_enemies.push_back(gun_enemie);
+		enemie->addChild(gun_enemie);
+
+		HealthBar* healthbar_enemie = new HealthBar();
+		healthbar_enemie->position.x = enemie->position.x;
+		healthbar_enemie->position.y = enemie->position.y - 60;
+
+		enemies_healthbars.push_back(healthbar_enemie);
+		layers[2]->addChild(healthbar_enemie);
+
+		enemieSpawnCounter = 0;
 	}
 
 	// ###############################################################

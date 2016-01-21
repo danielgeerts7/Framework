@@ -54,6 +54,9 @@ class Scene00: public SuperScene
 		int enemieDelay;
 		float enemieCounter;
 
+		int enemieSpawnDelay;
+		float enemieSpawnCounter;
+
 		bool pressedReloadingForThePlayer;
 		bool playerCanShoot;
 
