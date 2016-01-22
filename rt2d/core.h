@@ -50,11 +50,14 @@ public:
 	/// @return void
 	void showFrameRate(float numsecs);
 
+	int exitApp();
+
 private:
 	Renderer _renderer; ///< @brief The Renderer member
 
 	double _calculateDeltaTime(); ///< @brief updates deltaTime internally
 	double _deltaTime; ///< @brief deltaTime member
+	int _exitApp; ///< @brief exitApp member
 };
 
 #endif /* CORE_H */

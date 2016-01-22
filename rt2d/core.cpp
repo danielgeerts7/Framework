@@ -12,6 +12,7 @@
 Core::Core()
 {
 	_deltaTime = 0;
+	_exitApp = 0;
 }
 
 Core::~Core()
@@ -37,7 +38,7 @@ void Core::run(Scene* scene)
 	_renderer.renderScene(scene);
 
 	// user clicked the 'close' button in the window
-	if (glfwWindowShouldClose(_renderer.window()) == 1) { scene->stop(); }
+	if (glfwWindowShouldClose(_renderer.window()) == 1) { scene->stop(); _exitApp = 1;  }
 }
 
 void Core::showFrameRate(float numsecs)
@@ -67,4 +68,8 @@ double Core::_calculateDeltaTime()
 void Core::cleanup()
 {
 	_renderer.cleanup();
+}
+
+int Core::exitApp() {
+	return _exitApp;
 }
