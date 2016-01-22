@@ -97,6 +97,25 @@ bool compare(const pair<int, string>&i, const pair<int, string>&j)
 void HighScoreList::addScore(int score, string name) {
 	highscoreList.emplace_back(score, name);
 	sort(highscoreList.begin(), highscoreList.end(), compare);
+
+	std::ofstream outfile("assets/highscore_list.csv");
+
+	//check if file is open
+	if (outfile.is_open()) {
+
+		string Result;
+
+		stringstream convert;
+		convert << score;
+		Result = convert.str();
+
+		int listSize = highscoreList.size();
+
+		for (int i = 0; i < listSize; i++) {
+			outfile << highscoreList[i].first << "," << highscoreList[i].second << std::endl;
+		}
+		outfile.close();
+	}
 }
 
 vector<pair <int, string> > HighScoreList::sortHighScoreList() {
