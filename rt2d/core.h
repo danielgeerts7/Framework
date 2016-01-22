@@ -25,8 +25,6 @@
 #include <rt2d/entity.h>
 #include <rt2d/scene.h>
 
-#include <start\superscene.h>
-
 #include <glfw3.h>
 
 /// @brief The Core class handles updating and rendering of your Entities.
