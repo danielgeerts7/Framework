@@ -111,7 +111,8 @@ void SceneHighscore::update(float deltaTime)
 	}
 
 	if (!loaded) {
-		for (int i = 0; i < tophighscores; i++) {
+		int listsize = highscoreList.size();
+		for (int i = 0; i < listsize; i++) {
 			/* RANKS */
 			string RANK = " ";
 			if (i < 9) {

@@ -589,8 +589,8 @@ void Scene00::update(float deltaTime)
 		while (toremoveEB != enemies_bullets.end()) {
 			if (player_entity->gettingHitByEnemieBullets((*toremoveEB)) == 1 && player_entity->getPlayerHealth() > 0 && (*toremoveEB) > 0) {
 				
-				ParticleSystem* p = new ParticleSystem(RED, "assets/singleparticle.tga");
-				p->addParticleToParent((*toremoveEB));
+				ParticleSystem* p = new ParticleSystem(RED, "assets/singleparticle.tga", 0, 0);
+				p->addParticleToParentBullet((*toremoveEB));
 				layers[1]->addChild(p);
 				playerparticles.push_back(p);
 
@@ -613,8 +613,8 @@ void Scene00::update(float deltaTime)
 			if (enemies[ee]->gettingHitByPlayerBullets(player_bullets[pb]) == 1 && enemies[ee]->alive && player_entity->alive && player_bullets.size() >= 0) {
 				player_bullets[pb]->alive = false;
 
-				ParticleSystem* p = new ParticleSystem(RED, "assets/singleparticle.tga");
-				p->addParticleToParent(player_bullets[pb]);
+				ParticleSystem* p = new ParticleSystem(RED, "assets/singleparticle.tga", 0, 0);
+				p->addParticleToParentBullet(player_bullets[pb]);
 				layers[1]->addChild(p);
 				enemiesparticles.push_back(p);
 			}
@@ -906,6 +906,20 @@ void Scene00::update(float deltaTime)
 				currentscore += score;
 				countEnemiesDied++;
 				deadEnemies.push_back((*toremoveEnemies));
+
+				ParticleSystem* p = new ParticleSystem(YELLOW, "assets/gun.tga", 1, 0);
+				p->addParticleToParentEnemie((*toremoveEnemies));
+				layers[1]->addChild(p);
+				enemiesparticles.push_back(p);
+
+				int i = 0;
+				while (i < 3) {
+					ParticleSystem* pgun = new ParticleSystem(PINK, "assets/player_sprite_booty_parts.tga", 2, i);
+					pgun->addParticleToParentEnemie((*toremoveEnemies));
+					layers[1]->addChild(pgun);
+					enemiesparticles.push_back(pgun);
+					i++;
+				}
 			}
 			layers[2]->removeChild(*toremoveEnemies);
 			delete (*toremoveEnemies);

@@ -8,16 +8,17 @@
 
 #include "basicentity.h"
 #include "bullet.h"
+#include "enemie.h"
 #include <rt2d/sprite.h>
 
 using namespace std;
 class ParticleSystem : public BasicEntity
 {
 public:
-	ParticleSystem(RGBAColor color, string asset);
+	ParticleSystem(RGBAColor color, string asset, int spriteType, int spriteNumber);
 	~ParticleSystem();
 
-	int speed;
+	float speed;
 	float lifespan;
 	float angle;
 
@@ -31,13 +32,19 @@ public:
 
 	virtual void update(float deltaTime);
 
-	void addParticleToParent(Bullet* fromBullet);
+	void addParticleToParentBullet(Bullet* fromBullet);
+	void addParticleToParentEnemie(Enemie* fromEnemie);
 	bool isDead();
 
 private:
 	int maxParticles;
 	int counter;
 	int delay;
+
+// 0 = nothing, 1 = Bullet, 2 = Enemie
+	int whichParticle;
+
+	int type;
 };
 
 #endif /* PARTICLESYSTEM_H */

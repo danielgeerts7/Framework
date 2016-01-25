@@ -8,16 +8,34 @@
 #include "particlesystem.h"
 
 
-ParticleSystem::ParticleSystem(RGBAColor color, string asset) : BasicEntity ()
+ParticleSystem::ParticleSystem(RGBAColor color, string asset, int spriteType, int spriteNumber) : BasicEntity ()
 {
 	lifespan = 255;
+	type = spriteType;
 
-	this->scale = Point2(rand() % 1 + 3, rand() % 1 + 3);
-	this->addSprite(asset);
-	this->sprite()->color = color;
+	if (type == 0) {
+		this->addSprite(asset);
+		this->sprite()->color = color;
 
-	counter = 0;
-	delay = 300;
+		counter = 0;
+		delay = 600;
+	} else if (type == 1) {
+		this->addSprite(asset);
+		this->sprite()->color = color;
+
+		counter = 0;
+		delay = 700;
+	} else if (type == 2) {
+		this->addSprite(asset);
+		this->sprite()->color = color;
+		float x = (float)1 / (float)3 * spriteNumber;
+		float y = 1;
+		this->sprite()->uvdim = Point2(x, y);
+		float xoffset = spriteNumber * 64;
+		this->sprite()->uvoffset.x = xoffset;
+		counter = 0;
+		delay = 700;
+	}
 }
 
 
@@ -25,7 +43,11 @@ ParticleSystem::~ParticleSystem()
 {
 }
 
-void ParticleSystem::addParticleToParent(Bullet* fromBullet) {
+void ParticleSystem::addParticleToParentBullet(Bullet* fromBullet) {
+
+	int scale = rand() % 1 + 3;
+	this->scale = Point2(scale, scale);
+
 	this->velocity_x = cos(fromBullet->rotation + rand() % 2 - 1) * 0;
 	this->velocity_y = sin(fromBullet->rotation + rand() % 2 - 1) * 0;
 
@@ -36,6 +58,21 @@ void ParticleSystem::addParticleToParent(Bullet* fromBullet) {
 	this->position.x = fromBullet->position.x;
 	this->position.y = fromBullet->position.y;
 	this->rotation = angle;
+
+	whichParticle = 1;
+}
+
+void ParticleSystem::addParticleToParentEnemie(Enemie* fromEnemie) {
+	this->scale = Point2(1, 1);
+	this->velocity_x = cos(this->rotation + rand() % 2 - 1) * .75;
+	this->velocity_y = sin(this->rotation + rand() % 2 - 1) * .75;
+	location = fromEnemie->position;
+	velocity = Point2(velocity_x, velocity_y);
+
+	this->position.x = fromEnemie->position.x;
+	this->position.y = fromEnemie->position.y;
+	this->rotation = rand() % 360 / DEG_TO_RAD;
+	whichParticle = 2;
 }
 
 void ParticleSystem::update(float deltaTime)
@@ -45,16 +82,38 @@ void ParticleSystem::update(float deltaTime)
 	location.x += velocity.x;
 	location.y += velocity.y;
 
-	if (counter > delay) {
-		lifespan -= 2.5;
-	} else {
-		counter++;
-	}
-
-	this->position.x = location.x;
-	this->position.y = location.y;
+	//this->position.x = location.x;
+	//this->position.y = location.y;
 
 	isDead();
+
+	if (whichParticle == 1) {
+		if (counter > delay) {
+			lifespan -= 0.5;
+		}
+		else {
+			counter++;
+		}
+	} else if (whichParticle == 2) {
+		if (type == 1) {
+			//this->rotation += 0.05;
+			if (counter > delay) {
+				lifespan -= 0.5;
+			}
+			else {
+				counter++;
+			}
+		}
+		if (type == 2) {
+			//this->rotation += 0.03;
+			if (counter > delay) {
+				lifespan -= 0.75;
+			}
+			else {
+				counter++;
+			}
+		}
+	}
 }
 
 bool ParticleSystem::isDead() {
