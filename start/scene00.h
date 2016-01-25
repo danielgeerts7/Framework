@@ -62,8 +62,6 @@ class Scene00: public SuperScene
 
 		int playerRaduis;
 
-		ParticleSystem* p;
-
 		std::vector<ParticleSystem*> enemiesparticles;
 		std::vector<ParticleSystem*> playerparticles;
 		std::vector<Enemie*> enemies;

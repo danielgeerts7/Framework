@@ -589,7 +589,7 @@ void Scene00::update(float deltaTime)
 		while (toremoveEB != enemies_bullets.end()) {
 			if (player_entity->gettingHitByEnemieBullets((*toremoveEB)) == 1 && player_entity->getPlayerHealth() > 0 && (*toremoveEB) > 0) {
 				
-				p = new ParticleSystem(RED, "assets/singleparticle.tga");
+				ParticleSystem* p = new ParticleSystem(RED, "assets/singleparticle.tga");
 				p->addParticleToParent((*toremoveEB));
 				layers[1]->addChild(p);
 				playerparticles.push_back(p);
@@ -613,7 +613,7 @@ void Scene00::update(float deltaTime)
 			if (enemies[ee]->gettingHitByPlayerBullets(player_bullets[pb]) == 1 && enemies[ee]->alive && player_entity->alive && player_bullets.size() >= 0) {
 				player_bullets[pb]->alive = false;
 
-				p = new ParticleSystem(RED, "assets/singleparticle.tga");
+				ParticleSystem* p = new ParticleSystem(RED, "assets/singleparticle.tga");
 				p->addParticleToParent(player_bullets[pb]);
 				layers[1]->addChild(p);
 				enemiesparticles.push_back(p);
