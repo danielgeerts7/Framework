@@ -10,10 +10,11 @@
 #include "bullet.h"
 #include <rt2d/sprite.h>
 
+using namespace std;
 class ParticleSystem : public BasicEntity
 {
 public:
-	ParticleSystem();
+	ParticleSystem(RGBAColor color, string asset);
 	~ParticleSystem();
 
 	int speed;
@@ -30,11 +31,13 @@ public:
 
 	virtual void update(float deltaTime);
 
-	void addParticleToParent(BasicEntity* toParent, Bullet* fromBullet);
+	void addParticleToParent(Bullet* fromBullet);
 	bool isDead();
 
 private:
 	int maxParticles;
+	int counter;
+	int delay;
 };
 
 #endif /* PARTICLESYSTEM_H */

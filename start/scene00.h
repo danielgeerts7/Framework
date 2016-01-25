@@ -64,7 +64,8 @@ class Scene00: public SuperScene
 
 		ParticleSystem* p;
 
-		std::vector<ParticleSystem*> particles;
+		std::vector<ParticleSystem*> enemiesparticles;
+		std::vector<ParticleSystem*> playerparticles;
 		std::vector<Enemie*> enemies;
 		std::vector<Enemie*> deadEnemies;
 		std::vector<BasicEntity*> guns_enemies;

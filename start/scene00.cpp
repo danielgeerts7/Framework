@@ -223,14 +223,23 @@ Scene00::~Scene00()
 	guns_enemies.clear();
 	enemies_healthbars.clear();
 
-// remove particles
-	int pp = particles.size();
-	for (int a = 0; a < pp; a++) {
-		layers[3]->removeChild(particles[a]);
-		delete particles[a];
-		particles[a] = NULL;
+// remove enemiesparticles
+	int ep = enemiesparticles.size();
+	for (int a = 0; a < ep; a++) {
+		layers[1]->removeChild(enemiesparticles[a]);
+		delete enemiesparticles[a];
+		enemiesparticles[a] = NULL;
 	}
-	particles.clear();
+	enemiesparticles.clear();
+
+	// remove playerparticles
+	int pp = playerparticles.size();
+	for (int a = 0; a < pp; a++) {
+		layers[1]->removeChild(playerparticles[a]);
+		delete playerparticles[a];
+		playerparticles[a] = NULL;
+	}
+	playerparticles.clear();
 
 // remove ammo pickups
 	int ammopickupsize = ammunitionpickups.size();
@@ -579,6 +588,12 @@ void Scene00::update(float deltaTime)
 	if (player_entity->alive) {
 		while (toremoveEB != enemies_bullets.end()) {
 			if (player_entity->gettingHitByEnemieBullets((*toremoveEB)) == 1 && player_entity->getPlayerHealth() > 0 && (*toremoveEB) > 0) {
+				
+				p = new ParticleSystem(RED, "assets/singleparticle.tga");
+				p->addParticleToParent((*toremoveEB));
+				layers[1]->addChild(p);
+				playerparticles.push_back(p);
+
 				layers[1]->removeChild((*toremoveEB));
 				delete (*toremoveEB);
 				toremoveEB = enemies_bullets.erase(toremoveEB);
@@ -598,10 +613,10 @@ void Scene00::update(float deltaTime)
 			if (enemies[ee]->gettingHitByPlayerBullets(player_bullets[pb]) == 1 && enemies[ee]->alive && player_entity->alive && player_bullets.size() >= 0) {
 				player_bullets[pb]->alive = false;
 
-				p = new ParticleSystem();
-				p->addParticleToParent(enemies[ee], player_bullets[pb]);
-				layers[3]->addChild(p);
-				particles.push_back(p);
+				p = new ParticleSystem(RED, "assets/singleparticle.tga");
+				p->addParticleToParent(player_bullets[pb]);
+				layers[1]->addChild(p);
+				enemiesparticles.push_back(p);
 			}
 		}
 	}
@@ -623,21 +638,37 @@ void Scene00::update(float deltaTime)
 	}
 
 	// ###############################################################
-	// Deleting particles when isDead() is true
+	// Deleting enemies particles when isDead() is true
 	// ###############################################################
-	vector<ParticleSystem*>::iterator toremovePart = particles.begin();
-	while (toremovePart != particles.end()) {
+	vector<ParticleSystem*>::iterator toremovePart = enemiesparticles.begin();
+	while (toremovePart != enemiesparticles.end()) {
 		if ((*toremovePart)->isDead()) {
-			layers[3]->removeChild((*toremovePart));
+			layers[1]->removeChild((*toremovePart));
 			delete (*toremovePart);
-			toremovePart = particles.erase(toremovePart);
+			toremovePart = enemiesparticles.erase(toremovePart);
 		}
 		else {
 			++toremovePart;
 		}
 	}
-	string pp = "particles: ";
-	pp.append(to_string(particles.size()));
+
+	// ###############################################################
+	// Deleting player particles when isDead() is true
+	// ###############################################################
+	vector<ParticleSystem*>::iterator toremovePartplayer = playerparticles.begin();
+	while (toremovePartplayer != playerparticles.end()) {
+		if ((*toremovePartplayer)->isDead()) {
+			layers[1]->removeChild((*toremovePartplayer));
+			delete (*toremovePartplayer);
+			toremovePartplayer = playerparticles.erase(toremovePartplayer);
+		}
+		else {
+			++toremovePartplayer;
+		}
+	}
+
+	string pp = "Allparticles: ";
+	pp.append(to_string(enemiesparticles.size() + playerparticles.size()));
 	text[12]->message(pp);
 
 	// ###############################################################
