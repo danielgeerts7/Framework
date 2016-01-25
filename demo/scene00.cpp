@@ -68,9 +68,6 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	SuperScene::update(deltaTime);
 
-	// remove 'clicks' text
-	text[10]->message("");
-
 	// ###############################################################
 	// Scroll text with arrow up/down
 	// ###############################################################
