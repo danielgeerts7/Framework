@@ -26,15 +26,14 @@ ParticleSystem::ParticleSystem(RGBAColor color, string asset, int spriteType, in
 		counter = 0;
 		delay = 700;
 	} else if (type == 2) {
-		this->addSprite(asset);
+		this->addSpriteSheet(asset, 1, 3);
 		this->sprite()->color = color;
-		float x = (float)1 / (float)3 * spriteNumber;
+		float x = ((float)1 / (float)3);
 		float y = 1;
 		this->sprite()->uvdim = Point2(x, y);
-		float xoffset = spriteNumber * 64;
-		this->sprite()->uvoffset.x = xoffset;
+		this->sprite()->frame(spriteNumber);
 		counter = 0;
-		delay = 700;
+		delay = 100;
 	}
 }
 
@@ -64,10 +63,10 @@ void ParticleSystem::addParticleToParentBullet(Bullet* fromBullet) {
 
 void ParticleSystem::addParticleToParentEnemie(Enemie* fromEnemie) {
 	this->scale = Point2(1, 1);
-	this->velocity_x = cos(this->rotation + rand() % 2 - 1) * .75;
-	this->velocity_y = sin(this->rotation + rand() % 2 - 1) * .75;
+	this->velocity_x = cos(rand() % 360 / DEG_TO_RAD) * .75;
+	this->velocity_y = sin(rand() % 360 / DEG_TO_RAD) * .75;
 	location = fromEnemie->position;
-	velocity = Point2(velocity_x, velocity_y);
+	velocity = Vector2(velocity_x, velocity_y);
 
 	this->position.x = fromEnemie->position.x;
 	this->position.y = fromEnemie->position.y;
@@ -82,8 +81,8 @@ void ParticleSystem::update(float deltaTime)
 	location.x += velocity.x;
 	location.y += velocity.y;
 
-	//this->position.x = location.x;
-	//this->position.y = location.y;
+	this->position.x = location.x;
+	this->position.y = location.y;
 
 	isDead();
 
@@ -96,7 +95,7 @@ void ParticleSystem::update(float deltaTime)
 		}
 	} else if (whichParticle == 2) {
 		if (type == 1) {
-			//this->rotation += 0.05;
+			this->rotation += 0.05;
 			if (counter > delay) {
 				lifespan -= 0.5;
 			}
@@ -105,7 +104,7 @@ void ParticleSystem::update(float deltaTime)
 			}
 		}
 		if (type == 2) {
-			//this->rotation += 0.03;
+			this->rotation += 0.03;
 			if (counter > delay) {
 				lifespan -= 0.75;
 			}
