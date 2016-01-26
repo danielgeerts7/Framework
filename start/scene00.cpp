@@ -717,8 +717,12 @@ void Scene00::update(float deltaTime)
 	// But that function doens't do anything yet
 	// ###############################################################
 	int blocks_size = blocks.size();
+	int enemies_size = enemies.size();
 	for (int i = 0; i < blocks_size; i++) {
 		blocks[i]->baiscEntityCollidWithBlock(player_entity, 32, 24);
+		for (int j = 0; j < enemies_size; j++) {
+			blocks[i]->baiscEntityCollidWithBlock(enemies[j], 32, 24);
+		}
 	}
 	blocks_size = NULL;
 
