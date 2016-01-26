@@ -20,7 +20,6 @@ public:
 
 	float speed;
 	float lifespan;
-	float angle;
 
 	float velocity_x;
 	float velocity_y;

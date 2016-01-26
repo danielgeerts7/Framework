@@ -26,14 +26,14 @@ ParticleSystem::ParticleSystem(RGBAColor color, string asset, int spriteType, in
 		counter = 0;
 		delay = 700;
 	} else if (type == 2) {
-		this->addSpriteSheet(asset, 1, 3);
+		this->addSpriteSheet(asset, 1, 4);
 		this->sprite()->color = color;
-		float x = ((float)1 / (float)3);
+		float x = 0.25;
 		float y = 1;
 		this->sprite()->uvdim = Point2(x, y);
 		this->sprite()->frame(spriteNumber);
 		counter = 0;
-		delay = 100;
+		delay = 200;
 	}
 }
 
@@ -43,7 +43,6 @@ ParticleSystem::~ParticleSystem()
 }
 
 void ParticleSystem::addParticleToParentBullet(Bullet* fromBullet) {
-
 	int scale = rand() % 1 + 3;
 	this->scale = Point2(scale, scale);
 
@@ -56,16 +55,18 @@ void ParticleSystem::addParticleToParentBullet(Bullet* fromBullet) {
 
 	this->position.x = fromBullet->position.x;
 	this->position.y = fromBullet->position.y;
-	this->rotation = angle;
+	this->rotation = rand() % 360 / DEG_TO_RAD;
 
 	whichParticle = 1;
 }
 
 void ParticleSystem::addParticleToParentEnemie(Enemie* fromEnemie) {
 	this->scale = Point2(1, 1);
-	this->velocity_x = cos(rand() % 360 / DEG_TO_RAD) * .75;
-	this->velocity_y = sin(rand() % 360 / DEG_TO_RAD) * .75;
+	this->velocity_x = cos(rand() % 360 / DEG_TO_RAD) * 0.5;
+	this->velocity_y = sin(rand() % 360 / DEG_TO_RAD) * 0.5;
+
 	location = fromEnemie->position;
+	acceleration = Vector2(0, 0);
 	velocity = Vector2(velocity_x, velocity_y);
 
 	this->position.x = fromEnemie->position.x;
@@ -95,18 +96,17 @@ void ParticleSystem::update(float deltaTime)
 		}
 	} else if (whichParticle == 2) {
 		if (type == 1) {
-			this->rotation += 0.05;
+			this->rotation += 0.02;
 			if (counter > delay) {
 				lifespan -= 0.5;
 			}
 			else {
 				counter++;
 			}
-		}
-		if (type == 2) {
+		} else if (type == 2) {
 			this->rotation += 0.03;
 			if (counter > delay) {
-				lifespan -= 0.75;
+				lifespan -=	0.75;
 			}
 			else {
 				counter++;
