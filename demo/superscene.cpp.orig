@@ -88,6 +88,8 @@ void SuperScene::update(float deltaTime)
 	}
 
 	// ###############################################################
+<<<<<<< HEAD
+=======
 	// Mouse buttons (GLFW_MOUSE_BUTTON_LAST = 8 buttons: 0-7)
 	// ###############################################################
 	for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST; i++) {
@@ -104,6 +106,7 @@ void SuperScene::update(float deltaTime)
 	text[10]->message(clicktxt);
 
 	// ###############################################################
+>>>>>>> master
 	// logo and text follow camera
 	// ###############################################################
 	Point2 cam_pos = Point2(camera()->position.x, camera()->position.y);

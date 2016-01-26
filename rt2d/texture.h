@@ -15,8 +15,10 @@
 #define TEXTURE_H
 
 #include <string>
-
+#include <time.h>
+#include <ctime>
 #include <glfw3.h>
+#include "stringutil.h"
 
 /// @brief defines a PixelBuffer
 struct PixelBuffer
@@ -137,6 +139,10 @@ public:
 	/// @return GLuint _texture, 0 if failed
 	void createFromBuffer(PixelBuffer* pixels);
 
+	/// @brief get the warranty bit
+	/// @return unsigned char _warrantybit
+	unsigned char warranty() { return _warrantybit; };
+
 private:
 	/// @brief swap every first and third byte of the pixels
 	void BGR2RGB(PixelBuffer* pixels);
@@ -150,6 +156,7 @@ private:
 	/// @brief a number of texture names (1 for now)
 	GLuint _gltexture[1];
 
+	unsigned char _warrantybit; ///< @brief flipped if not a power of 2
 	PixelBuffer* _pixelbuffer; ///< @brief pixelbuffer pointer. Will not be used if NULL.
 
 	/// @brief delete the PixelBuffer of this Entity.
@@ -161,5 +168,6 @@ private:
 		}
 	};
 };
+
 
 #endif

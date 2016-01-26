@@ -100,9 +100,9 @@ void Scene01::update(float deltaTime)
 	int mousex = input()->getMouseX();
 	int mousey = input()->getMouseY();
 	std::string cursortxt = "cursor (";
-	cursortxt.append(std::to_string(mousex));
+	cursortxt.append(rt2d::to_string<int>(mousex));
 	cursortxt.append(",");
-	cursortxt.append(std::to_string(mousey));
+	cursortxt.append(rt2d::to_string<int>(mousey));
 	cursortxt.append(")");
 	text[9]->message(cursortxt);
 
@@ -116,8 +116,8 @@ void Scene01::update(float deltaTime)
 	// alpha child1_entity + child2_entity
 	// ###############################################################
 	static float counter = 0;
-	child1_entity->sprite()->color.a = abs(sin(counter)*255);
-	child2_entity->sprite()->color.a = abs(cos(counter)*255);
+	child1_entity->sprite()->color.a = std::abs(sin(counter)*255);
+	child2_entity->sprite()->color.a = std::abs(cos(counter)*255);
 	counter+=deltaTime/2; if (counter > TWO_PI) { counter = 0; }
 
 	// ###############################################################

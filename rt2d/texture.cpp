@@ -26,8 +26,10 @@ Texture::Texture()
 	_height = 0;
 	_depth = 3;
 
-	this->_gltexture[0] = 0;
+	_gltexture[0] = 0;
 	_pixelbuffer = NULL;
+
+	_warrantybit = 1;
 
 	//std::cout << "texture created" << std::endl;
 }
@@ -119,12 +121,15 @@ GLuint Texture::loadTGAImage(const std::string& filename, int filter, int wrap)
 	// =================================================================
 	// Check if the image's width and height is a power of 2. No biggie, we can handle it.
 	if ((pixels->width & (pixels->width - 1)) != 0) {
+		_warrantybit = 0;
 		//std::cout << "warning: " << filename << "’s width is not a power of 2" << std::endl;
 	}
 	if ((pixels->height & (pixels->height - 1)) != 0) {
+		_warrantybit = 0;
 		//std::cout << "warning: " << filename << "’s height is not a power of 2" << std::endl;
 	}
 	if (pixels->width != pixels->height) {
+		//_warrantybit = 0;
 		//std::cout << "warning: " << filename << " is not square" << std::endl;
 	}
 	// =================================================================
@@ -144,9 +149,11 @@ int Texture::writeTGAImage(PixelBuffer* pixels)
 	time_t t = time(NULL);
 
 	std::string filename = "rt2d_";
-	filename.append(std::to_string(t));
+	filename.append(rt2d::to_string(t));
 	filename.append("_");
-	filename.append(std::to_string(id)); id++;
+
+	filename.append(rt2d::to_string(id));
+	id++;
 	filename.append(".tga");
 
 	FILE *fp = fopen(filename.c_str(), "w");
@@ -241,11 +248,10 @@ void Texture::createFromBuffer(PixelBuffer* pixels)
 	// =================================================================
 
 	// generate a number of texturenames (just 1 for now)
-	// if you want to create more, fine. Leave &this->_gltexture[0] on 0 here. Only change the first argument.
-	glGenTextures(1, &this->_gltexture[0]);
+	glGenTextures(1, this->_gltexture);
 
 	// setup first texture (the only one in this case)
-	// if you create more, use this->_gltexture[x], where x is the id of the texturename.
+	// if you created more, use this->_gltexture[x], where x is the id of the texturename.
 	glBindTexture(GL_TEXTURE_2D, this->_gltexture[0]);
 
 	// handle transparency

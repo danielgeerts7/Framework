@@ -33,7 +33,11 @@ if(WIN32)
 	include(CreateLaunchers)
 	include(MSVCMultipleProcessCompile) # /MP
 
-	add_definitions( "/W3 /D_CRT_SECURE_NO_WARNINGS /wd4514 /nologo" ) # suppress pedantic warnings
+	if(MINGW)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	ELSE(MINGW)
+		add_definitions( "/W3 /D_CRT_SECURE_NO_WARNINGS /wd4514 /nologo" ) # suppress pedantic warnings
+	endif(MINGW)
 endif(WIN32)
 
 
@@ -106,6 +110,7 @@ add_library(rt2d
 	rt2d/shader.h
 	rt2d/sprite.cpp
 	rt2d/sprite.h
+	rt2d/stringutil.h
 	rt2d/text.cpp
 	rt2d/text.h
 	rt2d/texture.cpp
