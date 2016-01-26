@@ -62,8 +62,8 @@ void ParticleSystem::addParticleToParentBullet(Bullet* fromBullet) {
 
 void ParticleSystem::addParticleToParentEnemie(Enemie* fromEnemie) {
 	this->scale = Point2(1, 1);
-	this->velocity_x = cos(rand() % 360 / DEG_TO_RAD) * 0.5;
-	this->velocity_y = sin(rand() % 360 / DEG_TO_RAD) * 0.5;
+	this->velocity_x = cos(rand() % 360 / DEG_TO_RAD) * 0.2;
+	this->velocity_y = sin(rand() % 360 / DEG_TO_RAD) * 0.2;
 
 	location = fromEnemie->position;
 	acceleration = Vector2(0, 0);
