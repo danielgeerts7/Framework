@@ -418,7 +418,7 @@ void Scene00::update(float deltaTime)
 				int a = enemies[i]->getCurrentWaypoint() + 1;
 				enemies[i]->setCurrentWaypoint(a);
 			}
-			if (enemies[i]->getCurrentWaypoint() < 2) {
+			if (enemies[i]->getCurrentWaypoint() < 2 && enemies[i]->checkIfPlayerIsInFieldOfView == false) {
 				Point2 newpos = Point2(enemies[i]->getNewPosition().x, enemies[i]->getNewPosition().y);
 				Vector2 delta1 = Vector2(enemies[i]->position, newpos);
 				float angle1 = delta1.getAngle();
@@ -462,7 +462,7 @@ void Scene00::update(float deltaTime)
 				int a = enemies[i]->getCurrentWaypoint() + 1;
 				enemies[i]->setCurrentWaypoint(a);
 			}
-			if (enemies[i]->getCurrentWaypoint() < 2) {
+			if (enemies[i]->getCurrentWaypoint() < 2 && enemies[i]->checkIfPlayerIsInFieldOfView == false) {
 				Point2 newpos = Point2(enemies[i]->getNewPosition().x, enemies[i]->getNewPosition().y);
 				Vector2 delta1 = Vector2(enemies[i]->position, newpos);
 				float angle1 = delta1.getAngle();
@@ -507,7 +507,7 @@ void Scene00::update(float deltaTime)
 				int a = enemies[i]->getCurrentWaypoint() + 1;
 				enemies[i]->setCurrentWaypoint(a);
 			}
-			if (enemies[i]->getCurrentWaypoint() < 2) {
+			if (enemies[i]->getCurrentWaypoint() < 2 && enemies[i]->checkIfPlayerIsInFieldOfView == false) {
 				Point2 newpos = Point2(enemies[i]->getNewPosition().x, enemies[i]->getNewPosition().y);
 				Vector2 delta1 = Vector2(enemies[i]->position, newpos);
 				float angle1 = delta1.getAngle();
@@ -552,7 +552,7 @@ void Scene00::update(float deltaTime)
 				int a = enemies[i]->getCurrentWaypoint() + 1;
 				enemies[i]->setCurrentWaypoint(a);
 			}
-			if (enemies[i]->getCurrentWaypoint() < 2) {
+			if (enemies[i]->getCurrentWaypoint() < 2 && enemies[i]->checkIfPlayerIsInFieldOfView == false) {
 				Point2 newpos = Point2(enemies[i]->getNewPosition().x, enemies[i]->getNewPosition().y);
 				Vector2 delta1 = Vector2(enemies[i]->position, newpos);
 				float angle1 = delta1.getAngle();
