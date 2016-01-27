@@ -73,32 +73,32 @@ SceneMenu::~SceneMenu()
 	layers[1]->removeChild(textStart);
 	delete(btnStart);
 	delete(textStart);
-	btnStart == NULL;
-	textStart == NULL;
+	btnStart = NULL;
+	textStart = NULL;
 
 	//Removing text and button 'Highscore'
 	layers[1]->removeChild(btnHighscore);
 	layers[1]->removeChild(textHighscore);
 	delete(btnHighscore);
 	delete(textHighscore);
-	btnHighscore == NULL;
-	textHighscore == NULL;
+	btnHighscore = NULL;
+	textHighscore = NULL;
 
 	//Removing text and button 'Credits'
 	layers[1]->removeChild(btnCredits);
 	layers[1]->removeChild(textCredits);
 	delete(btnCredits);
 	delete(textCredits);
-	btnCredits == NULL;
-	textCredits == NULL;
+	btnCredits = NULL;
+	textCredits = NULL;
 
 	//Removing text and button 'Quit'
 	layers[1]->removeChild(btnQuit);
 	layers[1]->removeChild(textQuit);
 	delete(btnQuit);
 	delete(textQuit);
-	btnQuit == NULL;
-	textQuit == NULL;
+	btnQuit = NULL;
+	textQuit = NULL;
 }
 
 void SceneMenu::update(float deltaTime)

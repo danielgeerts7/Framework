@@ -73,19 +73,19 @@ SceneHighscore::~SceneHighscore()
 	for (int i = 0; i < textsRanks.size(); i++) {
 		layers[1]->removeChild(textsRanks[i]);
 		delete textsRanks[i];
-		textsRanks[i] == NULL;
+		textsRanks[i] = NULL;
 	}
 	/* NAMES */
 	for (int i = 0; i < textsnames.size(); i++) {
 		layers[1]->removeChild(textsnames[i]);
 		delete textsnames[i];
-		textsnames[i] == NULL;
+		textsnames[i] = NULL;
 	}
 	/* HIGHSCORES */
 	for (int i = 0; i < textsHighscores.size(); i++) {
 		layers[1]->removeChild(textsHighscores[i]);
 		delete textsHighscores[i];
-		textsHighscores[i] == NULL;
+		textsHighscores[i] = NULL;
 	}
 
 	layers[1]->removeChild(rankText);

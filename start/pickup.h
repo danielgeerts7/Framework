@@ -6,7 +6,7 @@
 #ifndef PICKUP_H
 #define PICKUP_H
 
-#include "basicentity.h";
+#include "basicentity.h"
 
 using namespace std;
 class Pickup : public BasicEntity
