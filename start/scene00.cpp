@@ -350,7 +350,7 @@ void Scene00::update(float deltaTime)
 			}
 		}
 	}
-	enemiesSize = NULL;
+	enemiesSize = 0;
 
 	// Setting the counter to 0 for a bullet shooting delay
 	if (enemieCounter >= enemieDelay) {
@@ -578,7 +578,7 @@ void Scene00::update(float deltaTime)
 			}
 		}
 	}
-	enemiesSizeForWaypoints = NULL;
+	enemiesSizeForWaypoints = 0;
 	
 
 	// ###############################################################
@@ -620,7 +620,7 @@ void Scene00::update(float deltaTime)
 			}
 		}
 	}
-	player_bullets_size = NULL;
+	player_bullets_size = 0;
 
 	// ###############################################################
 	// Remove all bullets that hit a Enemie
@@ -724,7 +724,7 @@ void Scene00::update(float deltaTime)
 			blocks[i]->baiscEntityCollidWithBlock(enemies[j], 32, 24);
 		}
 	}
-	blocks_size = NULL;
+	blocks_size = 0;
 
 	// ###############################################################
 	// Updating mouseClickBulletCounter and checking if the mouseClickBulletCounter is greater then the mouseClickBulletDelay
@@ -883,7 +883,7 @@ void Scene00::update(float deltaTime)
 			enemies[i]->alive = false;
 		}
 	}
-	enemie_size = NULL;
+	enemie_size = 0;
 
 	// ###############################################################
 	// Removing the healthbar when the health of the enemie is 0 or lower
@@ -988,8 +988,8 @@ void Scene00::update(float deltaTime)
 			}
 		}
 	}
-	blocksSize = NULL;
-	bulletListP = NULL;
+	blocksSize = 0;
+	bulletListP = 0;
 
 	// ###############################################################
 	// Deleting player bullets when bullets are !alive
@@ -1021,8 +1021,8 @@ void Scene00::update(float deltaTime)
 			}
 		}
 	}
-	blocksSizeEnemies = NULL;
-	bulletListE = NULL;
+	blocksSizeEnemies = 0;
+	bulletListE = 0;
 
 	// ###############################################################
 	// Deleting bullets when bullets are !alive
