@@ -804,6 +804,8 @@ void Scene00::update(float deltaTime)
 	// ###############################################################
 	if (currentAmmoInMagazine == 0 && currentAmmoInBag == 0) {
 		text[7]->message("You're out of ammo, find a ammunition box to continuing shooting");
+	} else {
+		text[7]->message("");
 	}
 
 	// ###############################################################
