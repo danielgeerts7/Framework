@@ -202,8 +202,6 @@ void SceneHighscore::update(float deltaTime)
 		clearBtn->sprite()->color = BLUE;
 		if (input()->getMouseUp(0)) {
 			h->clearHighScoreList();
-
-			int namesize = textsnames.size();
 		}
 	}
 	else {

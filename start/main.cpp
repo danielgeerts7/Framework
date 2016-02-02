@@ -52,7 +52,6 @@ int main(void)
 
 	while (running && core.exitApp() == 0) {
 		scenecounter = scene->activescene;
-		SuperScene::state state = scene->getState();
 		if (scenecounter >= 0 && scenecounter <= 3) {
 			if ((scene00->getState() == SuperScene::state::WIN || scene00->getState() == SuperScene::state::LOSE || scene00->getState() == SuperScene::state::STOP) && canAddScoreToTheList)
 			{

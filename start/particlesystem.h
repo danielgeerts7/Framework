@@ -36,7 +36,6 @@ public:
 	bool isDead();
 
 private:
-	int maxParticles;
 	int counter;
 	int delay;
 

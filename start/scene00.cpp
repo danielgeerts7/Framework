@@ -630,7 +630,7 @@ void Scene00::update(float deltaTime)
 	int player_bullets_size = player_bullets.size();
 	for (int pb = 0; pb < player_bullets_size; pb++) {
 		for (int ee = 0; ee < enemies.size(); ee++) {
-			if (enemies[ee]->gettingHitByPlayerBullets(player_bullets[pb]) == 1 && enemies[ee]->alive && player_entity->alive && player_bullets.size() >= 0) {
+			if (enemies[ee]->gettingHitByPlayerBullets(player_bullets[pb]) == 1 && enemies[ee]->alive && player_entity->alive && player_bullets_size >= 0) {
 				player_bullets[pb]->alive = false;
 
 				ParticleSystem* p = new ParticleSystem(RED, "assets/singleparticle.tga", 0, 0);

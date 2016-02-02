@@ -20,7 +20,6 @@ class SceneHighscore: public SuperScene
 
 	private:
 		int tophighscores;
-		Text* t;
 		HighScoreList* h;
 		bool loaded;
 
