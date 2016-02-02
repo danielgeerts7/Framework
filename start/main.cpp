@@ -49,6 +49,7 @@ int main(void)
 	int scenecounter = 0;
 	int running = 1;
 	bool canAddScoreToTheList = false;
+	bool canReloadScene00 = false;
 
 	while (running && core.exitApp() == 0) {
 		scenecounter = scene->activescene;
@@ -58,18 +59,25 @@ int main(void)
 			{
 				canAddScoreToTheList = true;
 			}
-			if ((scene00->getState() == SuperScene::state::WIN || scene00->getState() == SuperScene::state::LOSE) && !scene00->isRunning() && canAddScoreToTheList)
+			if ((scene00->getState() == SuperScene::state::WIN || scene00->getState() == SuperScene::state::LOSE || scene00->getState() == SuperScene::state::STOP) && !scene00->isRunning() && canAddScoreToTheList)
 			{
 				int newscore = scene00->getscore();
 				string newname = scene00->getname();
 				highscore->addScore(newscore, newname);
 				canAddScoreToTheList = false;
+				canReloadScene00 = true;
 			}
 			if (scenemenu->getState() == SuperScene::state::START && scenemenu->isRunning())
 			{
 				highscore->sortHighScoreList();
 			}
-
+			if ((scene00->getState() == SuperScene::state::WIN || scene00->getState() == SuperScene::state::LOSE || scene00->getState() == SuperScene::state::STOP) && canReloadScene00 == true) {
+				if (!scene00->isRunning()) {
+					scene00->breakAndDestroyScene();
+					scene00->reloadScene();
+					canReloadScene00 = false;
+				}
+			}
 			scene = scenes[scenecounter];
 			core.run(scene); // update and render the current scene
 			core.showFrameRate(5); // show framerate in output every n seconds

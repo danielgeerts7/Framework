@@ -7,6 +7,10 @@
 
 Scene00::Scene00() : SuperScene()
 {
+	reloadScene();
+}
+
+void Scene00::reloadScene() {
 
 	SuperScene::setState(START);
 
@@ -41,6 +45,7 @@ Scene00::Scene00() : SuperScene()
 	username.resize(3);
 
 	triggerWhenFinished = true;
+	triggerWINorLOSE = false;
 
 	arrow = new BasicEntity();
 	arrow->addSprite("assets/block.tga");
@@ -103,7 +108,7 @@ Scene00::Scene00() : SuperScene()
 	gun_player_entity->addSprite("assets/gun.tga");
 	gun_player_entity->sprite()->color = YELLOW;
 	gun_player_entity->position = Point2(30, 25);
-	
+
 	// ammunition pickup
 	int ammunition_pickup_amount = 4;
 	for (int i = 0; i < ammunition_pickup_amount; i++) {
@@ -176,10 +181,13 @@ Scene00::Scene00() : SuperScene()
 	player_entity->addChild(gun_player_entity);
 }
 
-
 Scene00::~Scene00()
 {
-// remove blocks
+	breakAndDestroyScene();
+}
+
+void Scene00::breakAndDestroyScene() {
+	// remove blocks
 	int s = blocks.size();
 	for (int i = 0; i<s; i++) {
 		layers[2]->removeChild(blocks[i]);
@@ -188,7 +196,7 @@ Scene00::~Scene00()
 	}
 	blocks.clear();
 
-// remove player bullets
+	// remove player bullets
 	int p_b = player_bullets.size();
 	for (int j = 0; j<p_b; j++) {
 		layers[1]->removeChild(player_bullets[j]);
@@ -197,7 +205,7 @@ Scene00::~Scene00()
 	}
 	player_bullets.clear();
 
-// remove enemies bullets
+	// remove enemies bullets
 	int e_b = enemies_bullets.size();
 	for (int l = 0; l<e_b; l++) {
 		layers[1]->removeChild(enemies_bullets[l]);
@@ -206,7 +214,7 @@ Scene00::~Scene00()
 	}
 	enemies_bullets.clear();
 
-// remove enemies, guns_enemies, enemies_healthbars
+	// remove enemies, guns_enemies, enemies_healthbars
 	int es = enemies.size();
 	for (int k = 0; k < es; k++) {
 		enemies[k]->removeChild(guns_enemies[k]);
@@ -223,7 +231,7 @@ Scene00::~Scene00()
 	guns_enemies.clear();
 	enemies_healthbars.clear();
 
-// remove enemiesparticles
+	// remove enemiesparticles
 	int ep = enemiesparticles.size();
 	for (int a = 0; a < ep; a++) {
 		layers[1]->removeChild(enemiesparticles[a]);
@@ -241,7 +249,7 @@ Scene00::~Scene00()
 	}
 	playerparticles.clear();
 
-// remove ammo pickups
+	// remove ammo pickups
 	int ammopickupsize = ammunitionpickups.size();
 	for (int i = 0; i < ammopickupsize; i++) {
 		layers[2]->removeChild(ammunitionpickups[i]);
@@ -250,7 +258,7 @@ Scene00::~Scene00()
 	}
 	ammunitionpickups.clear();
 
-// remove health pickups
+	// remove health pickups
 	int healthpickupsize = healthpickups.size();
 	for (int i = 0; i < healthpickupsize; i++) {
 		layers[2]->removeChild(healthpickups[i]);
@@ -259,7 +267,7 @@ Scene00::~Scene00()
 	}
 	healthpickups.clear();
 
-// removing the rest
+	// removing the rest
 	layers[0]->removeChild(background_entity);
 	layers[2]->removeChild(player_entity);
 	layers[2]->removeChild(player_healthbar);
@@ -275,6 +283,18 @@ Scene00::~Scene00()
 	player_healthbar = NULL;
 	gun_player_entity = NULL;
 	player_health_text = NULL;
+
+	layers[4]->removeChild(enterUsername);
+	delete enterUsername;
+	enterUsername = NULL;
+
+	layers[3]->removeChild(player_health_text);
+	delete player_health_text;
+	player_health_text = NULL;
+
+	layers[4]->removeChild(arrow);
+	delete arrow;
+	arrow = NULL;
 }
 
 void Scene00::update(float deltaTime)
@@ -1041,20 +1061,21 @@ void Scene00::update(float deltaTime)
 		}
 	}
 
-	// ###############################################################
-	// Setting state when WIN of LOSE
-	// ###############################################################
-	if (enemies.size() <= 0) {
-		SuperScene::setState(WIN);
+	if (player_entity->getPlayerHealth() == 0) {
+		player_entity->alive = false;
 	}
-	if (player_entity->getPlayerHealth() <= 0) {
-		SuperScene::setState(LOSE);
+
+	// ###############################################################
+	// Activate endscreen
+	// ###############################################################
+	if (player_entity->alive == false) {
+		triggerWINorLOSE = true;
 	}
 
 	// ###############################################################
 	// When WIN or LOSE, enter username
 	// ###############################################################
-	if (SuperScene::getState() == WIN || SuperScene::getState() == LOSE) {
+	if (triggerWINorLOSE) {
 		if (triggerWhenFinished) {
 			enterUsername->position.x = camera()->position.x;
 			enterUsername->position.y = camera()->position.y;
@@ -1072,6 +1093,7 @@ void Scene00::update(float deltaTime)
 		}
 
 		if (input()->getKey(GLFW_KEY_ENTER)) {
+			SuperScene::setState(WIN);
 			this->stop();
 			SuperScene::activescene = 0;
 		}

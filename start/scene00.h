@@ -24,7 +24,9 @@ class Scene00: public SuperScene
 {
 	public:
 		Scene00();
+		void reloadScene();
 		virtual ~Scene00();
+		void breakAndDestroyScene();
 
 		virtual void update(float deltaTime);
 
@@ -94,6 +96,7 @@ class Scene00: public SuperScene
 		BasicEntity* arrow;
 
 		bool triggerWhenFinished;
+		bool triggerWINorLOSE;
 
 		bool numberone = false;
 		bool numbertwo = false;
