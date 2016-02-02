@@ -122,3 +122,11 @@ vector<pair <int, string> > HighScoreList::sortHighScoreList() {
 	sort(highscoreList.begin(), highscoreList.end(), compare);
 	return highscoreList;
 }
+
+void HighScoreList::resetHighScoreList() {
+	//TODO reset the highscorelist to the default HighScoreList (Delete and fill Vector)
+}
+
+void HighScoreList::clearHighScoreList() {
+	//TODO clear the whole Highscorelist and clear the scene
+}

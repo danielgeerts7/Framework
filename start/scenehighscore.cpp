@@ -64,6 +64,26 @@ SceneHighscore::SceneHighscore(HighScoreList* highscore) : SuperScene()
 	highscoreText->position.x = textsHighscores[0]->position.x;
 	highscoreText->position.y = 150;
 	layers[1]->addChild(highscoreText);
+
+//reset button
+	resetText = new Text();
+	resetBtn = new Button(resetText, "Reset list!");
+	resetBtn->position = Point2(200, 800);
+	resetBtn->scale = Point2(6, 1);
+	resetText->position.x = resetBtn->position.x - 150;
+	resetText->position.y = resetBtn->position.y;
+	layers[1]->addChild(resetBtn);
+	layers[1]->addChild(resetText);
+
+//clear button
+	clearText = new Text();
+	clearBtn = new Button(clearText, "Clear list!");
+	clearBtn->position = Point2(200, 900);
+	clearBtn->scale = Point2(6, 1);
+	clearText->position.x = clearBtn->position.x - 150;
+	clearText->position.y = clearBtn->position.y;
+	layers[1]->addChild(clearBtn);
+	layers[1]->addChild(clearText);
 }
 
 
@@ -97,6 +117,22 @@ SceneHighscore::~SceneHighscore()
 	rankText = NULL;
 	titleNameText = NULL;
 	highscoreText = NULL;
+
+//remove text
+	layers[1]->removeChild(resetText);
+	layers[1]->removeChild(clearText);
+	delete resetText;
+	delete clearText;
+	resetText = NULL;
+	clearText = NULL;
+
+//remove buttons
+	layers[1]->removeChild(resetBtn);
+	layers[1]->removeChild(clearBtn);
+	delete resetBtn;
+	delete clearBtn;
+	resetBtn = NULL;
+	clearBtn = NULL;
 }
 
 void SceneHighscore::update(float deltaTime)
@@ -122,7 +158,8 @@ void SceneHighscore::update(float deltaTime)
 			if (i < 9) {
 				RANK.append(" ");
 				RANK.append(to_string(i + 1));
-			} else if (i == 9) {
+			}
+			else if (i == 9) {
 				RANK.append(to_string(i + 1));
 			}
 			RANK.append(". ");
@@ -142,5 +179,34 @@ void SceneHighscore::update(float deltaTime)
 			textsHighscores[i]->position.y = 225 + (50 * i);
 		}
 		loaded = true;
-	} 
+	}
+
+	// ###############################################################
+	// Getting mouse position
+	// ###############################################################
+	mousePosX = input()->getMouseX() + camera()->position.x - SWIDTH / 2;
+	mousePosY = input()->getMouseY() + camera()->position.y - SHEIGHT / 2;
+	Point2 mousepos = Point2(mousePosX, mousePosY);
+
+	if (resetBtn->checkIfMouseIsOverBtn(mousepos, resetBtn->scale) == 1) {
+		resetBtn->sprite()->color = BLUE;
+		if (input()->getMouseUp(0)) {
+			h->resetHighScoreList();
+		}
+	}
+	else {
+		resetBtn->sprite()->color = GRAY;
+	}
+
+	if (clearBtn->checkIfMouseIsOverBtn(mousepos, clearBtn->scale) == 1) {
+		clearBtn->sprite()->color = BLUE;
+		if (input()->getMouseUp(0)) {
+			h->clearHighScoreList();
+
+			int namesize = textsnames.size();
+		}
+	}
+	else {
+		clearBtn->sprite()->color = GRAY;
+	}
 }

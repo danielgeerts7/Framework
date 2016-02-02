@@ -8,6 +8,7 @@
 
 #include "superscene.h"
 #include "highscorelist.h"
+#include "button.h"
 
 class SceneHighscore: public SuperScene
 {
@@ -26,6 +27,14 @@ class SceneHighscore: public SuperScene
 		Text* rankText;
 		Text* titleNameText;
 		Text* highscoreText;
+
+		Text* resetText;
+		Button* resetBtn;
+		Text* clearText;
+		Button* clearBtn;
+
+		int mousePosX;
+		int mousePosY;
 
 		vector<pair <int, string> > highscoreList;
 		vector<Text*> textsRanks;

@@ -17,10 +17,12 @@ class HighScoreList
 {
 public:
 	HighScoreList();
-	~HighScoreList();
+	virtual ~HighScoreList();
 
 	void addScore(int score, string name);
 	vector<pair <int, string> > sortHighScoreList();
+	void resetHighScoreList();
+	void clearHighScoreList();
 
 private:
 	vector<int> tempHighscore;
