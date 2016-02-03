@@ -21,8 +21,9 @@ public:
 
 	void addScore(int score, string name);
 	vector<pair <int, string> > sortHighScoreList();
-	void resetHighScoreList();
-	void clearHighScoreList();
+	HighScoreList* getHighScoreList();
+	HighScoreList* resetHighScoreList();
+	HighScoreList* clearHighScoreList();
 
 private:
 	vector<int> tempHighscore;

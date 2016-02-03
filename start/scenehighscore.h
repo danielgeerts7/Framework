@@ -18,6 +18,9 @@ class SceneHighscore: public SuperScene
 
 		virtual void update(float deltaTime);
 
+		void reloadSceneHighscore(HighScoreList* highscore);
+		void clearSceneHighscore();
+
 	private:
 		int tophighscores;
 		HighScoreList* h;

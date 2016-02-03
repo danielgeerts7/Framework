@@ -123,10 +123,73 @@ vector<pair <int, string> > HighScoreList::sortHighScoreList() {
 	return highscoreList;
 }
 
-void HighScoreList::resetHighScoreList() {
-	//TODO reset the highscorelist to the default HighScoreList (Delete and fill Vector)
+HighScoreList* HighScoreList::getHighScoreList() {
+	return this;
 }
 
-void HighScoreList::clearHighScoreList() {
-	//TODO clear the whole Highscorelist and clear the scene
+HighScoreList*  HighScoreList::resetHighScoreList() {
+	int size = highscoreList.size();
+	for (int i = 0; i < size; i++) {
+		highscoreList[i].first = NULL;
+		highscoreList[i].second = "";
+	}
+	highscoreList.clear();
+
+	// if file cannot be found make a new file
+	std::ofstream outfile("assets/highscore_list.csv");
+
+	int a = 60;
+	int b = 50;
+	int c = 10;
+	int d = 20;
+	int e = 80;
+	int f = 70;
+	int g = 100;
+	int h = 30;
+	int i = 40;
+	int j = 90;
+
+	string aa = "aaa";
+	string bb = "aaa";
+	string cc = "aaa";
+	string dd = "aaa";
+	string ee = "aaa";
+	string ff = "aaa";
+	string gg = "aaa";
+	string hh = "aaa";
+	string ii = "aaa";
+	string jj = "aaa";
+
+	highscoreList.emplace_back(a, aa);
+	highscoreList.emplace_back(b, bb);
+	highscoreList.emplace_back(c, cc);
+	highscoreList.emplace_back(d, dd);
+	highscoreList.emplace_back(e, ee);
+	highscoreList.emplace_back(f, ff);
+	highscoreList.emplace_back(g, gg);
+	highscoreList.emplace_back(h, hh);
+	highscoreList.emplace_back(i, ii);
+	highscoreList.emplace_back(j, jj);
+
+	// filling the new file
+	int listSize = highscoreList.size();
+	for (int i = 0; i < listSize; i++) {
+		outfile << highscoreList[i].first << "," << highscoreList[i].second << std::endl;
+	}
+	outfile.close();
+
+	return this;
+}
+
+HighScoreList* HighScoreList::clearHighScoreList() {
+	int size = highscoreList.size();
+	for (int i = 0; i < size; i++) {
+		highscoreList[i].first = NULL;
+		highscoreList[i].second = "";
+	}
+	highscoreList.clear();
+
+	std::ofstream outfile("assets/highscore_list.csv");
+	outfile.close();
+	return this;
 }

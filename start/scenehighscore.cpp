@@ -8,11 +8,17 @@
 
 SceneHighscore::SceneHighscore(HighScoreList* highscore) : SuperScene()
 {
+	reloadSceneHighscore(highscore);
+}
+
+void SceneHighscore::reloadSceneHighscore(HighScoreList* highscore) {
 	SuperScene::setState(START);
 
 	tophighscores = 10;
 
 	text[0]->message("HIGHSCORE: here you can see who is the best!");
+
+	h = highscore;
 
 	/* RANKS */
 	for (int i = 0; i < tophighscores; i++) {
@@ -40,10 +46,9 @@ SceneHighscore::SceneHighscore(HighScoreList* highscore) : SuperScene()
 		layers[1]->addChild(t);
 		textsHighscores.push_back(t);
 	}
-	h = highscore;
 
 	loaded = false;
-
+	
 	/* RANK */
 	rankText = new Text();
 	rankText->message("RANK");
@@ -65,7 +70,7 @@ SceneHighscore::SceneHighscore(HighScoreList* highscore) : SuperScene()
 	highscoreText->position.y = 150;
 	layers[1]->addChild(highscoreText);
 
-//reset button
+	//reset button
 	resetText = new Text();
 	resetBtn = new Button(resetText, "Reset list!");
 	resetBtn->position = Point2(200, 800);
@@ -75,7 +80,7 @@ SceneHighscore::SceneHighscore(HighScoreList* highscore) : SuperScene()
 	layers[1]->addChild(resetBtn);
 	layers[1]->addChild(resetText);
 
-//clear button
+	//clear button
 	clearText = new Text();
 	clearBtn = new Button(clearText, "Clear list!");
 	clearBtn->position = Point2(200, 900);
@@ -89,24 +94,36 @@ SceneHighscore::SceneHighscore(HighScoreList* highscore) : SuperScene()
 
 SceneHighscore::~SceneHighscore()
 {
+	clearSceneHighscore();
+}
+
+void SceneHighscore::clearSceneHighscore() {
 	/* RANKS */
-	for (int i = 0; i < textsRanks.size(); i++) {
+	int sizer = textsRanks.size();
+	for (int i = 0; i < sizer; i++) {
 		layers[1]->removeChild(textsRanks[i]);
 		delete textsRanks[i];
 		textsRanks[i] = NULL;
 	}
+	textsRanks.clear();
+
 	/* NAMES */
-	for (int i = 0; i < textsnames.size(); i++) {
+	int sizen = textsnames.size();
+	for (int i = 0; i < sizen; i++) {
 		layers[1]->removeChild(textsnames[i]);
 		delete textsnames[i];
 		textsnames[i] = NULL;
 	}
+	textsnames.clear();
+
 	/* HIGHSCORES */
-	for (int i = 0; i < textsHighscores.size(); i++) {
+	int sizeh = textsHighscores.size();
+	for (int i = 0; i < sizeh; i++) {
 		layers[1]->removeChild(textsHighscores[i]);
 		delete textsHighscores[i];
 		textsHighscores[i] = NULL;
 	}
+	textsHighscores.clear();
 
 	layers[1]->removeChild(rankText);
 	layers[1]->removeChild(titleNameText);
@@ -118,7 +135,7 @@ SceneHighscore::~SceneHighscore()
 	titleNameText = NULL;
 	highscoreText = NULL;
 
-//remove text
+	//remove text
 	layers[1]->removeChild(resetText);
 	layers[1]->removeChild(clearText);
 	delete resetText;
@@ -126,7 +143,7 @@ SceneHighscore::~SceneHighscore()
 	resetText = NULL;
 	clearText = NULL;
 
-//remove buttons
+	//remove buttons
 	layers[1]->removeChild(resetBtn);
 	layers[1]->removeChild(clearBtn);
 	delete resetBtn;
@@ -192,6 +209,8 @@ void SceneHighscore::update(float deltaTime)
 		resetBtn->sprite()->color = BLUE;
 		if (input()->getMouseUp(0)) {
 			h->resetHighScoreList();
+			clearSceneHighscore();
+			reloadSceneHighscore(h->getHighScoreList());
 		}
 	}
 	else {
@@ -202,6 +221,8 @@ void SceneHighscore::update(float deltaTime)
 		clearBtn->sprite()->color = BLUE;
 		if (input()->getMouseUp(0)) {
 			h->clearHighScoreList();
+			clearSceneHighscore();
+			reloadSceneHighscore(h->getHighScoreList());
 		}
 	}
 	else {
