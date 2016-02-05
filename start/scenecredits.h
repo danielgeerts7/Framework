@@ -7,7 +7,11 @@
 #define SCENECREDITS_H
 
 #include "superscene.h"
+#include <deque>
+#include <fstream>
+#include <sstream>
 
+using namespace std;
 class SceneCredits: public SuperScene
 {
 	public:
@@ -18,6 +22,16 @@ class SceneCredits: public SuperScene
 
 	private:
 		BasicEntity* logo;
+
+		BasicEntity* consolecontainer;
+		vector<Text*> consoletext;
+		deque<string> fulltext;
+		unsigned int numlines;
+		Timer t;
+
+		void filltext();
+		void updateconsoletext();
+		int index;
 };
 
 #endif /* SCENECREDITS_H */

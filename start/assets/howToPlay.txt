@@ -1,0 +1,24 @@
+﻿HOW TO PLAY
+
+						Object:
+						You are the green player, the object of this game is to kill
+						as much enemies as possible.
+
+						Gameplay:
+						U can move the player with the W,A,S,D keys. When u click on 
+						the left mouse button, the player starts shooting. After u
+						finished the game, u can enter a username. Select with the
+						arrowkeys youre username. When u have selected a username,
+						then press Enter and it will save the score.
+
+					
+
+					
+			CREDITS
+						
+						Development - Daniel geerts
+						Art - Daniel Geerts
+						Libraries - RT2D, OpenGl
+						Code language  - c++
+
+						Copyright 2015-2016 - Daniel Geerts
