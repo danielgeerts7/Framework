@@ -87,11 +87,15 @@ class Scene00: public SuperScene
 		vector<Pickup*> ammunitionpickups;
 		vector<Pickup*> healthpickups;
 
-		string firstLetter;
-		string secondLetter;
-		string thirdLetter;
-		string username;
+		char firstLetter;
+		char secondLetter;
+		char thirdLetter;
+		vector<char> username;
 		Text* enterUsername;
+
+		bool shiftone = false;
+		bool shifttwo = false;
+		bool shiftthree = false;
 
 		BasicEntity* arrow;
 
