@@ -53,21 +53,21 @@ void SceneHighscore::reloadSceneHighscore(HighScoreList* highscore) {
 	rankText = new Text();
 	rankText->message("RANK");
 	rankText->position.x = textsRanks[0]->position.x;
-	rankText->position.y = 150;
+	rankText->position.y = 200;
 	layers[1]->addChild(rankText);
 
 	/* NAME */
 	titleNameText = new Text();
 	titleNameText->message("NAME");
 	titleNameText->position.x = textsnames[0]->position.x;
-	titleNameText->position.y = 150;
+	titleNameText->position.y = 200;
 	layers[1]->addChild(titleNameText);
 
 	/* HIGHSCORE */
 	highscoreText = new Text();
 	highscoreText->message("HIGHSCORE");
 	highscoreText->position.x = textsHighscores[0]->position.x;
-	highscoreText->position.y = 150;
+	highscoreText->position.y = 200;
 	layers[1]->addChild(highscoreText);
 
 	//reset button
@@ -181,19 +181,19 @@ void SceneHighscore::update(float deltaTime)
 			}
 			RANK.append(". ");
 			textsRanks[i]->message(RANK);
-			textsRanks[i]->position.y = 225 + (50 * i);
+			textsRanks[i]->position.y = 275 + (50 * i);
 
 			/* NAMES */
 			string NAME = "";
 			NAME.append(highscoreList[i].second);
 			textsnames[i]->message(NAME);
-			textsnames[i]->position.y = 225 + (50 * i);
+			textsnames[i]->position.y = 275 + (50 * i);
 
 			/* HIGHSCORES */
 			string HIGHSCORE = "";
 			HIGHSCORE.append(to_string(highscoreList[i].first));
 			textsHighscores[i]->message(HIGHSCORE);
-			textsHighscores[i]->position.y = 225 + (50 * i);
+			textsHighscores[i]->position.y = 275 + (50 * i);
 		}
 		loaded = true;
 	}

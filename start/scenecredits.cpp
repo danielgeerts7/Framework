@@ -28,7 +28,7 @@ SceneCredits::SceneCredits() : SuperScene()
 	for (unsigned int i = 0; i < numlines; i++) {
 		Text* line = new Text();
 		line->scale = Point2(0.45f, 0.45f);
-		line->position = Point2(left, 160 + i * 25);
+		line->position = Point2(left, 200 + i * 25);
 		line->message("", WHITE);
 
 		consoletext.push_back(line);
