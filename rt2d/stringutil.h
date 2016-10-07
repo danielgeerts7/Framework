@@ -2,16 +2,18 @@
 #define STRINGUTIL_H_
 
 #include <string>
-#include <time.h>
 #include <sstream>
 
-namespace rt2d {
-
+// Work around MinGW bug. Thanks Viktor.
+// https://gcc.gnu.org/bugzilla/show_bug.cgi?id=52015
+namespace rt2d
+{
     template<typename T>
-    inline std::string to_string(T number) {
-        std::stringstream temp_stry;
-    	temp_stry << (number);
-    	return temp_stry.str();
+    inline std::string to_string(T val)
+    {
+        std::stringstream temp_str;
+        temp_str << (val);
+        return temp_str.str();
     }
 }
 
